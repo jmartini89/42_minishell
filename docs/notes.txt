@@ -51,5 +51,3 @@ tgetnum
 tgetstr
 tgoto
 tputs
-
-testciaociao

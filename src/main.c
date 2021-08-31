@@ -54,8 +54,6 @@ int	main(void)
 		if (line_read && *line_read)
 		{
 			add_history(line_read);
-			split_test = ft_split(line_read, ' ');
-			/*
 			g_pid = fork();
 			if (!g_pid)
 			{
@@ -72,11 +70,7 @@ int	main(void)
 				while (waitpid(-1, &wstatus, 0) > 0)
 					usleep (10);
 			}
-			*/
 		}
-		int i = -1;
-		while (split_test[++i])
-			ft_printf("%s\n", split_test[i]);
 	}
 	return (1);
 }
