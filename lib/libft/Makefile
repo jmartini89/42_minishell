@@ -59,25 +59,28 @@ OBJS		= $(SRCS:.c=.o)
 OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
 
 .c.o:
-		$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
+	@$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
 
 
-$(NAME):	$(OBJS)
-			${LIB} $(NAME) $(OBJS)
-			${RAN} ${NAME}
+$(NAME): $(OBJS)
+	@${LIB} $(NAME) $(OBJS)
+	@${RAN} ${NAME}
+	@echo "\e[32m"$@" compilation successfull\e[0m"
 
-all:		$(NAME)
+all: $(NAME)
 
-bonus:		${OBJS_BONUS} ${NAME}
-			${LIB} $(NAME) $(OBJS_BONUS)
-			${RAN} ${NAME}
+bonus: ${OBJS_BONUS} ${NAME}
+	${LIB} $(NAME) $(OBJS_BONUS)
+	${RAN} ${NAME}
 
 clean:
-			${RM} $(OBJS) $(OBJS_BONUS)
+	@${RM} $(OBJS) $(OBJS_BONUS)
+	@echo "\e[33m"$(NAME)" clean completed\e[0m"
 
-fclean: 	clean
-			${RM} ${NAME}
+fclean: clean
+	@${RM} ${NAME}
+	@echo "\e[33m"$(NAME)" full clean completed\e[0m"
 
-re: 		fclean all
+re: fclean all
 
-.PHONY:		all clean fclean re
+.PHONY: all clean fclean re

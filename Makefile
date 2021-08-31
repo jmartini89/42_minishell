@@ -3,43 +3,59 @@ CC = gcc
 CFLAGS = #-Wall -Werror -Wextra
 LDFLAGS="-L/Users/jmartini/homebrew/opt/readline/lib"
 CPPFLAGS="-I/Users/jmartini/homebrew/opt/readline/include"
-DEBUG = -g -fsanitize=address
 
-SRCDIR = ./src
-SRCFILES = main.c
-SRC = $(addprefix $(SRCDIR)/,$(SRCFILES))
-OBJ = ${SRC:.c=.o}
+DEBUG = minishell_debug
+DFLAGS = -g -fsanitize=address
 
-LDIR = ./lib
-LFTDIR = $(LDIR)/libft
-LPRINTFDIR = $(LDIR)/ft_printf
-LFT = libft.a
-LPRINTF = libftprintf.a
-LIBS = -L$(LFTDIR) -L$(LPRINTFDIR) -lft -lftprintf -lreadline #$(LDFLAGS) $(CPPFLAGS)
+SRCDIR = src
+OBJDIR = obj
+BINDIR = bin
+LIBDIR = lib
+SRCEXT = c
+OBJEXT = o
 
-all: $(NAME)
+SOURCES = $(wildcard $(SRCDIR)/*.c)
+OBJECTS = $(SOURCES:$(SRCDIR)/%.$(SRCEXT)=$(OBJDIR)/%.$(OBJEXT))
+LIBS = -L$(LIBDIR)/libft -L$(LIBDIR)/ft_printf -lft -lftprintf -lreadline #$(LDFLAGS) $(CPPFLAGS)
+RM = rm -f
 
-$(NAME): $(OBJ) | libraries test
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+all: directories libraries $(BINDIR)/$(NAME)
+
+directories:
+	@mkdir -p $(OBJDIR)
+	@mkdir -p $(BINDIR)
 
 libraries:
-	make -C $(LFTDIR)
-	make -C $(LPRINTFDIR)
+	@make -C $(LIBDIR)/libft
+	@make -C $(LIBDIR)/ft_printf
+
+clean:
+	@$(RM) $(BINDIR)/$(NAME) $(OBJECTS)
+	@$(RM) $(BINDIR)/$(DEBUG)
+	@$(RM) a.out
+	@echo "\e[33m"$(NAME)" clean completed\e[0m"
+
+fclean: clean
+	@make fclean -C $(LIBDIR)/libft
+	@make fclean -C $(LIBDIR)/ft_printf
+	@rm -rf $(OBJDIR) $(BINDIR)
+	@echo "\e[33m"$(NAME)" full clean completed\e[0m"
+
+re: clean all
 
 test:
 	$(CC) $(CFLAGS) test.c $(LIBS)
 
-clean:
-	rm -f $(NAME) $(OBJ)
-	rm -f a.out
+debug: directories libraries $(BINDIR)/$(DEBUG)
 
-fclean: clean
-	make fclean -C $(LFTDIR)
-	make fclean -C $(LPRINTFDIR)
+$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "\e[34m"$<" compiled successfully\e[0m"
 
-re: clean all
+$(BINDIR)/$(NAME): $(OBJECTS)
+	@$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+	@echo "\e[32m"$@" compiled successfully\e[0m"
 
-debug : $(OBJ) | libraries test
-	$(CC) $(CFLAGS) $(DEBUG) -o $(NAME) $^ $(LIBS)
-
-redebug: clean debug
+$(BINDIR)/$(DEBUG): $(OBJECTS)
+	@$(CC) $(CFLAGS) $(DFLAGS) -o $(BINDIR)/$(DEBUG) $^ $(LIBS)
+	@echo "\e[32m"$@" compiled successfully\e[0m"

@@ -24,23 +24,26 @@ SRCS		= ft_printf.c \
 OBJS		= $(SRCS:.c=.o)
 
 .c.o:
-		$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
+	@$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
 
 
-$(NAME):	$(OBJS)
-			${LIB} $(NAME) $(OBJS)
-			${RAN} ${NAME}
+$(NAME): $(OBJS)
+	@${LIB} $(NAME) $(OBJS)
+	@${RAN} ${NAME}
+	@echo "\e[32m"$(NAME)" compilation successfull\e[0m"
 
-all:		$(NAME)
+all: @$(NAME)
 
 clean:
-			${RM} $(OBJS)
+	@${RM} $(OBJS)
+	@echo "\e[33m"$(NAME)" clean completed\e[0m"
 
-fclean: 	clean
-			${RM} ${NAME}
+fclean: clean
+	@${RM} ${NAME}
+	@echo "\e[33m"$(NAME)" full clean completed\e[0m"
 
-re: 		fclean all
+re: fclean all
 
-.PHONY:		all clean fclean re
+.PHONY: all clean fclean re
 
-bonus:		$(NAME)
+bonus: $(NAME)
