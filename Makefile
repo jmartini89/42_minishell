@@ -1,11 +1,11 @@
 NAME = minishell
-TARGET = $(BINDIR)/$(NAME)
 CC = gcc
 CFLAGS = #-Wall -Werror -Wextra
 LDFLAGS="-L/Users/jmartini/homebrew/opt/readline/lib"
 CPPFLAGS="-I/Users/jmartini/homebrew/opt/readline/include"
 
-DEBUG = -g -fsanitize=address
+DEBUG = minishell_debug
+DFLAGS = -g -fsanitize=address
 
 SRCDIR = src
 OBJDIR = obj
@@ -14,48 +14,48 @@ LIBDIR = lib
 SRCEXT = c
 OBJEXT = o
 
-
 SOURCES = $(wildcard $(SRCDIR)/*.c)
 OBJECTS = $(SOURCES:$(SRCDIR)/%.$(SRCEXT)=$(OBJDIR)/%.$(OBJEXT))
+LIBS = -L$(LIBDIR)/libft -L$(LIBDIR)/ft_printf -lft -lftprintf -lreadline #$(LDFLAGS) $(CPPFLAGS)
 RM = rm -f
 
-LIBFTDIR = $(LIBDIR)/libft
-LIBPRINTFDIR = $(LIBDIR)/ft_printf
-LIBS = -L$(LIBFTDIR) -L$(LIBPRINTFDIR) -lft -lftprintf -lreadline #$(LDFLAGS) $(CPPFLAGS)
+all: directories libraries $(BINDIR)/$(NAME)
 
-all: build $(NAME)
-
-
-$(NAME): $(OBJECTS) | libraries
-	$(CC) $(CFLAGS) -o $(TARGET) $^ $(LIBS)
-	@echo "\e[32mminishell compilation successfull\e[0m"
-
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-build:
+directories:
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(BINDIR)
 
 libraries:
-	@make -C $(LIBFTDIR)
-	@make -C $(LIBPRINTFDIR)
+	@make -C $(LIBDIR)/libft
+	@make -C $(LIBDIR)/ft_printf
+
+clean:
+	@$(RM) $(BINDIR)/$(NAME) $(OBJECTS)
+	@$(RM) $(BINDIR)/$(DEBUG)
+	@$(RM) a.out
+	@echo "\e[33m"$(NAME)" clean completed\e[0m"
+
+fclean: clean
+	@make fclean -C $(LIBDIR)/libft
+	@make fclean -C $(LIBDIR)/ft_printf
+	@rm -rf $(OBJDIR) $(BINDIR)
+	@echo "\e[33m"$(NAME)" full clean completed\e[0m"
+
+re: clean all
 
 test:
 	$(CC) $(CFLAGS) test.c $(LIBS)
 
-clean:
-	$(RM) $(BINDIR)/$(NAME) $(OBJECTS)
-	$(RM) a.out
+debug: directories libraries $(BINDIR)/$(DEBUG)
 
-fclean: clean
-	make fclean -C $(LIBFTDIR)
-	make fclean -C $(LIBPRINTFDIR)
-	rm -rf $(OBJDIR) $(BINDIR)
+$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "\e[34m"$<" compiled successfully\e[0m"
 
-re: clean all
+$(BINDIR)/$(NAME): $(OBJECTS)
+	@$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+	@echo "\e[32m"$@" compiled successfully\e[0m"
 
-debug: build $(OBJECTS) | libraries
-	$(CC) $(CFLAGS) $(DEBUG) -o $(TARGET) $^ $(LIBS)
-
-redebug: clean debug
+$(BINDIR)/$(DEBUG): $(OBJECTS)
+	@$(CC) $(CFLAGS) $(DFLAGS) -o $(BINDIR)/$(DEBUG) $^ $(LIBS)
+	@echo "\e[32m"$@" compiled successfully\e[0m"

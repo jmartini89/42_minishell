@@ -65,7 +65,7 @@ OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
 $(NAME): $(OBJS)
 	@${LIB} $(NAME) $(OBJS)
 	@${RAN} ${NAME}
-	@echo "\e[32mlibft compilation successfull\e[0m"
+	@echo "\e[32m"$@" compilation successfull\e[0m"
 
 all: $(NAME)
 
@@ -74,10 +74,12 @@ bonus: ${OBJS_BONUS} ${NAME}
 	${RAN} ${NAME}
 
 clean:
-	${RM} $(OBJS) $(OBJS_BONUS)
+	@${RM} $(OBJS) $(OBJS_BONUS)
+	@echo "\e[33m"$(NAME)" clean completed\e[0m"
 
 fclean: clean
-	${RM} ${NAME}
+	@${RM} ${NAME}
+	@echo "\e[33m"$(NAME)" full clean completed\e[0m"
 
 re: fclean all
 
