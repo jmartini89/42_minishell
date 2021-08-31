@@ -15,7 +15,7 @@ LFTDIR = $(LDIR)/libft
 LPRINTFDIR = $(LDIR)/ft_printf
 LFT = libft.a
 LPRINTF = libftprintf.a
-LIBS = -L$(LFTDIR) -L$(LPRINTFDIR) -lft -lftprintf -lreadline $(LDFLAGS) $(CPPFLAGS)
+LIBS = -L$(LFTDIR) -L$(LPRINTFDIR) -lft -lftprintf -lreadline #$(LDFLAGS) $(CPPFLAGS)
 
 all: $(NAME)
 

@@ -1,5 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# include "minishell_def.h"
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
 # include <stdio.h>
@@ -12,5 +13,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
+
+int	ft_parser(char *line_read);
 
 #endif
