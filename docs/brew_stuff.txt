@@ -1,0 +1,7 @@
+mkdir homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
+export PATH=$PATH:~/homebrew/bin
+brew install readline
+
+For compilers to find readline you may need to set:
+	export LDFLAGS="-L/Users/jmartini/homebrew/opt/readline/lib"
+	export CPPFLAGS="-I/Users/jmartini/homebrew/opt/readline/include"
