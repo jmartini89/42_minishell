@@ -19,7 +19,7 @@ OBJECTS = $(SOURCES:$(SRCDIR)/%.$(SRCEXT)=$(OBJDIR)/%.$(OBJEXT))
 LIBS = -L$(LIBDIR)/libft -L$(LIBDIR)/ft_printf -lft -lftprintf -lreadline #$(LDFLAGS) $(CPPFLAGS)
 RM = rm -f
 
-all: directories libraries $(BINDIR)/$(NAME)
+all: directories libraries test $(BINDIR)/$(NAME)
 
 directories:
 	@mkdir -p $(OBJDIR)
@@ -32,7 +32,7 @@ libraries:
 clean:
 	@$(RM) $(BINDIR)/$(NAME) $(OBJECTS)
 	@$(RM) $(BINDIR)/$(DEBUG)
-	@$(RM) a.out
+	@$(RM) $(BINDIR)/a.out
 	@echo "\e[33m"$(NAME)" clean completed\e[0m"
 
 fclean: clean
@@ -44,7 +44,7 @@ fclean: clean
 re: clean all
 
 test:
-	$(CC) $(CFLAGS) test.c $(LIBS)
+	$(CC) $(CFLAGS) test.c $(LIBS) -o $(BINDIR)/a.out
 
 debug: directories libraries $(BINDIR)/$(DEBUG)
 
