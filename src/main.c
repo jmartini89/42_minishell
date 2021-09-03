@@ -54,21 +54,25 @@ int	main(void)
 		if (line_read && *line_read)
 		{
 			add_history(line_read);
-			g_pid = fork();
-			if (!g_pid)
+			if (ft_parser(line_read))
 			{
-				if (execve(line_read, exec_arg, NULL) < 0)
+				ft_printf("DEBUG ECHO : %s\n", line_read);
+				g_pid = fork();
+				if (!g_pid)
 				{
-					err = errno;
-					ft_printf("%s\n", (strerror(err)));
-					free (line_read);
-					exit(err);
+					if (execve(line_read, exec_arg, NULL) < 0)
+					{
+						err = errno;
+						ft_printf("%s\n", (strerror(err)));
+						free (line_read);
+						exit(err);
+					}
 				}
-			}
-			else
-			{
-				while (waitpid(-1, &wstatus, 0) > 0)
-					usleep (10);
+				else
+				{
+					while (waitpid(-1, &wstatus, 0) > 0)
+						usleep (10);
+				}
 			}
 		}
 	}
