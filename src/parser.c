@@ -2,14 +2,8 @@
 
 static int	ft_is_metachar(char c)
 {
-	if (c == '\\' ||
-		c == '|' ||
-		c == '&' ||
-		c == ';' ||
-		c == '(' ||
-		c == ')' ||
-		c == '<' ||
-		c == '>')
+	if (c == '\\' || c == '|' || c == '&' || c == ';'
+		|| c == '(' || c == ')' || c == '<' || c == '>')
 		return (1);
 	return (0);
 }
@@ -29,9 +23,10 @@ static int	ft_is_valid_line(char *line)
 			double_quotes *= -1;
 		if (line[i] == '\'' && double_quotes == 1)
 			single_quotes *= -1;
-		if ((single_quotes == 1 && double_quotes == 1 && 
-			ft_is_metachar(line[i])) ||
-			line[i] == '\\' && line[i + 1] && line[i + 1] == '\"')
+		if ((single_quotes == 1 && double_quotes == 1
+				&& ft_is_metachar(line[i]))
+			|| (double_quotes == -1 && line[i] == '\\'
+				&& line[i + 1] && line[i + 1] == '\"'))
 			return (ERR_SYNTAX_CHAR);
 	}
 	if (double_quotes == -1 || single_quotes == -1)
@@ -45,9 +40,6 @@ int	ft_parser(char *line_read)
 
 	err = ft_is_valid_line(line_read);
 	if (err)
-	{
-		ft_perror(err);
-		return (0);
-	}
+		return (ft_perror(err));
 	return (1);
 }
