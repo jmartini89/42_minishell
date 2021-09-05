@@ -1,9 +1,10 @@
 NAME = minishell
 CC = gcc
-CFLAGS = $(DEBUG) $(CEXTRA)
-#CEXTRA = -Wall -Werror -Wextra
+CFLAGS = $(DEBUG) $(CWARN)
+#CWARN = -Wall -Werror -Wextra
 #DEBUG = -g -fsanitize=address
-#MACOS = -L/Users/jmartini/homebrew/opt/readline/lib -I/Users/jmartini/homebrew/opt/readline/include
+#MACOS = -L~/homebrew/opt/readline/lib -I~/homebrew/opt/readline/include
+RM = rm -f
 
 SRCDIR = src
 OBJDIR = obj
@@ -19,21 +20,18 @@ LIBPATH = $(patsubst %, $(LIBDIR)/$(LIBDIR)%, $(LIB))
 LIBINC = $(addprefix -L, $(LIBPATH))
 LIBLINK = $(addprefix -l, $(LIB))
 INCLUDE =  $(LIBINC) $(LIBLINK) -lreadline $(MACOS)
-RM = rm -f
 
 all: $(BINDIR)/$(NAME)
+
+libraries : lib/libft/libft.a lib/libftprintf/libftprintf.a
+lib/libft/libft.a :
+	@make -C $(LIBDIR)/libft
+lib/libftprintf/libftprintf.a :
+	@make -C $(LIBDIR)/libftprintf
 
 $(OBJDIR) :
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(BINDIR)
-
-libraries : lib/libft/libft.a lib/libftprintf/libftprintf.a
-
-lib/libft/libft.a :
-	@make -C $(LIBDIR)/libft
-
-lib/libftprintf/libftprintf.a :
-	@make -C $(LIBDIR)/libftprintf
 
 clean :
 	@$(RM) $(BINDIR)/$(NAME) $(OBJECTS)
@@ -43,13 +41,15 @@ clean :
 fclean : clean
 	@make fclean -C $(LIBDIR)/libft
 	@make fclean -C $(LIBDIR)/libftprintf
-	@rm -rf $(OBJDIR) $(BINDIR)
+	@$(RM) -r $(OBJDIR) $(BINDIR)
 	@echo "\e[33m"$(NAME)" full clean completed\e[0m"
 
 re : clean all
 
-test:
-	$(CC) $(CFLAGS) test.c $(INCLUDE) -o a.out
+TESTBIN = bin/a.out
+$(TESTBIN):
+	@$(CC) $(CFLAGS) test.c $(INCLUDE) -o $@
+	@echo "\e[34m"$@" compiled successfully\e[0m"
 
 #Link
 $(BINDIR)/$(NAME) : $(OBJECTS)
@@ -57,6 +57,6 @@ $(BINDIR)/$(NAME) : $(OBJECTS)
 	@echo "\e[32m"$@" compiled successfully\e[0m"
 
 #Compile
-$(OBJECTS) : $(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR) libraries
+$(OBJECTS) : $(OBJDIR)/%.o : $(SRCDIR)/%.c | libraries $(OBJDIR) $(TESTBIN)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "\e[34m"$<" compiled successfully\e[0m"
