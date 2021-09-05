@@ -1,11 +1,11 @@
 NAME = minishell
 CC = gcc
-CFLAGS = #-Wall -Werror -Wextra
+CFLAGS = $(DEBUG) $(CEXTRA)
+#CEXTRA = -Wall -Werror -Wextra
+#DEBUG = -g -fsanitize=address
 LDFLAGS="-L/Users/jmartini/homebrew/opt/readline/lib"
 CPPFLAGS="-I/Users/jmartini/homebrew/opt/readline/include"
-
-DEBUG = minishell_debug
-DFLAGS = -g -fsanitize=address
+#MACOS = $(LDFLAGS) $(CPPFLAGS)
 
 SRCDIR = src
 OBJDIR = obj
@@ -15,47 +15,58 @@ SRCEXT = c
 OBJEXT = o
 
 SOURCES = $(wildcard $(SRCDIR)/*.c)
-OBJECTS = $(SOURCES:$(SRCDIR)/%.$(SRCEXT)=$(OBJDIR)/%.$(OBJEXT))
-LIBS = -L$(LIBDIR)/libft -L$(LIBDIR)/ft_printf -lft -lftprintf -lreadline #$(LDFLAGS) $(CPPFLAGS)
+OBJECTS = $(patsubst $(SRCDIR)/%.$(SRCEXT), $(OBJDIR)/%.$(OBJEXT), $(SOURCES))
+
+LIB = ft ftprintf
+LIBPATH = $(patsubst %, -L$(LIBDIR)/$(LIBDIR)%, $(LIB))
+LIBLINK = $(addprefix -l, $(LIB))
+
+INCLUDE = $(LIBPATH) $(LIBLINK) -lreadline $(MACOS)
+
+# use same as LIBPATH
+LFT = lib/libft/libft.a
+LPRINTF = lib/libftprintf/libftprintf.a
+
 RM = rm -f
 
-all: directories libraries test $(BINDIR)/$(NAME)
+all: $(BINDIR)/$(NAME)
 
-directories:
-	@mkdir -p $(OBJDIR)
-	@mkdir -p $(BINDIR)
+$(OBJDIR) :
+	mkdir -p $(OBJDIR)
+	mkdir -p $(BINDIR)
 
-libraries:
+libraries : $(LFT) $(LPRINTF)
+
+$(LFT) :
 	@make -C $(LIBDIR)/libft
-	@make -C $(LIBDIR)/ft_printf
 
-clean:
+$(LPRINTF) :
+	@make -C $(LIBDIR)/libftprintf
+
+clean :
 	@$(RM) $(BINDIR)/$(NAME) $(OBJECTS)
-	@$(RM) $(BINDIR)/$(DEBUG)
 	@$(RM) $(BINDIR)/a.out
 	@echo "\e[33m"$(NAME)" clean completed\e[0m"
 
-fclean: clean
+fclean : clean
 	@make fclean -C $(LIBDIR)/libft
-	@make fclean -C $(LIBDIR)/ft_printf
+	@make fclean -C $(LIBDIR)/libftprintf
 	@rm -rf $(OBJDIR) $(BINDIR)
 	@echo "\e[33m"$(NAME)" full clean completed\e[0m"
 
-re: clean all
+re : clean all
 
 test:
-	$(CC) $(CFLAGS) test.c $(LIBS) -o $(BINDIR)/a.out
+	$(CC) $(CFLAGS) test.c $(INCLUDE) -o a.out
 
-debug: directories libraries $(BINDIR)/$(DEBUG)
+$(LIBRARIES)
 
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+#Link
+$(BINDIR)/$(NAME) : $(OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $^ $(INCLUDE)
+	@echo "\e[32m"$@" compiled successfully\e[0m"
+
+#Compile
+$(OBJECTS) : $(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR) libraries
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "\e[34m"$<" compiled successfully\e[0m"
-
-$(BINDIR)/$(NAME): $(OBJECTS)
-	@$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
-	@echo "\e[32m"$@" compiled successfully\e[0m"
-
-$(BINDIR)/$(DEBUG): $(OBJECTS)
-	@$(CC) $(CFLAGS) $(DFLAGS) -o $(BINDIR)/$(DEBUG) $^ $(LIBS)
-	@echo "\e[32m"$@" compiled successfully\e[0m"
