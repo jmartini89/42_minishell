@@ -3,44 +3,36 @@ CC = gcc
 CFLAGS = $(DEBUG) $(CEXTRA)
 #CEXTRA = -Wall -Werror -Wextra
 #DEBUG = -g -fsanitize=address
-LDFLAGS="-L/Users/jmartini/homebrew/opt/readline/lib"
-CPPFLAGS="-I/Users/jmartini/homebrew/opt/readline/include"
-#MACOS = $(LDFLAGS) $(CPPFLAGS)
+#MACOS = -L/Users/jmartini/homebrew/opt/readline/lib -I/Users/jmartini/homebrew/opt/readline/include
 
 SRCDIR = src
 OBJDIR = obj
 BINDIR = bin
 LIBDIR = lib
-SRCEXT = c
-OBJEXT = o
 
 SOURCES = $(wildcard $(SRCDIR)/*.c)
-OBJECTS = $(patsubst $(SRCDIR)/%.$(SRCEXT), $(OBJDIR)/%.$(OBJEXT), $(SOURCES))
+OBJECTS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SOURCES))
 
 LIB = ft ftprintf
-LIBPATH = $(patsubst %, -L$(LIBDIR)/$(LIBDIR)%, $(LIB))
+#LIBNAME = $(addprefix lib, $(addsuffix .a, $(LIB)))
+LIBPATH = $(patsubst %, $(LIBDIR)/$(LIBDIR)%, $(LIB))
+LIBINC = $(addprefix -L, $(LIBPATH))
 LIBLINK = $(addprefix -l, $(LIB))
-
-INCLUDE = $(LIBPATH) $(LIBLINK) -lreadline $(MACOS)
-
-# use same as LIBPATH
-LFT = lib/libft/libft.a
-LPRINTF = lib/libftprintf/libftprintf.a
-
+INCLUDE =  $(LIBINC) $(LIBLINK) -lreadline $(MACOS)
 RM = rm -f
 
 all: $(BINDIR)/$(NAME)
 
 $(OBJDIR) :
-	mkdir -p $(OBJDIR)
-	mkdir -p $(BINDIR)
+	@mkdir -p $(OBJDIR)
+	@mkdir -p $(BINDIR)
 
-libraries : $(LFT) $(LPRINTF)
+libraries : lib/libft/libft.a lib/libftprintf/libftprintf.a
 
-$(LFT) :
+lib/libft/libft.a :
 	@make -C $(LIBDIR)/libft
 
-$(LPRINTF) :
+lib/libftprintf/libftprintf.a :
 	@make -C $(LIBDIR)/libftprintf
 
 clean :
@@ -59,11 +51,9 @@ re : clean all
 test:
 	$(CC) $(CFLAGS) test.c $(INCLUDE) -o a.out
 
-$(LIBRARIES)
-
 #Link
 $(BINDIR)/$(NAME) : $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $^ $(INCLUDE)
+	@$(CC) $(CFLAGS) -o $@ $^ $(INCLUDE)
 	@echo "\e[32m"$@" compiled successfully\e[0m"
 
 #Compile
