@@ -14,7 +14,13 @@
 # include <sys/wait.h>
 # include <signal.h>
 
+/* PARSER */
+
 int	ft_parser(char *line_read);
+int	ft_validity_check(char *line_read);
+
+/* UTILS */
+
 int	ft_perror(int err);
 
 #endif

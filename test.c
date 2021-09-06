@@ -1,8 +1,8 @@
-#include "./inc/minishell.h"
+#include "minishell.h"
 
 int	main(void)
 {
-	printf("TEST\t%d\n", getpid());
+	ft_printf("TEST\t%d\n", getpid());
 	pause ();
 	return (1);
 }
