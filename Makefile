@@ -1,9 +1,13 @@
 NAME = minishell
 CC = gcc
-CFLAGS = $(DEBUG) $(CWARN) -I./inc $(MACOS)
+CFLAGS = $(CWARN) -I./inc
 #CWARN = -Wall -Werror -Wextra
-#DEBUG = -g -fsanitize=address
 MACOS = -L~/homebrew/opt/readline/lib -I~/homebrew/opt/readline/include
+DEBUG = -g -fsanitize=address
+UNAME = $(shell uname)
+ifeq ($(UNAME), Darwin)
+CFLAGS += $(MACOS)
+endif
 RM = rm -f
 
 SRCDIR = src
@@ -14,6 +18,7 @@ LIBDIR = lib
 #SOURCES = $(wildcard $(SRCDIR)/*.c)
 SOURCES = $(shell find $(SRCDIR) -name "*.c")
 OBJECTS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SOURCES))
+TARGET = $(BINDIR)/$(NAME)
 
 LIB = ft ftprintf
 #LIBNAME = $(addprefix lib, $(addsuffix .a, $(LIB)))
@@ -22,7 +27,9 @@ LIBINC = $(addprefix -L, $(LIBPATH))
 LIBLINK = $(addprefix -l, $(LIB))
 INCLUDE = $(LIBINC) $(LIBLINK) -lreadline
 
-all: $(BINDIR)/$(NAME)
+all: $(TARGET)
+
+$(NAME) : all
 
 libraries : lib/libft/libft.a lib/libftprintf/libftprintf.a
 lib/libft/libft.a :
@@ -31,7 +38,7 @@ lib/libftprintf/libftprintf.a :
 	@make -C $(LIBDIR)/libftprintf
 
 clean :
-	@$(RM) $(BINDIR)/$(NAME) $(OBJECTS)
+	@$(RM) $(TARGET) $(OBJECTS)
 	@$(RM) $(TESTBIN)
 	@echo "\e[33m"$(NAME)" clean completed\e[0m"
 
@@ -43,6 +50,10 @@ fclean : clean
 
 re : clean all
 
+debug : CFLAGS += $(DEBUG)
+debug : re all
+	@echo "\e[31mDEBUG\e[0m"
+
 TESTBIN = bin/test.out
 $(TESTBIN) :
 	@mkdir -p $(dir $@)
@@ -50,7 +61,7 @@ $(TESTBIN) :
 	@echo "\e[34m"$@" compiled successfully\e[0m"
 
 #Link
-$(BINDIR)/$(NAME) : $(OBJECTS) | $(TESTBIN)
+$(TARGET) : $(OBJECTS) | $(TESTBIN)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -o $@ $^ $(INCLUDE)
 	@echo "\e[32m"$@" compiled successfully\e[0m"
