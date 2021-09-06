@@ -30,9 +30,6 @@ lib/libft/libft.a :
 lib/libftprintf/libftprintf.a :
 	@make -C $(LIBDIR)/libftprintf
 
-$(BINDIR) :
-	@mkdir -p $(BINDIR)
-
 clean :
 	@$(RM) $(BINDIR)/$(NAME) $(OBJECTS)
 	@$(RM) $(TESTBIN)
