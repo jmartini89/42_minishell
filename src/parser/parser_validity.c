@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "minishell.h"
 
 static int	ft_is_metachar(char c)
 {
@@ -34,7 +34,7 @@ static int	ft_is_valid_line(char *line)
 	return (0);
 }
 
-int	ft_parser(char *line_read)
+int	ft_validity_check(char *line_read)
 {
 	int	err;
 

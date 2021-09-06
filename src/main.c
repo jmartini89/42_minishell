@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "minishell.h"
 
 pid_t	g_pid;
 
@@ -53,7 +53,7 @@ int	main(void)
 
 		if (line_read && *line_read)
 		{
-			add_history(line_read);
+			add_history(line_read); // BUG : same command
 			if (ft_parser(line_read))
 			{
 				ft_printf("DEBUG ECHO : %s\n", line_read);
