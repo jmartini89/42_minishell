@@ -30,17 +30,17 @@ OBJS		= $(SRCS:.c=.o)
 $(NAME): $(OBJS)
 	@${LIB} $(NAME) $(OBJS)
 	@${RAN} ${NAME}
-	@echo "\e[32m"$(NAME)" compilation successfull\e[0m"
+#	@echo "\e[32m"$(NAME)" compilation successfull\e[0m"
 
 all: @$(NAME)
 
 clean:
 	@${RM} $(OBJS)
-	@echo "\e[33m"$(NAME)" clean completed\e[0m"
+#	@echo "\e[33m"$(NAME)" clean completed\e[0m"
 
 fclean: clean
 	@${RM} ${NAME}
-	@echo "\e[33m"$(NAME)" full clean completed\e[0m"
+#	@echo "\e[33m"$(NAME)" full clean completed\e[0m"
 
 re: fclean all
 

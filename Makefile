@@ -15,27 +15,24 @@ OBJDIR = obj
 BINDIR = bin
 LIBDIR = lib
 
-#SOURCES = $(wildcard $(SRCDIR)/*.c)
 SOURCES = $(shell find $(SRCDIR) -name "*.c")
 OBJECTS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SOURCES))
 TARGET = $(BINDIR)/$(NAME)
 
 LIB = ft ftprintf
-#LIBNAME = $(addprefix lib, $(addsuffix .a, $(LIB)))
+LIBNAME = $(addprefix lib, $(addsuffix .a, $(LIB)))
+LIBSTAT = $(addprefix lib/,$(LIBNAME))
 LIBPATH = $(patsubst %, $(LIBDIR)/$(LIBDIR)%, $(LIB))
-LIBINC = $(addprefix -L, $(LIBPATH))
+LIBINC = $(addprefix -L, $(LIBDIR))
 LIBLINK = $(addprefix -l, $(LIB))
 INCLUDE = $(LIBINC) $(LIBLINK) -lreadline
 
-all: $(TARGET)
+all : $(TARGET)
 
 $(NAME) : all
 
-libraries : lib/libft/libft.a lib/libftprintf/libftprintf.a
-lib/libft/libft.a :
-	@make -C $(LIBDIR)/libft
-lib/libftprintf/libftprintf.a :
-	@make -C $(LIBDIR)/libftprintf
+$(LIBSTAT) :
+	@make -s -C $(LIBDIR) -f lib.mk
 
 clean :
 	@$(RM) $(TARGET) $(OBJECTS)
@@ -43,10 +40,9 @@ clean :
 	@echo "\e[33m"$(NAME)" clean completed\e[0m"
 
 fclean : clean
-	@make fclean -C $(LIBDIR)/libft
-	@make fclean -C $(LIBDIR)/libftprintf
+	@make -s clean -C $(LIBDIR) -f lib.mk
 	@$(RM) -r $(OBJDIR) $(BINDIR)
-	@echo "\e[33m"$(NAME)" full clean completed\e[0m"
+	@echo "\e[33mfull clean completed\e[0m"
 
 re : clean all
 
@@ -67,7 +63,7 @@ $(TARGET) : $(OBJECTS) | $(TESTBIN)
 	@echo "\e[32m"$@" compiled successfully\e[0m"
 
 #Compile
-$(OBJECTS) : $(OBJDIR)/%.o : $(SRCDIR)/%.c | libraries
+$(OBJECTS) : $(OBJDIR)/%.o : $(SRCDIR)/%.c | $(LIBSTAT)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "\e[34m"$<" compiled successfully\e[0m"
