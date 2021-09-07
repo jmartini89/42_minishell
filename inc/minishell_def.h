@@ -1,5 +1,6 @@
 #ifndef MINISHELL_DEF
 # define MINISHELL_DEF
+# define M_SHELL_NAME "miniscell"
 
 enum	e_err {
 	ERR_UNDEF,
