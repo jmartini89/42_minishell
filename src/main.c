@@ -28,8 +28,6 @@ int	main(void)
 	rl_catch_signals = 0;
 	signal(SIGINT, ft_sig_int);
 	signal(SIGQUIT, ft_sig_quit);
-
-	char	**split_test;
 	while (1)
 	{
 		g_pid = getpid();
@@ -56,7 +54,8 @@ int	main(void)
 			add_history(line_read); // BUG : same command
 			if (ft_parser(line_read))
 			{
-				ft_printf("DEBUG ECHO : %s\n", line_read);
+				ft_printf(M_SHELL_NAME" echo : %s\n", line_read);
+				/*
 				g_pid = fork();
 				if (!g_pid)
 				{
@@ -73,6 +72,7 @@ int	main(void)
 					while (waitpid(-1, &wstatus, 0) > 0)
 						usleep (10);
 				}
+				*/
 			}
 		}
 	}

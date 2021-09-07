@@ -1,7 +1,8 @@
 NAME = minishell
 CC = gcc
-CFLAGS = $(CWARN) -I./inc
+CFLAGS = $(CWARN) $(HEADERS)
 #CWARN = -Wall -Werror -Wextra
+HEADERS = -I./inc $(addprefix -I./, $(LIBPATH))
 MACOS = -L~/homebrew/opt/readline/lib -I~/homebrew/opt/readline/include
 DEBUG = -g -fsanitize=address
 UNAME = $(shell uname)
