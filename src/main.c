@@ -40,7 +40,7 @@ int	main(void)
 			line_read = NULL;
 		}
 
-		line_read = readline("\e[32mminishell$ \e[0m");
+		line_read = readline("\e[32m"M_SHELL_NAME"\e[0m$ ");
 
 		if (line_read == NULL ||
 			(ft_strlen(line_read) == 4 && !ft_memcmp(line_read, "exit", 4)))
