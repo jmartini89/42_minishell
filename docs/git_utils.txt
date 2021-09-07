@@ -1,0 +1,3 @@
+git remote prune [remote]
+git fetch
+git branch -va
