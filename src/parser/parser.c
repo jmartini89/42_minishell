@@ -53,9 +53,16 @@ static	void	ft_args_finder(char *line_read)
 		if(single_quotes == -1 || double_quotes == -1)
 			quotes_status = -1;
 		else
-			quotes_status = 1;
+			quotes_status = 1;	
+		if(line_read[i] == '|' && !arg_start)
+		{
+			arg_start = &line_read[i];
+			arg_end = &line_read[i];
+		}
 		if (!ft_is_space_tab(line_read[i]) && !arg_start)
 			arg_start = &line_read[i];
+		if(line_read[i + 1] == '|' && arg_start && quotes_status == 1 && !arg_end)
+			arg_end = &line_read[i];
 		if (ft_is_space_tab(line_read[i]) && arg_start && !arg_end && quotes_status == 1)
 			arg_end = &line_read[i - 1];
 		if (line_read[i + 1] == '\0' && !ft_is_space_tab(line_read[i]))
