@@ -1,13 +1,5 @@
 #include "minishell.h"
 
-static int	ft_is_metachar(char c)
-{
-	if (c == '\\' || c == '|' || c == '&' || c == ';'
-		|| c == '(' || c == ')' || c == '<' || c == '>')
-		return (1);
-	return (0);
-}
-
 static int	ft_is_valid_line(char *line)
 {
 	int	single_quotes;
