@@ -13,6 +13,11 @@ static	char	**ft_args_assembler(char *start, char *end)
 	char	*output;
 	int		len;
 
+	if(*start == '\'' || *start == '\"')
+	{
+		start++;
+		end--;
+	}
 	len = end - start + 1;
 	output = ft_calloc(len + 1, sizeof(*output));
 	ft_memcpy(output, start, len);
@@ -38,16 +43,20 @@ static	void	ft_args_finder(char *line_read)
 	double_quotes = 1;
 	quotes_status = 1;
 	i = -1;
-	//	QUOTES	DOLLAR	PIPE
+	//	DOLLAR	PIPE
 	while (line_read[++i]) // read until arg_end then assemble
 	{
+		if (line_read[i] == '\"' && single_quotes == 1)
+			double_quotes *= -1;
+		if (line_read[i] == '\'' && double_quotes == 1)
+			single_quotes *= -1;
+		if(single_quotes == -1 || double_quotes == -1)
+			quotes_status = -1;
+		else
+			quotes_status = 1;
 		if (!ft_is_space_tab(line_read[i]) && !arg_start)
-		{
-			// if quotes start -> i++ && update quotes
 			arg_start = &line_read[i];
-		}
-		/* ! if quotes end ! */
-		if (ft_is_space_tab(line_read[i]) && arg_start && !arg_end && quotes_status)
+		if (ft_is_space_tab(line_read[i]) && arg_start && !arg_end && quotes_status == 1)
 			arg_end = &line_read[i - 1];
 		if (line_read[i + 1] == '\0' && !ft_is_space_tab(line_read[i]))
 			arg_end = &line_read[i];
