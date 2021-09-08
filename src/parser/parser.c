@@ -1,5 +1,13 @@
 #include "minishell.h"
 
+static void	ft_env_test(char *line)
+{
+	char	*env_test;
+	env_test = getenv(line);
+	if (env_test)
+		ft_printf("ENV TEST : %s\n", env_test);
+}
+
 static	char	**ft_args_assembler(char *start, char *end)
 {
 	char	*output;
@@ -9,12 +17,7 @@ static	char	**ft_args_assembler(char *start, char *end)
 	output = ft_calloc(len + 1, sizeof(*output));
 	ft_memcpy(output, start, len);
 	ft_printf("ARGS_ASSEMBLER : %s\n", output);
-	/*
-	char	*env_test;
-	env_test = getenv(output);
-	if (env_test)
-		ft_printf("%s\n", env_test);
-	*/
+	ft_env_test(output);
 	free (output);
 	return (NULL);
 }
