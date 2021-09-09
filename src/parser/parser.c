@@ -8,10 +8,10 @@ static void	ft_env_test(char *line)
 		ft_printf("ENV TEST : %s\n", env_test);
 }
 
-/* 
-** implement translation layers
-** QUOTES
-** DOLLAR
+/*
+** TODO : implement translation layers :
+** * QUOTES
+** * DOLLAR
 */
 static	char	**ft_args_assembler(char *start, char *end)
 {
