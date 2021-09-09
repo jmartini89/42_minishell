@@ -8,16 +8,16 @@ static void	ft_env_test(char *line)
 		ft_printf("ENV TEST : %s\n", env_test);
 }
 
+/* 
+** implement translation layers
+** QUOTES
+** DOLLAR
+*/
 static	char	**ft_args_assembler(char *start, char *end)
 {
 	char	*output;
 	int		len;
 
-	if(*start == '\'' || *start == '\"')
-	{
-		start++;
-		end--;
-	}
 	len = end - start + 1;
 	output = ft_calloc(len + 1, sizeof(*output));
 	ft_memcpy(output, start, len);
@@ -43,25 +43,24 @@ static	void	ft_args_finder(char *line_read)
 	double_quotes = 1;
 	quotes_status = 1;
 	i = -1;
-	//	DOLLAR	PIPE
-	while (line_read[++i]) // read until arg_end then assemble
+	while (line_read[++i])
 	{
-		if (line_read[i] == '\"' && single_quotes == 1)
-			double_quotes *= -1;
-		if (line_read[i] == '\'' && double_quotes == 1)
-			single_quotes *= -1;
-		if(single_quotes == -1 || double_quotes == -1)
-			quotes_status = -1;
+		if (line_read[i] == '\"' && single_quotes)
+			double_quotes *= 0;
+		if (line_read[i] == '\'' && double_quotes)
+			single_quotes *= 0;
+		if (!single_quotes || !double_quotes)
+			quotes_status = 0;
 		else
-			quotes_status = 1;	
-		if(line_read[i] == '|' && !arg_start)
+			quotes_status = 1;
+		if (line_read[i] == '|' && !arg_start)
 		{
 			arg_start = &line_read[i];
 			arg_end = &line_read[i];
 		}
 		if (!ft_is_space_tab(line_read[i]) && !arg_start)
 			arg_start = &line_read[i];
-		if(line_read[i + 1] == '|' && arg_start && quotes_status == 1 && !arg_end)
+		if (line_read[i + 1] == '|' && arg_start && quotes_status == 1 && !arg_end)
 			arg_end = &line_read[i];
 		if (ft_is_space_tab(line_read[i]) && arg_start && !arg_end && quotes_status == 1)
 			arg_end = &line_read[i - 1];
