@@ -48,7 +48,7 @@ fclean : clean
 re : clean all
 
 debug : CFLAGS += $(DEBUG)
-debug : re all
+debug : all
 	@echo "\e[31mDEBUG\e[0m"
 
 TESTBIN = bin/test.out

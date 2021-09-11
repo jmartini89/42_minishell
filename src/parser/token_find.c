@@ -10,6 +10,7 @@ static void	ft_token_init(t_token *tkn)
 	tkn->quotes_status = QTS_CLOSE;
 }
 
+/* WIP */
 static void	ft_token_quotes_address(t_token *tkn, char *c, int status)
 {
 	int		len;
@@ -18,10 +19,11 @@ static void	ft_token_quotes_address(t_token *tkn, char *c, int status)
 	tmp = NULL;
 	if (!tkn->quotes)
 		tkn->quotes = ft_calloc(1, sizeof(*tkn->quotes));
+	/*!!! TMP IS NOT ALLOCATED !!!*/
 	len = -1;
 	while (tkn->quotes[++len])
 		tmp[len] = tkn->quotes[len];
-	tkn->quotes = ft_calloc(len + 1, sizeof(*tkn->quotes));
+	tkn->quotes = ft_calloc(len + 2, sizeof(*tkn->quotes));
 	len = -1;
 	while (tkn->quotes[++len])
 	{
@@ -29,12 +31,8 @@ static void	ft_token_quotes_address(t_token *tkn, char *c, int status)
 		free (tmp[len]);
 	}
 	free (tmp);
-
-/* TEST */
-	if (status == QTS_OPEN)
-		ft_printf("QTS_OPEN\t%p\n", c);
-	if (status == QTS_CLOSE)
-		ft_printf("QTS_CLOSE\t%p\n", c);
+	tkn->quotes[len] = c;
+	//ft_printf("PRE\t%p\n%p\n", c, tkn->quotes[len + 1]);
 }
 
 static void	ft_token_quotes(t_token *tkn, char *c)
