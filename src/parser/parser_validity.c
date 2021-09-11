@@ -1,27 +1,24 @@
 #include "minishell.h"
 
+/* TODO : OPERATOR REDIRECTION VALIDITY */
 static int	ft_is_valid_line(char *line)
 {
-	int	s_qts;
-	int	d_qts;
-	int	i;
+	t_token	tkn_valid;
+	int		i;
 
+	ft_token_init_quotes(&tkn_valid);
 	i = -1;
-	s_qts = 1;
-	d_qts = 1;
 	while (line[++i])
 	{
-		if (line[i] == '\"' && s_qts == 1)
-			d_qts *= -1;
-		if (line[i] == '\'' && d_qts == 1)
-			s_qts *= -1;
-		if ((s_qts == 1 && d_qts == 1
+		ft_token_quotes(&tkn_valid, &line[i]);
+		if ((tkn_valid.s_qts == QTS_CLOSE
+				&& tkn_valid.d_qts == QTS_CLOSE
 				&& ft_is_metachar(line[i]))
-			|| (d_qts == -1 && line[i] == '\\'
+			|| (tkn_valid.d_qts == QTS_OPEN && line[i] == '\\'
 				&& line[i + 1] && line[i + 1] == '\"'))
 			return (ERR_SYNTAX_CHAR);
 	}
-	if (d_qts == -1 || s_qts == -1)
+	if (tkn_valid.quotes_status == QTS_OPEN)
 		return (ERR_SYNTAX_QUOTES);
 	return (0);
 }
