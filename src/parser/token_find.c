@@ -10,29 +10,24 @@ static void	ft_token_init(t_token *tkn)
 	tkn->quotes_status = QTS_CLOSE;
 }
 
-/* WIP */
 static void	ft_token_quotes_address(t_token *tkn, char *c, int status)
 {
 	int		len;
 	char	**tmp;
 
-	tmp = NULL;
 	if (!tkn->quotes)
 		tkn->quotes = ft_calloc(1, sizeof(*tkn->quotes));
-	/*!!! TMP IS NOT ALLOCATED !!!*/
+	tmp = tkn->quotes;
 	len = -1;
 	while (tkn->quotes[++len])
 		tmp[len] = tkn->quotes[len];
 	tkn->quotes = ft_calloc(len + 2, sizeof(*tkn->quotes));
 	len = -1;
-	while (tkn->quotes[++len])
-	{
+	while (tmp[++len])
 		tkn->quotes[len] = tmp[len];
-		free (tmp[len]);
-	}
 	free (tmp);
 	tkn->quotes[len] = c;
-	//ft_printf("PRE\t%p\n%p\n", c, tkn->quotes[len + 1]);
+	ft_printf("QTS DEBUG FIND\t: %d\t%p\n", len, tkn->quotes[len]);
 }
 
 static void	ft_token_quotes(t_token *tkn, char *c)
