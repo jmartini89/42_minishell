@@ -16,5 +16,6 @@ typedef struct s_token
 int		ft_parser(char *line_read);
 int		ft_validity_check(char *line_read);
 void	ft_token(char *line);
+void	ft_token_assembler(t_token *tkn);
 
 #endif
