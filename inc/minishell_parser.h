@@ -3,6 +3,10 @@
 # define PIPE 1
 # define REDIR_R 2
 # define REDIR_L 3
+# define QTS_SINGLE 1
+# define QTS_DOUBLE 2
+# define QTS_ADDR_START 1
+# define QTS_ADDR_END 2
 
 typedef struct s_token
 {
@@ -11,10 +15,7 @@ typedef struct s_token
 	int		s_qts;
 	int		d_qts;
 	int		quotes_status;
-	char	*s_qts_start;
-	char	*s_qts_end;
-	char	*d_qts_start;
-	char	*d_qts_end;
+	char	**quotes;
 }	t_token;
 
 int		ft_parser(char *line_read);

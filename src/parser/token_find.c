@@ -4,32 +4,35 @@ static void	ft_token_init(t_token *tkn)
 {
 	tkn->start = NULL;
 	tkn->end = NULL;
-	tkn->s_qts_start = NULL;
-	tkn->s_qts_end = NULL;
-	tkn->d_qts_start = NULL;
-	tkn->d_qts_end = NULL;
+	tkn->quotes = NULL;
 	tkn->s_qts = 1;
 	tkn->d_qts = 1;
 	tkn->quotes_status = 1;
 }
 
+static void	ft_token_quotes_address(t_token *tkn, int status)
+{
+	if (status == QTS_ADDR_START)
+		;
+}
+
 static void	ft_token_quotes(t_token *tkn, char *c)
 {
-	if (*c == '\"' && tkn->s_qts == 1)
-	{
-		tkn->d_qts *= -1;
-		if (tkn->d_qts == -1)
-			tkn->d_qts_start = c;
-		else
-			tkn->d_qts_end = c;
-	}
-	if (*c == '\'' && tkn->d_qts == 1)
+	if (ft_is_quote(*c) == QTS_SINGLE && tkn->d_qts == 1)
 	{
 		tkn->s_qts *= -1;
 		if (tkn->s_qts == -1)
-			tkn->s_qts_start = c;
+			ft_token_quotes_address(tkn, QTS_ADDR_START);
 		else
-			tkn->s_qts_end = c;
+			ft_token_quotes_address(tkn, QTS_ADDR_END);
+	}
+	if (ft_is_quote(*c) == QTS_DOUBLE && tkn->s_qts == 1)
+	{
+		tkn->d_qts *= -1;
+		if (tkn->d_qts == -1)
+			ft_token_quotes_address(tkn, QTS_ADDR_START);
+		else
+			ft_token_quotes_address(tkn, QTS_ADDR_END);
 	}
 	if (tkn->s_qts == -1 || tkn->d_qts == -1)
 		tkn->quotes_status = -1;
