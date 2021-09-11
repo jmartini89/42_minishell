@@ -4,19 +4,34 @@ static void	ft_token_init(t_token *tkn)
 {
 	tkn->start = NULL;
 	tkn->end = NULL;
-	tkn->single_quotes = 1;
-	tkn->double_quotes = 1;
+	tkn->s_qts_start = NULL;
+	tkn->s_qts_end = NULL;
+	tkn->d_qts_start = NULL;
+	tkn->d_qts_end = NULL;
+	tkn->s_qts = 1;
+	tkn->d_qts = 1;
 	tkn->quotes_status = 1;
 }
 
-/* TODO : IMPLEMENT ADDRESS SAVE */
 static void	ft_token_quotes(t_token *tkn, char *c)
 {
-	if (*c == '\"' && tkn->single_quotes == 1)
-		tkn->double_quotes *= -1;
-	if (*c == '\'' && tkn->double_quotes == 1)
-		tkn->single_quotes *= -1;
-	if (tkn->single_quotes == -1 || tkn->double_quotes == -1)
+	if (*c == '\"' && tkn->s_qts == 1)
+	{
+		tkn->d_qts *= -1;
+		if (tkn->d_qts == -1)
+			tkn->d_qts_start = c;
+		else
+			tkn->d_qts_end = c;
+	}
+	if (*c == '\'' && tkn->d_qts == 1)
+	{
+		tkn->s_qts *= -1;
+		if (tkn->s_qts == -1)
+			tkn->s_qts_start = c;
+		else
+			tkn->s_qts_end = c;
+	}
+	if (tkn->s_qts == -1 || tkn->d_qts == -1)
 		tkn->quotes_status = -1;
 	else
 		tkn->quotes_status = 1;

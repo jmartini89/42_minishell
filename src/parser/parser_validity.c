@@ -2,26 +2,26 @@
 
 static int	ft_is_valid_line(char *line)
 {
-	int	single_quotes;
-	int	double_quotes;
+	int	s_qts;
+	int	d_qts;
 	int	i;
 
 	i = -1;
-	single_quotes = 1;
-	double_quotes = 1;
+	s_qts = 1;
+	d_qts = 1;
 	while (line[++i])
 	{
-		if (line[i] == '\"' && single_quotes == 1)
-			double_quotes *= -1;
-		if (line[i] == '\'' && double_quotes == 1)
-			single_quotes *= -1;
-		if ((single_quotes == 1 && double_quotes == 1
+		if (line[i] == '\"' && s_qts == 1)
+			d_qts *= -1;
+		if (line[i] == '\'' && d_qts == 1)
+			s_qts *= -1;
+		if ((s_qts == 1 && d_qts == 1
 				&& ft_is_metachar(line[i]))
-			|| (double_quotes == -1 && line[i] == '\\'
+			|| (d_qts == -1 && line[i] == '\\'
 				&& line[i + 1] && line[i + 1] == '\"'))
 			return (ERR_SYNTAX_CHAR);
 	}
-	if (double_quotes == -1 || single_quotes == -1)
+	if (d_qts == -1 || s_qts == -1)
 		return (ERR_SYNTAX_QUOTES);
 	return (0);
 }

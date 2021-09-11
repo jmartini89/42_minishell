@@ -8,9 +8,13 @@ typedef struct s_token
 {
 	char	*start;
 	char	*end;
-	int		single_quotes;
-	int		double_quotes;
+	int		s_qts;
+	int		d_qts;
 	int		quotes_status;
+	char	*s_qts_start;
+	char	*s_qts_end;
+	char	*d_qts_start;
+	char	*d_qts_end;
 }	t_token;
 
 int		ft_parser(char *line_read);
