@@ -5,6 +5,8 @@
 # define REDIR_L 3
 # define QTS_SINGLE 1
 # define QTS_DOUBLE 2
+# define QTS_OPEN -1
+# define QTS_CLOSE 1
 # define QTS_ADDR_START 1
 # define QTS_ADDR_END 2
 

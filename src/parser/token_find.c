@@ -5,39 +5,58 @@ static void	ft_token_init(t_token *tkn)
 	tkn->start = NULL;
 	tkn->end = NULL;
 	tkn->quotes = NULL;
-	tkn->s_qts = 1;
-	tkn->d_qts = 1;
-	tkn->quotes_status = 1;
+	tkn->s_qts = QTS_CLOSE;
+	tkn->d_qts = QTS_CLOSE;
+	tkn->quotes_status = QTS_CLOSE;
 }
 
-static void	ft_token_quotes_address(t_token *tkn, int status)
+static void	ft_token_quotes_address(t_token *tkn, char *c, int status)
 {
-	if (status == QTS_ADDR_START)
-		;
+	int		len;
+	char	**tmp;
+
+	tmp = NULL;
+	if (!tkn->quotes)
+		tkn->quotes = ft_calloc(1, sizeof(*tkn->quotes));
+	len = -1;
+	while (tkn->quotes[++len])
+		tmp[len] = tkn->quotes[len];
+	tkn->quotes = ft_calloc(len + 1, sizeof(*tkn->quotes));
+	len = -1;
+	while (tkn->quotes[++len])
+	{
+		tkn->quotes[len] = tmp[len];
+		free (tmp[len]);
+	}
+	free (tmp);
+
+/* TEST */
+	if (status == QTS_OPEN)
+		ft_printf("QTS_OPEN\t%p\n", c);
+	if (status == QTS_CLOSE)
+		ft_printf("QTS_CLOSE\t%p\n", c);
 }
 
 static void	ft_token_quotes(t_token *tkn, char *c)
 {
-	if (ft_is_quote(*c) == QTS_SINGLE && tkn->d_qts == 1)
+	int	quote;
+	int	status;
+
+	status = tkn->s_qts * tkn->d_qts;
+	quote = ft_is_quote(*c);
+	if (quote)
 	{
-		tkn->s_qts *= -1;
-		if (tkn->s_qts == -1)
-			ft_token_quotes_address(tkn, QTS_ADDR_START);
+		if (quote == QTS_SINGLE && tkn->d_qts == QTS_CLOSE)
+			tkn->s_qts *= -1;
+		if (quote == QTS_DOUBLE && tkn->s_qts == QTS_CLOSE)
+			tkn->d_qts *= -1;
+		if (tkn->s_qts == QTS_OPEN || tkn->d_qts == QTS_OPEN)
+			tkn->quotes_status = QTS_OPEN;
 		else
-			ft_token_quotes_address(tkn, QTS_ADDR_END);
+			tkn->quotes_status = QTS_CLOSE;
+		if (status != tkn->s_qts * tkn->d_qts)
+			ft_token_quotes_address(tkn, c, tkn->quotes_status);
 	}
-	if (ft_is_quote(*c) == QTS_DOUBLE && tkn->s_qts == 1)
-	{
-		tkn->d_qts *= -1;
-		if (tkn->d_qts == -1)
-			ft_token_quotes_address(tkn, QTS_ADDR_START);
-		else
-			ft_token_quotes_address(tkn, QTS_ADDR_END);
-	}
-	if (tkn->s_qts == -1 || tkn->d_qts == -1)
-		tkn->quotes_status = -1;
-	else
-		tkn->quotes_status = 1;
 }
 
 /* TODO : OPERATOR PROPER IMPLEMENTATION */
@@ -51,10 +70,10 @@ static void	ft_token_start_end(t_token *tkn, char *c)
 	if (!ft_is_space_tab(*c) && !tkn->start)
 		tkn->start = c;
 	if (ft_is_operator(*(c + 1))
-		&& tkn->start && !tkn->end && tkn->quotes_status == 1)
+		&& tkn->start && !tkn->end && tkn->quotes_status == QTS_CLOSE)
 		tkn->end = c;
 	if (ft_is_space_tab(*c)
-		&& tkn->start && !tkn->end && tkn->quotes_status == 1)
+		&& tkn->start && !tkn->end && tkn->quotes_status == QTS_CLOSE)
 		tkn->end = c - 1;
 	if (*(c + 1) == '\0' && !ft_is_space_tab(*c))
 		tkn->end = c;

@@ -5,9 +5,11 @@ static void	ft_token_translation_env(t_token *tkn)
 	//
 }
 
+/* !!! FREE tkn->quotes !!! */
 static void	ft_token_translation_quotes(t_token *tkn)
 {
-	//
+	if (tkn->quotes)
+		free (tkn->quotes);
 }
 
 void	ft_token_assembler(t_token *tkn)
