@@ -54,8 +54,8 @@ int	main(void)
 			add_history(line_read); // BUG : same command
 			if (ft_parser(line_read))
 			{
-				ft_printf(M_SHELL_NAME" echo : %s\n", line_read);
 				/*
+				ft_printf(M_SHELL_NAME" echo : %s\n", line_read);
 				g_pid = fork();
 				if (!g_pid)
 				{
