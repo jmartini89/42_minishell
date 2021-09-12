@@ -19,11 +19,11 @@ void	ft_token_init_quotes(t_token *tkn)
 	tkn->quotes_status = QTS_CLOSE;
 }
 
-void	ft_token_quotes(t_token *tkn, char *c)
+int	ft_token_quotes(t_token *tkn, char c)
 {
 	int	quote;
 
-	quote = ft_is_quote(*c);
+	quote = ft_is_quote(c);
 	if (quote)
 	{
 		if (quote == QTS_SINGLE && tkn->d_qts == QTS_CLOSE)

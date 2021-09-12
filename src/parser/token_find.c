@@ -29,7 +29,7 @@ void	ft_token(char *line)
 	i = -1;
 	while (line[++i])
 	{
-		ft_token_quotes(&tkn, &line[i]);
+		ft_token_quotes(&tkn, line[i]);
 		ft_token_start_end(&tkn, &line[i]);
 		if (tkn.end)
 		{

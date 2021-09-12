@@ -10,7 +10,7 @@ static int	ft_is_valid_line(char *line)
 	i = -1;
 	while (line[++i])
 	{
-		ft_token_quotes(&tkn_valid, &line[i]);
+		ft_token_quotes(&tkn_valid, line[i]);
 		if ((tkn_valid.s_qts == QTS_CLOSE
 				&& tkn_valid.d_qts == QTS_CLOSE
 				&& ft_is_metachar(line[i]))
