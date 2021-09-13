@@ -23,12 +23,19 @@ static int	ft_is_valid_line(char *line)
 	return (0);
 }
 
-int	ft_validity_check(char *line_read)
+static int	ft_parser_validity(char *line_read)
 {
 	int	err;
 
 	err = ft_is_valid_line(line_read);
 	if (err)
 		return (ft_perror(err));
+	return (1);
+}
+
+int	ft_parser(char *line_read)
+{
+	if (!ft_parser_validity(line_read))
+		return (0);
 	return (1);
 }
