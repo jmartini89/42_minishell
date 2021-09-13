@@ -45,7 +45,7 @@ static void	ft_token_start_end(t_token *tkn, char *c)
 		tkn->end = c;
 }
 
-void	ft_token_find (t_token *tkn, char *c)
+void	ft_token_find(t_token *tkn, char *c)
 {
 	ft_token_quotes(tkn, *c);
 	ft_token_start_end(tkn, c);

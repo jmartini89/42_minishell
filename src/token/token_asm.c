@@ -40,17 +40,17 @@ static int	ft_token_translation_quotes_len(t_token *tkn)
 		}
 		addr++;
 	}
-	//ft_printf("%d\n", len);
 	return (len);
 }
 
-static void	ft_token_translation_quotes(t_token *tkn)
+static void	*ft_token_translation_quotes(t_token *tkn)
 {
 	char	*addr;
 	char	*tmp;
 	char	*output;
 	int		i;
 
+	output = NULL;
 	output = ft_calloc(
 			ft_token_translation_quotes_len(tkn) + 1, sizeof(*output));
 	addr = tkn->start;
@@ -79,13 +79,16 @@ static void	ft_token_translation_quotes(t_token *tkn)
 		}
 		addr++;
 	}
-	ft_printf("ARGS_ASSEMBLER : %s\n", output);
-	free (output);
-	output = NULL;
+	return (output);
 }
 
 void	ft_token_assembler(t_token *tkn)
 {
+	char	*tmp;
+
+	tmp = NULL;
 	ft_token_init_quotes(tkn);
-	ft_token_translation_quotes(tkn);
+	tmp = ft_token_translation_quotes(tkn);
+	ft_printf("%s\n", tmp);
+	free (tmp);
 }

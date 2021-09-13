@@ -1,5 +1,5 @@
-#ifndef MINISHELL_DEF_H
-# define MINISHELL_DEF_H
+#ifndef MINISHELL_ERR_H
+# define MINISHELL_ERR_H
 
 enum	e_err {
 	ERR_UNDEF,
