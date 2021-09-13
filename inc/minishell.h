@@ -1,9 +1,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
-/* PROJECT */
+/* SUB_HEADERS */
 # include "minishell_err.h"
 # include "minishell_utils.h"
-# include "minishell_parser.h"
+# include "minishell_token.h"
 /* LOCAL LIBRARIES*/
 # include "libft.h"
 # include "ft_printf.h"

@@ -14,7 +14,8 @@ int	ft_token(char *line)
 		ft_token_find(&tkn, &line[i]);
 		if (tkn.end)
 		{
-			ft_token_assembler(&tkn);
+			if (!ft_token_assembler(&tkn))
+				return (ft_perror(ERR_SYS_MALLOC));
 			ft_token_init_all(&tkn);
 		}
 	}

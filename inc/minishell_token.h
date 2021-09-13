@@ -33,7 +33,7 @@ void	ft_token_find(t_token *tkn, char *c);
 int		ft_token_quotes(t_token *tkn, char c);
 
 /* TOKEN_ASM*/
-void	ft_token_assembler(t_token *tkn);
+int		ft_token_assembler(t_token *tkn);
 
 /* TOKEN_UTILS */
 int		ft_is_metachar(char c);

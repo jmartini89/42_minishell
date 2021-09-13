@@ -1,26 +1,36 @@
 #include "minishell.h"
 
-static char	*ft_env_test(t_token *tkn, char *addr)
+static char	*ft_token_pre_env(t_token *tkn, char *addr)
 {
 	int		len;
 	char	*tmp;
-	char	*env_test;
 
-	len = 0;
-	tmp = NULL;
 	addr++;
-	while (addr[len] && &addr[len] <= tkn->end && !ft_is_quote(addr[len]))
+	tmp = NULL;
+	len = 0;
+	while (&addr[len] <= tkn->end && !ft_is_quote(addr[len]))
 		len++;
 	tmp = ft_calloc(len + 1, sizeof(*tmp));
+	if (!tmp)
+		return (0);
 	ft_memcpy(tmp, addr, len);
-	env_test = getenv(tmp);
-	free (tmp);
-	return (env_test);
+	return (tmp);
 }
 
-static int	ft_token_translation_quotes_len(t_token *tkn)
+static char	*ft_token_env(t_token *tkn, char *pre_env)
+{
+	char	*env;
+
+	env = getenv(pre_env);
+	free (pre_env);
+	return (env);
+}
+
+static int	ft_token_len(t_token *tkn)
 {
 	char	*addr;
+	char	*pre_env;
+	char	*env;
 	int		len;
 
 	addr = tkn->start;
@@ -31,7 +41,11 @@ static int	ft_token_translation_quotes_len(t_token *tkn)
 		{
 			if (*addr == '$' && tkn->s_qts == QTS_CLOSE)
 			{
-				len += ft_strlen(ft_env_test(tkn, addr));
+				pre_env = ft_token_pre_env(tkn, addr);
+				if (!pre_env)
+					return (0);
+				env = ft_token_env(tkn, pre_env);
+				len += ft_strlen(env);
 				while (*addr && !ft_is_quote(*addr))
 					addr++;
 			}
@@ -43,16 +57,18 @@ static int	ft_token_translation_quotes_len(t_token *tkn)
 	return (len);
 }
 
-static void	*ft_token_translation_quotes(t_token *tkn)
+static char	*ft_token_translate(t_token *tkn)
 {
 	char	*addr;
-	char	*tmp;
-	char	*output;
+	char	*token;
+	char	*pre_env;
+	char	*env;
 	int		i;
 
-	output = NULL;
-	output = ft_calloc(
-			ft_token_translation_quotes_len(tkn) + 1, sizeof(*output));
+	token = NULL;
+	token = ft_calloc(ft_token_len(tkn) + 1, sizeof(*token));
+	if (!token)
+		return (0);
 	addr = tkn->start;
 	i = 0;
 	while (addr <= tkn->end)
@@ -61,34 +77,36 @@ static void	*ft_token_translation_quotes(t_token *tkn)
 		{
 			if (*addr == '$' && tkn->s_qts == QTS_CLOSE)
 			{
-				tmp = ft_env_test(tkn, addr);
-				while (tmp && *tmp)
+				pre_env = ft_token_pre_env(tkn, addr);
+				if (!pre_env)
+					return (0);
+				env = ft_token_env(tkn, pre_env);
+				while (env && *env)
 				{
-					output[i] = *tmp;
-					i++;
-					tmp++;
+					token[i++] = *env;
+					env++;
 				}
 				while (*addr && !ft_is_quote(*addr))
 					addr++;
 			}
 			else
-			{
-				output[i] = *addr;
-				i++;
-			}
+				token[i++] = *addr;
 		}
 		addr++;
 	}
-	return (output);
+	return (token);
 }
 
-void	ft_token_assembler(t_token *tkn)
+int	ft_token_assembler(t_token *tkn)
 {
 	char	*tmp;
 
 	tmp = NULL;
 	ft_token_init_quotes(tkn);
-	tmp = ft_token_translation_quotes(tkn);
+	tmp = ft_token_translate(tkn);
+	if (!tmp)
+		return (0);
 	ft_printf("%s\n", tmp);
 	free (tmp);
+	return (1);
 }
