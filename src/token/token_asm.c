@@ -75,7 +75,7 @@ static char	*ft_token_translate(t_token *tkn)
 	{
 		if (!ft_token_quotes(tkn, *addr))
 		{
-			if (*addr == '$' && tkn->s_qts == QTS_CLOSE)
+			if (*addr == '$' && tkn->s_qts == QTS_CLOSE) // PARAMETER EXPANSION
 			{
 				pre_env = ft_token_pre_env(tkn, addr);
 				if (!pre_env)

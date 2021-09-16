@@ -77,8 +77,8 @@ int	main(void)
 				*/
 			}
 			else if (tkn_status < 0)
-				return (0);
+				return (EXIT_FAILURE);
 		}
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }
