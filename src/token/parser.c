@@ -11,11 +11,9 @@ static int	ft_is_valid_line(char *line)
 	while (line[++i])
 	{
 		ft_token_quotes(&parser, line[i]);
-		if ((parser.s_qts == QTS_CLOSE
+		if (parser.s_qts == QTS_CLOSE
 				&& parser.d_qts == QTS_CLOSE
 				&& ft_is_metachar(line[i]))
-			|| (parser.d_qts == QTS_OPEN && line[i] == '\\'
-				&& line[i + 1] && line[i + 1] == '\"'))
 			return (ERR_SYNTAX_CHAR);
 	}
 	if (parser.quotes_status == QTS_OPEN)
