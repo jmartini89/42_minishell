@@ -5,7 +5,7 @@ int	ft_token(char *line)
 	t_token	tkn;
 	int		i;
 
-	if (!ft_parser(line))
+	if (!ft_syntax(line))
 		return (0);
 	ft_token_init_all(&tkn);
 	i = -1;
