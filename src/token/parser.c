@@ -3,27 +3,25 @@
 /* TODO : OPERATOR REDIRECTION VALIDITY */
 static int	ft_is_valid_line(char *line)
 {
-	t_token	tkn_valid;
+	t_token	parser;
 	int		i;
 
-	ft_token_init_quotes(&tkn_valid);
+	ft_token_init_quotes(&parser);
 	i = -1;
 	while (line[++i])
 	{
-		ft_token_quotes(&tkn_valid, line[i]);
-		if ((tkn_valid.s_qts == QTS_CLOSE
-				&& tkn_valid.d_qts == QTS_CLOSE
+		ft_token_quotes(&parser, line[i]);
+		if (parser.s_qts == QTS_CLOSE
+				&& parser.d_qts == QTS_CLOSE
 				&& ft_is_metachar(line[i]))
-			|| (tkn_valid.d_qts == QTS_OPEN && line[i] == '\\'
-				&& line[i + 1] && line[i + 1] == '\"'))
 			return (ERR_SYNTAX_CHAR);
 	}
-	if (tkn_valid.quotes_status == QTS_OPEN)
+	if (parser.quotes_status == QTS_OPEN)
 		return (ERR_SYNTAX_QUOTES);
 	return (0);
 }
 
-int	ft_validity_check(char *line_read)
+int	ft_parser(char *line_read)
 {
 	int	err;
 

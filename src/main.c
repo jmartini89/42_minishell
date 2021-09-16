@@ -20,6 +20,7 @@ int	main(void)
 {
 	char	*line_read;
 	char	**exec_arg;
+	int		tkn_status;
 	int		wstatus;
 	int		err;
 
@@ -52,7 +53,8 @@ int	main(void)
 		if (line_read && *line_read)
 		{
 			add_history(line_read); // BUG : same command
-			if (ft_parser(line_read))
+			tkn_status = ft_token(line_read);
+			if (tkn_status > 0)
 			{
 				/*
 				ft_printf(M_SHELL_NAME" echo : %s\n", line_read);
@@ -74,7 +76,9 @@ int	main(void)
 				}
 				*/
 			}
+			else if (tkn_status < 0)
+				return (EXIT_FAILURE);
 		}
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }
