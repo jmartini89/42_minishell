@@ -16,7 +16,7 @@ void	ft_sig_quit(int sig)
 {
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*line_read;
 	char	**exec_arg;
@@ -29,6 +29,33 @@ int	main(void)
 	rl_catch_signals = 0;
 	signal(SIGINT, ft_sig_int);
 	signal(SIGQUIT, ft_sig_quit);
+
+/* ENV TESTS */
+	char *test1 = ft_calloc(16, sizeof(*test1));
+	char *test2 = ft_calloc(9, sizeof(*test2));
+	ft_memcpy(test1, "SHELL="M_SHELL_NAME, ft_strlen("SHELL="M_SHELL_NAME));
+	ft_memcpy(test2, "SHLVL=69", ft_strlen("SHLVL=69"));
+	int env_len = -1;
+	while (envp[++env_len])
+		;
+	int *heap_env = ft_calloc(env_len, sizeof(*heap_env));
+	int i = -1;
+	while (envp[++i])
+	{
+		if (!ft_memcmp(envp[i], "SHELL", 5))
+		{
+			ft_printf("%d\n", i);
+			envp[i] = test1;
+			heap_env[i] = 1;
+		}
+		if (!ft_memcmp(envp[i], "SHLVL", 5))
+		{
+			ft_printf("%d\n", i);
+			envp[i] = test2;
+			heap_env[i] = 1;
+		}
+	}
+
 	while (1)
 	{
 		g_pid = getpid();
@@ -52,16 +79,14 @@ int	main(void)
 
 		if (line_read && *line_read)
 		{
-			add_history(line_read); // BUG : same command
+			add_history(line_read); // BUG : line repetition
 			tkn_status = ft_token(line_read);
 			if (tkn_status > 0)
 			{
-				/*
-				ft_printf(M_SHELL_NAME" echo : %s\n", line_read);
 				g_pid = fork();
 				if (!g_pid)
 				{
-					if (execve(line_read, exec_arg, NULL) < 0)
+					if (execve(line_read, exec_arg, envp) < 0)
 					{
 						err = errno;
 						ft_printf("%s\n", (strerror(err)));
@@ -74,11 +99,22 @@ int	main(void)
 					while (waitpid(-1, &wstatus, 0) > 0)
 						usleep (10);
 				}
-				*/
 			}
 			else if (tkn_status < 0)
 				return (EXIT_FAILURE);
 		}
 	}
+	
+/* ENV FREE */
+	i = -1;
+	while (++i < env_len)
+	{
+		if (heap_env[i])
+		{
+			ft_printf("%d\n", i);
+			free (envp[i]);
+		}
+	}
+	free (heap_env);
 	return (EXIT_SUCCESS);
 }

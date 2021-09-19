@@ -54,7 +54,6 @@ static int	ft_token_len(t_token *tkn)
 		}
 		addr++;
 	}
-	ft_printf("%d\n", len);
 	return (len);
 }
 
@@ -67,6 +66,10 @@ static char	*ft_token_translate(t_token *tkn)
 	int		i;
 
 	token = NULL;
+	/*
+	** token HERE IS ALREADY USING EXPANSION!
+	** TRY TO MERGE, SINGLE ALLOC
+	*/
 	token = ft_calloc(ft_token_len(tkn) + 1, sizeof(*token));
 	if (!token)
 		return (0);
@@ -82,6 +85,7 @@ static char	*ft_token_translate(t_token *tkn)
 				if (!pre_env)
 					return (0);
 				env = ft_token_expansion(tkn, pre_env);
+				ft_printf("%p\n", env);
 				while (env && *env)
 				{
 					token[i++] = *env;
@@ -107,7 +111,7 @@ int	ft_token_assembler(t_token *tkn)
 	tmp = ft_token_translate(tkn);
 	if (!tmp)
 		return (0);
-	ft_printf("OUTPUT : %s\n", tmp);
+	ft_printf("%s\n", tmp);
 	free (tmp);
 	return (1);
 }
