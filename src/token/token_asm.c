@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static char	*ft_token_pre_env(t_token *tkn, char *addr)
+static char	*ft_token_expansion_alloc(t_token *tkn, char *addr)
 {
 	int		len;
 	char	*tmp;
@@ -8,7 +8,7 @@ static char	*ft_token_pre_env(t_token *tkn, char *addr)
 	addr++;
 	tmp = NULL;
 	len = 0;
-	while (&addr[len] <= tkn->end && !ft_is_quote(addr[len]))
+	while (&addr[len] <= tkn->end && !ft_is_quote(addr[len]) && addr[len] != '$')
 		len++;
 	tmp = ft_calloc(len + 1, sizeof(*tmp));
 	if (!tmp)
@@ -17,12 +17,12 @@ static char	*ft_token_pre_env(t_token *tkn, char *addr)
 	return (tmp);
 }
 
-static char	*ft_token_env(t_token *tkn, char *pre_env)
+static char	*ft_token_expansion(t_token *tkn, char *addr)
 {
 	char	*env;
 
-	env = getenv(pre_env);
-	free (pre_env);
+	env = getenv(addr);
+	free (addr);
 	return (env);
 }
 
@@ -41,12 +41,12 @@ static int	ft_token_len(t_token *tkn)
 		{
 			if (*addr == '$' && tkn->s_qts == QTS_CLOSE)
 			{
-				pre_env = ft_token_pre_env(tkn, addr);
+				pre_env = ft_token_expansion_alloc(tkn, addr);
 				if (!pre_env)
 					return (0);
-				env = ft_token_env(tkn, pre_env);
+				env = ft_token_expansion(tkn, pre_env);
 				len += ft_strlen(env);
-				while (*addr && !ft_is_quote(*addr))
+				while (*addr && !ft_is_quote(*addr) && *(addr + 1) != '$')
 					addr++;
 			}
 			else
@@ -54,6 +54,7 @@ static int	ft_token_len(t_token *tkn)
 		}
 		addr++;
 	}
+	ft_printf("%d\n", len);
 	return (len);
 }
 
@@ -77,16 +78,16 @@ static char	*ft_token_translate(t_token *tkn)
 		{
 			if (*addr == '$' && tkn->s_qts == QTS_CLOSE) // PARAMETER EXPANSION
 			{
-				pre_env = ft_token_pre_env(tkn, addr);
+				pre_env = ft_token_expansion_alloc(tkn, addr);
 				if (!pre_env)
 					return (0);
-				env = ft_token_env(tkn, pre_env);
+				env = ft_token_expansion(tkn, pre_env);
 				while (env && *env)
 				{
 					token[i++] = *env;
 					env++;
 				}
-				while (*addr && !ft_is_quote(*addr))
+				while (*addr && !ft_is_quote(*addr) && *(addr + 1) != '$')
 					addr++;
 			}
 			else
@@ -106,7 +107,7 @@ int	ft_token_assembler(t_token *tkn)
 	tmp = ft_token_translate(tkn);
 	if (!tmp)
 		return (0);
-	ft_printf("%s\n", tmp);
+	ft_printf("OUTPUT : %s\n", tmp);
 	free (tmp);
 	return (1);
 }
