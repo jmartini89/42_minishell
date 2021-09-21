@@ -3,8 +3,6 @@
 
 # define M_SHELL_NAME "miniscell"
 
-pid_t	g_pid;
-
 typedef struct s_shell
 {
 	char	**env;

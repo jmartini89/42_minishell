@@ -1,7 +1,6 @@
 #include "minishell.h"
 
-
-int	ft_env_init(char **envp)
+int	ft_env_dup(char **envp)
 {
 	int		env_len;
 	int		i;
@@ -25,20 +24,18 @@ int	main(int argc, char **argv, char **envp)
 	char	*line_read;
 	char	**exec_arg;
 	int		tkn_status;
+	int		pid;
 	int		wstatus;
 	int		err;
 
 	shell.env = envp;
 	line_read = NULL;
 	exec_arg = NULL;
-
-	if (ft_env_init(shell.env) < 0)
+	if (ft_env_dup(shell.env) < 0)
 		return (EXIT_FAILURE);
-	ft_signal();
 	while (1)
 	{
-		g_pid = getpid();
-		ft_printf("%d\n", g_pid);
+		ft_signal();
 		if (line_read)
 		{
 			free (line_read);
@@ -58,23 +55,24 @@ int	main(int argc, char **argv, char **envp)
 
 		if (line_read && *line_read)
 		{
-			add_history(line_read); // BUG : line repetition
+			add_history(line_read); /* TODO : avoid repetitions */
 			tkn_status = ft_token(line_read);
 			if (tkn_status > 0)
 			{
-				g_pid = fork(); // WTF???
-				if (!g_pid)
+				pid = fork();
+				if (!pid)
 				{
 					if (execve(line_read, exec_arg, shell.env) < 0)
 					{
 						err = errno;
-						ft_printf("%s\n", (strerror(err)));
+						ft_printf(M_SHELL_NAME" : execve : %s\n", (strerror(err)));
 						free (line_read);
-						exit(err);
+						exit (err);
 					}
 				}
 				else
 				{
+					signal(SIGINT, ft_sig_void); /* TODO : NEWLINE */
 					while (waitpid(-1, &wstatus, 0) > 0)
 						usleep (10);
 				}
