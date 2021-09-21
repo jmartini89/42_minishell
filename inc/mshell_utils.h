@@ -1,5 +1,5 @@
-#ifndef MINISHELL_ERR_H
-# define MINISHELL_ERR_H
+#ifndef MSHELL_UTILS_H
+# define MSHELL_UTILS_H
 
 enum	e_err {
 	ERR_UNDEF,
@@ -15,5 +15,9 @@ static const char *const	g_errstr[] = {
 	"Syntax : undefined special character",
 	"Syntax : unexpected token",
 };
+
+void	ft_signal(void);
+int		ft_perror(int err);
+void	ft_gc(t_shell *shell);
 
 #endif

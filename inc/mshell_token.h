@@ -1,5 +1,5 @@
-#ifndef MINISHELL_PARSER_H
-# define MINISHELL_PARSER_H
+#ifndef MSHELL_TOKEN_H
+# define MSHELL_TOKEN_H
 # define WORD 0
 # define PIPE 1
 # define REDIR_OUT 2
