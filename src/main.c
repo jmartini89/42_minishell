@@ -1,23 +1,5 @@
 #include "minishell.h"
 
-int	ft_env_dup(char **envp)
-{
-	int		env_len;
-	int		i;
-
-	env_len = 0;
-	while (envp[env_len])
-		env_len++;
-	i = -1;
-	while (++i < env_len)
-	{
-		envp[i] = ft_strdup(envp[i]);
-		if (!envp[i])
-			return (ft_perror(ERR_SYS_MALLOC));
-	}
-	return (1);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
@@ -26,13 +8,23 @@ int	main(int argc, char **argv, char **envp)
 	int		tkn_status;
 	int		pid;
 	int		wstatus;
+	int		wexit;
 	int		err;
 
 	shell.env = envp;
 	line_read = NULL;
 	exec_arg = NULL;
-	if (ft_env_dup(shell.env) < 0)
+	if (!ft_env_init(&shell))
 		return (EXIT_FAILURE);
+
+	shell.cwd = getcwd(NULL, 0);
+	ft_printf("%s\n", shell.cwd);
+	chdir("..");
+	free (shell.cwd);
+	shell.cwd = getcwd(NULL, 0);
+	ft_printf("%s\n", shell.cwd);
+	free (shell.cwd);
+
 	while (1)
 	{
 		ft_signal();
@@ -44,8 +36,7 @@ int	main(int argc, char **argv, char **envp)
 
 		line_read = readline("\e[32m"M_SHELL_NAME"\e[0m$ ");
 
-		if (line_read == NULL ||
-			(ft_strlen(line_read) == 4 && !ft_memcmp(line_read, "exit", 4)))
+		if (line_read == NULL) // TODO : EXIT COMMAND & EXIT STATUS
 		{
 			ft_printf("exit\n");
 			free (line_read);
@@ -55,26 +46,46 @@ int	main(int argc, char **argv, char **envp)
 
 		if (line_read && *line_read)
 		{
-			add_history(line_read); /* TODO : avoid repetitions */
+			add_history(line_read); // TODO : avoid repetitions
 			tkn_status = ft_token(line_read);
 			if (tkn_status > 0)
 			{
 				pid = fork();
+				if (pid < 0)
+				{
+					ft_perror(ERR_SYS_FORK);
+					return (EXIT_FAILURE);
+				}
 				if (!pid)
 				{
 					if (execve(line_read, exec_arg, shell.env) < 0)
 					{
 						err = errno;
-						ft_printf(M_SHELL_NAME" : execve : %s\n", (strerror(err)));
+						ft_perror(ERR_EXEC_NOFILE);
 						free (line_read);
-						exit (err);
+						line_read = NULL;
+						if (err == ENOENT)
+							exit (127);
+						if (err == EPERM)
+							exit (126);
 					}
 				}
 				else
 				{
-					signal(SIGINT, ft_sig_void); /* TODO : NEWLINE */
-					while (waitpid(-1, &wstatus, 0) > 0)
-						usleep (10);
+					signal(SIGINT, ft_sig_void);
+					wexit = wait(&wstatus);
+					if (wexit < 0)
+					{
+						ft_perror(ERR_SYS_FORK);
+						return (EXIT_FAILURE);
+					}
+					if (WIFSIGNALED(wstatus))
+					{
+						ft_printf("\n");
+						ft_printf("EXIT STATUS\t%d\n", WTERMSIG(wstatus) + 128);
+					}
+					if (WEXITSTATUS(wstatus))
+						ft_printf("EXIT STATUS\t%d\n", WEXITSTATUS(wstatus));
 				}
 			}
 			else if (tkn_status < 0)

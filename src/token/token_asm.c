@@ -85,7 +85,6 @@ static char	*ft_token_translate(t_token *tkn)
 				if (!pre_env)
 					return (0);
 				env = ft_token_expansion(tkn, pre_env);
-				ft_printf("%p\n", env);
 				while (env && *env)
 				{
 					token[i++] = *env;

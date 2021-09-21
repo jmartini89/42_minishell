@@ -6,6 +6,7 @@
 typedef struct s_shell
 {
 	char	**env;
+	char	*cwd;
 }	t_shell;
 
 #endif

@@ -16,6 +16,7 @@
 /* SUB_HEADERS */
 # include "mshell_main.h"
 # include "mshell_utils.h"
+# include "mshell_env.h"
 # include "mshell_token.h"
 
 #endif
