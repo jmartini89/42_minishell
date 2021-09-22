@@ -8,14 +8,14 @@ static int	ft_is_valid_operator(t_token *parser, char *c)
 	if (operator == PIPE)
 	{
 		if (*(c + 1)
-				&& ft_is_operator(*(c + 1)) == operator)
+			&& ft_is_operator(*(c + 1)) == operator)
 			return (0);
 	}
 	if (operator == REDIR_OUT || operator == REDIR_IN)
 	{
 		if (*(c + 1) && *(c + 2)
-				&& ft_is_operator(*(c + 1)) == operator
-				&& ft_is_operator(*(c + 2)) == operator)
+			&& ft_is_operator(*(c + 1)) == operator
+			&& ft_is_operator(*(c + 2)) == operator)
 			return (0);
 	}
 	return (1);
@@ -32,11 +32,11 @@ static int	ft_is_valid_line(char *line)
 	{
 		ft_token_quotes_status(&parser, line[i]);
 		if (ft_is_metachar(line[i])
-				&& parser.quotes_status == QTS_CLOSE)
+			&& parser.quotes_status == QTS_CLOSE)
 			return (ERR_SYNTAX_CHAR);
 		if (ft_is_operator(line[i])
-				&& parser.quotes_status == QTS_CLOSE
-				&& !ft_is_valid_operator(&parser, &line[i]))
+			&& parser.quotes_status == QTS_CLOSE
+			&& !ft_is_valid_operator(&parser, &line[i]))
 			return (ERR_SYNTAX_TKN);
 	}
 	if (parser.quotes_status == QTS_OPEN)
