@@ -3,6 +3,6 @@
 int	main(void)
 {
 	ft_printf("TEST\t%d\n", getpid());
-	//pause ();
+	pause ();
 	return (1);
 }

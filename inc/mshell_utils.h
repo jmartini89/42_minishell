@@ -22,10 +22,4 @@ static const char *const	g_errstr[] = {
 	"execve : no such file or directory",
 };
 
-/* UTILS */
-
-void	ft_signal(void);
-void	ft_sig_void(int sig);
-void	ft_gc(t_shell *shell);
-
 #endif

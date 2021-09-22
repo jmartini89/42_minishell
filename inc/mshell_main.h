@@ -9,4 +9,8 @@ typedef struct s_shell
 	char	*cwd;
 }	t_shell;
 
+void	ft_signal(void);
+void	ft_sig_void(int sig);
+void	ft_gc(t_shell *shell);
+
 #endif

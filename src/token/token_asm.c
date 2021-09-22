@@ -37,7 +37,7 @@ static int	ft_token_len(t_token *tkn, t_shell *shell)
 	len = 0;
 	while (addr <= tkn->end)
 	{
-		if (!ft_token_quotes(tkn, *addr))
+		if (!ft_token_quotes_status(tkn, *addr))
 		{
 			if (*addr == '$' && tkn->s_qts == QTS_CLOSE)
 			{
@@ -66,10 +66,6 @@ static char	*ft_token_translate(t_token *tkn, t_shell *shell)
 	int		i;
 
 	token = NULL;
-	/*
-	** token HERE IS ALREADY USING EXPANSION!
-	** TRY TO MERGE, SINGLE ALLOC
-	*/
 	token = ft_calloc(ft_token_len(tkn, shell) + 1, sizeof(*token));
 	if (!token)
 		return (0);
@@ -77,7 +73,7 @@ static char	*ft_token_translate(t_token *tkn, t_shell *shell)
 	i = 0;
 	while (addr <= tkn->end)
 	{
-		if (!ft_token_quotes(tkn, *addr))
+		if (!ft_token_quotes_status(tkn, *addr))
 		{
 			if (*addr == '$' && tkn->s_qts == QTS_CLOSE) // PARAMETER EXPANSION
 			{

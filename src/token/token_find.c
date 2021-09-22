@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_token_quotes(t_token *tkn, char c)
+int	ft_token_quotes_status(t_token *tkn, char c)
 {
 	int	quote;
 	int	status;
@@ -47,6 +47,6 @@ static void	ft_token_start_end(t_token *tkn, char *c)
 
 void	ft_token_find(t_token *tkn, char *c)
 {
-	ft_token_quotes(tkn, *c);
+	ft_token_quotes_status(tkn, *c);
 	ft_token_start_end(tkn, c);
 }

@@ -30,7 +30,7 @@ static int	ft_is_valid_line(char *line)
 	i = -1;
 	while (line[++i])
 	{
-		ft_token_quotes(&parser, line[i]);
+		ft_token_quotes_status(&parser, line[i]);
 		if (ft_is_metachar(line[i])
 				&& parser.quotes_status == QTS_CLOSE)
 			return (ERR_SYNTAX_CHAR);
