@@ -68,6 +68,8 @@ int	main(int argc, char **argv, char **envp)
 							exit (127);
 						if (err == EPERM)
 							exit (126);
+						else // TODO : PROPER EXIT
+							exit (err);
 					}
 				}
 				else
