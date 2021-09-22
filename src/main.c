@@ -49,27 +49,19 @@ int	main(int argc, char **argv, char **envp)
 		if (line_read && *line_read)
 		{
 			add_history(line_read); // TODO : avoid repetitions
-			if (ft_syntax(line_read))
+			if (ft_token(line_read, &shell))
 			{
-				if (!ft_token(line_read, &shell))
-				{
-					ft_perror(ERR_SYS_MALLOC);
-					exit (EXIT_FAILURE);
-				}
 				if (shell.token)
 				{
 					pid = fork();
 					if (pid < 0)
-					{
-						ft_perror(ERR_SYS_FORK);
-						exit (EXIT_FAILURE);
-					}
+						ft_perror_exit(ERR_SYS_FORK);
 					if (!pid)
 					{
 						if (execve(shell.token[0], exec_arg, shell.env) < 0)
 						{
 							err = errno;
-							ft_perror(ERR_EXEC_NOFILE);
+							ft_perror_exit(ERR_EXEC_NOFILE);
 							free (line_read);
 							line_read = NULL;
 							if (err == ENOENT)
@@ -85,10 +77,7 @@ int	main(int argc, char **argv, char **envp)
 						signal(SIGINT, ft_sig_void);
 						wexit = wait(&wstatus);
 						if (wexit < 0)
-						{
-							ft_perror(ERR_SYS_FORK);
-							exit (EXIT_FAILURE);
-						}
+							ft_perror_exit(ERR_SYS_FORK);
 						if (WIFSIGNALED(wstatus))
 						{
 							ft_printf("\n");

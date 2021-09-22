@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int	ft_env_dup(t_shell *shell, char **envp)
+static void	ft_env_dup(t_shell *shell, char **envp)
 {
 	int		len;
 	int		i;
@@ -14,12 +14,11 @@ static int	ft_env_dup(t_shell *shell, char **envp)
 	{
 		shell->env[i] = ft_strdup(envp[i]);
 		if (!shell->env[i])
-			return (ft_perror(ERR_SYS_MALLOC));
+			ft_perror_exit(ERR_SYS_MALLOC);
 	}
-	return (1);
 }
 
-static int	ft_env_custom(t_shell *shell)
+static void	ft_env_custom(t_shell *shell)
 {
 	int		i;
 	char	*tmp;
@@ -36,6 +35,8 @@ static int	ft_env_custom(t_shell *shell)
 			{
 				tmp = ft_itoa(ft_atoi(ft_getenv(shell, "SHLVL")) + 1);
 				tmp2 = ft_strjoin("SHLVL=", tmp);
+				if (!tmp || !tmp2)
+					ft_perror_exit(ERR_SYS_MALLOC);
 				free (tmp);
 				tmp = shell->env[i];
 				shell->env[i] = tmp2;
@@ -43,14 +44,11 @@ static int	ft_env_custom(t_shell *shell)
 			}
 		}
 	}
-	return (1);
 }
 
 int	ft_env_init(t_shell *shell, char **envp)
 {
-	if (ft_env_dup(shell, envp) < 0)
-		return (0);
-	if (ft_env_custom(shell) < 0)
-		return (0);
+	ft_env_dup(shell, envp);
+	ft_env_custom(shell);
 	return (1);
 }

@@ -12,15 +12,16 @@ enum	e_err {
 };
 static const char *const	g_errstr[] = {
 	"Undefined",
-	"System : malloc fail",
-	"System : fork fail",
-	"Syntax : unclosed quotes",
-	"Syntax : undefined special character",
-	"Syntax : unexpected token",
-	"execve : no such file or directory",
+	"*** SYSTEM ERROR : MALLOC FAIL ***",
+	"*** SYSTEM ERROR : FORK FAIL ***",
+	"syntax error : unclosed quotes",
+	"syntax error : undefined special character",
+	"syntax error : unexpected token",
+	"execve error : no such file or directory",
 };
 
 int		ft_perror(int err);
+void	ft_perror_exit(int err);
 void	ft_signal(void);
 void	ft_sig_void(int sig);
 
