@@ -18,16 +18,5 @@ int	ft_token(char *line, t_shell *shell)
 			ft_token_init_all(&tkn);
 		}
 	}
-	/*
-	** DEBUG
-	int j = 0;
-	while (tkn.token[j])
-	{
-		ft_printf("%s\n", tkn.token[j]);
-		free (tkn.token[j]);
-		j++;
-	}
-	free (tkn.token);
-	*/
 	return (1);
 }

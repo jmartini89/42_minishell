@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 	shell.cwd = getcwd(NULL, 0);
 	ft_printf("%s\n", shell.cwd);
 	chdir("..");
-	free (shell.cwd);
+	free (shell.cwd);`
 	shell.cwd = getcwd(NULL, 0);
 	ft_printf("%s\n", shell.cwd);
 	free (shell.cwd);
@@ -56,49 +56,51 @@ int	main(int argc, char **argv, char **envp)
 					ft_perror(ERR_SYS_MALLOC);
 					exit (EXIT_FAILURE);
 				}
-				pid = fork();
-				if (pid < 0)
+				if (shell.token)
 				{
-					ft_perror(ERR_SYS_FORK);
-					exit (EXIT_FAILURE);
-				}
-				if (!pid)
-				{
-					if (execve(line_read, exec_arg, shell.env) < 0)
-					{
-						err = errno;
-						ft_perror(ERR_EXEC_NOFILE);
-						free (line_read);
-						line_read = NULL;
-						if (err == ENOENT)
-							exit (127);
-						if (err == EPERM)
-							exit (126);
-						else // TODO : PROPER EXIT
-							exit (err);
-					}
-				}
-				else
-				{
-					signal(SIGINT, ft_sig_void);
-					wexit = wait(&wstatus);
-					if (wexit < 0)
+					pid = fork();
+					if (pid < 0)
 					{
 						ft_perror(ERR_SYS_FORK);
 						exit (EXIT_FAILURE);
 					}
-					if (WIFSIGNALED(wstatus))
+					if (!pid)
 					{
-						ft_printf("\n");
-						ft_printf("EXIT STATUS\t%d\n", WTERMSIG(wstatus) + 128);
+						if (execve(shell.token[0], exec_arg, shell.env) < 0)
+						{
+							err = errno;
+							ft_perror(ERR_EXEC_NOFILE);
+							free (line_read);
+							line_read = NULL;
+							if (err == ENOENT)
+								exit (127);
+							if (err == EPERM)
+								exit (126);
+							else // TODO : PROPER EXIT
+								exit (err);
+						}
 					}
-					if (WEXITSTATUS(wstatus))
-						ft_printf("EXIT STATUS\t%d\n", WEXITSTATUS(wstatus));
+					else
+					{
+						signal(SIGINT, ft_sig_void);
+						wexit = wait(&wstatus);
+						if (wexit < 0)
+						{
+							ft_perror(ERR_SYS_FORK);
+							exit (EXIT_FAILURE);
+						}
+						if (WIFSIGNALED(wstatus))
+						{
+							ft_printf("\n");
+							ft_printf("EXIT STATUS\t%d\n", WTERMSIG(wstatus) + 128);
+						}
+						if (WEXITSTATUS(wstatus))
+							ft_printf("EXIT STATUS\t%d\n", WEXITSTATUS(wstatus));
+					}
+					ft_gc_token(shell.token);
 				}
-				int i = 0;
 			}
 		}
-		ft_gc_token(shell.token);
 	}
 	ft_gc(&shell);
 	return (EXIT_SUCCESS);

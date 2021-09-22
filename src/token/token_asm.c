@@ -122,5 +122,6 @@ int	ft_token_assembler(t_token *tkn, t_shell *shell)
 	if (!shell->token[len])
 		return (0);
 	free (tmp);
+	ft_printf("TOKEN : %s\n", shell->token[len]);
 	return (1);
 }
