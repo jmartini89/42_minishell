@@ -17,16 +17,16 @@ static char	*ft_token_expansion_alloc(t_token *tkn, char *addr)
 	return (tmp);
 }
 
-static char	*ft_token_expansion(t_token *tkn, char *addr)
+static char	*ft_token_expansion(t_token *tkn, t_shell *shell, char *addr)
 {
 	char	*env;
 
-	env = getenv(addr);
+	env = ft_getenv(shell, addr);
 	free (addr);
 	return (env);
 }
 
-static int	ft_token_len(t_token *tkn)
+static int	ft_token_len(t_token *tkn, t_shell *shell)
 {
 	char	*addr;
 	char	*pre_env;
@@ -44,7 +44,7 @@ static int	ft_token_len(t_token *tkn)
 				pre_env = ft_token_expansion_alloc(tkn, addr);
 				if (!pre_env)
 					return (0);
-				env = ft_token_expansion(tkn, pre_env);
+				env = ft_token_expansion(tkn, shell, pre_env);
 				len += ft_strlen(env);
 				while (*addr && !ft_is_quote(*addr) && *(addr + 1) != '$')
 					addr++;
@@ -57,7 +57,7 @@ static int	ft_token_len(t_token *tkn)
 	return (len);
 }
 
-static char	*ft_token_translate(t_token *tkn)
+static char	*ft_token_translate(t_token *tkn, t_shell *shell)
 {
 	char	*addr;
 	char	*token;
@@ -70,7 +70,7 @@ static char	*ft_token_translate(t_token *tkn)
 	** token HERE IS ALREADY USING EXPANSION!
 	** TRY TO MERGE, SINGLE ALLOC
 	*/
-	token = ft_calloc(ft_token_len(tkn) + 1, sizeof(*token));
+	token = ft_calloc(ft_token_len(tkn, shell) + 1, sizeof(*token));
 	if (!token)
 		return (0);
 	addr = tkn->start;
@@ -84,7 +84,7 @@ static char	*ft_token_translate(t_token *tkn)
 				pre_env = ft_token_expansion_alloc(tkn, addr);
 				if (!pre_env)
 					return (0);
-				env = ft_token_expansion(tkn, pre_env);
+				env = ft_token_expansion(tkn, shell, pre_env);
 				while (env && *env)
 				{
 					token[i++] = *env;
@@ -101,13 +101,13 @@ static char	*ft_token_translate(t_token *tkn)
 	return (token);
 }
 
-int	ft_token_assembler(t_token *tkn)
+int	ft_token_assembler(t_token *tkn, t_shell *shell)
 {
 	char	*tmp;
 
 	tmp = NULL;
 	ft_token_init_quotes(tkn);
-	tmp = ft_token_translate(tkn);
+	tmp = ft_token_translate(tkn, shell);
 	if (!tmp)
 		return (0);
 	ft_printf("%s\n", tmp);

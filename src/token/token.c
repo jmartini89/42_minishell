@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_token(char *line)
+int	ft_token(char *line, t_shell *shell)
 {
 	t_token	tkn;
 	int		i;
@@ -14,7 +14,7 @@ int	ft_token(char *line)
 		ft_token_find(&tkn, &line[i]);
 		if (tkn.end)
 		{
-			if (!ft_token_assembler(&tkn))
+			if (!ft_token_assembler(&tkn, shell))
 				return (ft_perror(ERR_SYS_MALLOC));
 			ft_token_init_all(&tkn);
 		}

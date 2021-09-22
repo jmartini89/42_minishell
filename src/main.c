@@ -11,12 +11,14 @@ int	main(int argc, char **argv, char **envp)
 	int		wexit;
 	int		err;
 
-	shell.env = envp;
 	line_read = NULL;
 	exec_arg = NULL;
-	if (!ft_env_init(&shell))
+
+	if (!ft_env_init(&shell, envp))
 		return (EXIT_FAILURE);
 
+/*
+** CWD TEST
 	shell.cwd = getcwd(NULL, 0);
 	ft_printf("%s\n", shell.cwd);
 	chdir("..");
@@ -24,6 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	shell.cwd = getcwd(NULL, 0);
 	ft_printf("%s\n", shell.cwd);
 	free (shell.cwd);
+*/
 
 	while (1)
 	{
@@ -47,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 		if (line_read && *line_read)
 		{
 			add_history(line_read); // TODO : avoid repetitions
-			tkn_status = ft_token(line_read);
+			tkn_status = ft_token(line_read, &shell);
 			if (tkn_status > 0)
 			{
 				pid = fork();

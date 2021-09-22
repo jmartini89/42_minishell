@@ -22,7 +22,7 @@ typedef struct s_token
 }	t_token;
 
 /* TOKEN */
-int		ft_token(char *line);
+int		ft_token(char *line, t_shell *shell);
 
 /* SYNTAX */
 int		ft_syntax(char *line);
@@ -37,7 +37,7 @@ void	ft_token_find(t_token *tkn, char *c);
 int		ft_token_quotes(t_token *tkn, char c);
 
 /* TOKEN_ASM*/
-int		ft_token_assembler(t_token *tkn);
+int		ft_token_assembler(t_token *tkn, t_shell *shell);
 
 /* TOKEN_UTILS */
 int		ft_is_metachar(char c);

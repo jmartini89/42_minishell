@@ -7,6 +7,7 @@ static void	ft_gc_env(char	**env)
 	i = -1;
 	while (env[++i])
 		free (env[i]);
+	free (env);
 }
 
 void	ft_gc(t_shell *shell)
