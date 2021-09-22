@@ -13,8 +13,7 @@ int	main(int argc, char **argv, char **envp)
 	line_read = NULL;
 	exec_arg = NULL;
 
-	if (!ft_env_init(&shell, envp))
-		return (EXIT_FAILURE);
+	ft_env_init(&shell, envp);
 
 /*
 ** CWD TEST

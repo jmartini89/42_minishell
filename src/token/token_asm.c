@@ -7,9 +7,9 @@ static char	*ft_token_expansion(t_token *tkn, t_shell *shell, char *addr)
 	char	*env;
 
 	addr++;
-	tmp = NULL;
 	len = 0;
-	while (&addr[len] <= tkn->end && !ft_is_quote(addr[len]) && addr[len] != '$')
+	while (&addr[len] <= tkn->end
+		&& !ft_is_quote(addr[len]) && addr[len] != '$')
 		len++;
 	tmp = ft_calloc(len + 1, sizeof(*tmp));
 	if (!tmp)
@@ -47,44 +47,49 @@ static int	ft_token_len(t_token *tkn, t_shell *shell)
 	return (len);
 }
 
+static void	ft_token_write(t_token *tkn, t_tkn_tmp *tmp, t_shell *shell)
+{
+	if (!ft_token_quotes_status(tkn, *tmp->addr))
+	{
+		if (*tmp->addr == '$' && tkn->s_qts == QTS_CLOSE)
+		{
+			tmp->env = ft_token_expansion(tkn, shell, tmp->addr);
+			while (tmp->env && *tmp->env)
+			{
+				tmp->token[tmp->i++] = *tmp->env;
+				tmp->env++;
+			}
+			while (*tmp->addr
+				&& !ft_is_quote(*tmp->addr) && *(tmp->addr + 1) != '$')
+				tmp->addr++;
+		}
+		else
+			tmp->token[tmp->i++] = *tmp->addr;
+	}
+}
+
 static char	*ft_token_translate(t_token *tkn, t_shell *shell)
 {
-	char	*addr;
-	char	*token;
-	char	*env;
-	int		i;
+	t_tkn_tmp	tmp;
 
-	token = ft_calloc(ft_token_len(tkn, shell) + 1, sizeof(*token));// !!! UNPROTECTED token_len !!!
-	if (!token)
+	tmp.token = ft_calloc(
+			ft_token_len(tkn, shell) + 1, sizeof(*tmp.token));
+	if (!tmp.token)
 		ft_perror_exit(ERR_SYS_MALLOC);
-	addr = tkn->start;
-	i = 0;
-	while (addr <= tkn->end)
+	tmp.addr = tkn->start;
+	tmp.i = 0;
+	while (tmp.addr <= tkn->end)
 	{
-		if (!ft_token_quotes_status(tkn, *addr))
-		{
-			if (*addr == '$' && tkn->s_qts == QTS_CLOSE) // PARAMETER EXPANSION
-			{
-				env = ft_token_expansion(tkn, shell, addr);
-				while (env && *env)
-				{
-					token[i++] = *env;
-					env++;
-				}
-				while (*addr && !ft_is_quote(*addr) && *(addr + 1) != '$')
-					addr++;
-			}
-			else
-				token[i++] = *addr;
-		}
-		addr++;
+		ft_token_write(tkn, &tmp, shell);
+		tmp.addr++;
 	}
-	return (token);
+	return (tmp.token);
 }
 
 void	ft_token_assembler(t_token *tkn, t_shell *shell)
 {
 	int		len;
+	int		i;
 	char	**tmp;
 
 	tmp = shell->token;
@@ -97,7 +102,7 @@ void	ft_token_assembler(t_token *tkn, t_shell *shell)
 	shell->token = ft_calloc(len + 2, sizeof(*shell->token));
 	if (!shell->token)
 		ft_perror_exit(ERR_SYS_MALLOC);
-	int i = 0;
+	i = 0;
 	while (tmp && tmp[i])
 	{
 		shell->token[i] = tmp[i];

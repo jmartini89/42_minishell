@@ -9,6 +9,14 @@
 # define QTS_OPEN -1
 # define QTS_CLOSE 1
 
+typedef struct s_tkn_tmp
+{
+	char	*addr;
+	char	*token;
+	char	*env;
+	int		i;
+}	t_tkn_tmp;
+
 typedef struct s_token
 {
 	char	*start;
