@@ -14,9 +14,10 @@
 # include "libft.h"
 # include "ft_printf.h"
 /* SUB_HEADERS */
-# include "mshell_main.h"
+# include "mshell_src.h"
 # include "mshell_utils.h"
 # include "mshell_env.h"
 # include "mshell_token.h"
+# include "mshell_gc.h"
 
 #endif

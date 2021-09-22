@@ -65,7 +65,6 @@ static char	*ft_token_translate(t_token *tkn, t_shell *shell)
 	char	*env;
 	int		i;
 
-	token = NULL;
 	token = ft_calloc(ft_token_len(tkn, shell) + 1, sizeof(*token));// !!! UNPROTECTED token_len !!!
 	if (!token)
 		return (0);
@@ -102,22 +101,26 @@ int	ft_token_assembler(t_token *tkn, t_shell *shell)
 	int		len;
 	char	**tmp;
 
-	tmp = tkn->token;
-	len = -1;
-	while (tmp && tmp[++len])
-		tmp[len] = tkn->token[len];
-	tkn->token = ft_calloc(len + 2, sizeof(*tkn->token));
-	if (!tkn->token)
+	tmp = shell->token;
+	len = 0;
+	while (tmp && tmp[len])
+	{
+		tmp[len] = shell->token[len];
+		len++;
+	}
+	shell->token = ft_calloc(len + 2, sizeof(*shell->token));
+	if (!shell->token)
 		return (0);
+	int i = 0;
+	while (tmp && tmp[i])
+	{
+		shell->token[i] = tmp[i];
+		i++;
+	}
 	ft_token_init_quotes(tkn);
-	len = -1;
-	while (tmp && tmp[++len])
-		tkn->token[len] = tmp[len];
-	len += 1;
-	tkn->token[len] = ft_token_translate(tkn, shell);
-	if (!tkn->token[len])
+	shell->token[len] = ft_token_translate(tkn, shell);
+	if (!shell->token[len])
 		return (0);
-	ft_printf("%s\n", tkn->token[len]);
 	free (tmp);
 	return (1);
 }

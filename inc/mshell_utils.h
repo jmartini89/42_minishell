@@ -1,8 +1,6 @@
 #ifndef MSHELL_UTILS_H
 # define MSHELL_UTILS_H
 
-/* FT_PERROR */
-int		ft_perror(int err);
 enum	e_err {
 	ERR_UNDEF,
 	ERR_SYS_MALLOC,
@@ -21,5 +19,9 @@ static const char *const	g_errstr[] = {
 	"Syntax : unexpected token",
 	"execve : no such file or directory",
 };
+
+int		ft_perror(int err);
+void	ft_signal(void);
+void	ft_sig_void(int sig);
 
 #endif

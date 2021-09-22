@@ -5,7 +5,6 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 	char	*line_read;
 	char	**exec_arg;
-	int		tkn_status;
 	int		pid;
 	int		wstatus;
 	int		wexit;
@@ -50,14 +49,18 @@ int	main(int argc, char **argv, char **envp)
 		if (line_read && *line_read)
 		{
 			add_history(line_read); // TODO : avoid repetitions
-			tkn_status = ft_token(line_read, &shell);
-			if (tkn_status > 0)
+			if (ft_syntax(line_read))
 			{
+				if (!ft_token(line_read, &shell))
+				{
+					ft_perror(ERR_SYS_MALLOC);
+					exit (EXIT_FAILURE);
+				}
 				pid = fork();
 				if (pid < 0)
 				{
 					ft_perror(ERR_SYS_FORK);
-					return (EXIT_FAILURE);
+					exit (EXIT_FAILURE);
 				}
 				if (!pid)
 				{
@@ -82,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 					if (wexit < 0)
 					{
 						ft_perror(ERR_SYS_FORK);
-						return (EXIT_FAILURE);
+						exit (EXIT_FAILURE);
 					}
 					if (WIFSIGNALED(wstatus))
 					{
@@ -92,10 +95,10 @@ int	main(int argc, char **argv, char **envp)
 					if (WEXITSTATUS(wstatus))
 						ft_printf("EXIT STATUS\t%d\n", WEXITSTATUS(wstatus));
 				}
+				int i = 0;
 			}
-			else if (tkn_status < 0)
-				return (EXIT_FAILURE);
 		}
+		ft_gc_token(shell.token);
 	}
 	ft_gc(&shell);
 	return (EXIT_SUCCESS);
