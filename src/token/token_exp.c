@@ -68,7 +68,7 @@ static void	ft_token_write(t_token *tkn, t_tkn_tmp *tmp, t_shell *shell)
 	}
 }
 
-static char	*ft_token_translate(t_token *tkn, t_shell *shell)
+char	*ft_token_translate(t_token *tkn, t_shell *shell)
 {
 	t_tkn_tmp	tmp;
 
@@ -84,32 +84,4 @@ static char	*ft_token_translate(t_token *tkn, t_shell *shell)
 		tmp.addr++;
 	}
 	return (tmp.token);
-}
-
-void	ft_token_assembler(t_token *tkn, t_shell *shell)
-{
-	int		len;
-	int		i;
-	char	**tmp;
-
-	tmp = shell->token;
-	len = 0;
-	while (tmp && tmp[len])
-	{
-		tmp[len] = shell->token[len];
-		len++;
-	}
-	shell->token = ft_calloc(len + 2, sizeof(*shell->token));
-	if (!shell->token)
-		ft_perror_exit(ERR_SYS_MALLOC);
-	i = 0;
-	while (tmp && tmp[i])
-	{
-		shell->token[i] = tmp[i];
-		i++;
-	}
-	ft_token_init_quotes(tkn);
-	shell->token[len] = ft_token_translate(tkn, shell);
-	free (tmp);
-	ft_printf("TOKEN : %s\n", shell->token[len]);
 }
