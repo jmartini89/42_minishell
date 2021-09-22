@@ -18,7 +18,7 @@ typedef struct s_token
 	int		quotes_status;
 	/* TODO */
 	int		*tkn_operators;
-	char	*token;
+	char	**token;
 }	t_token;
 
 /* TOKEN */

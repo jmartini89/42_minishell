@@ -66,7 +66,7 @@ static char	*ft_token_translate(t_token *tkn, t_shell *shell)
 	int		i;
 
 	token = NULL;
-	token = ft_calloc(ft_token_len(tkn, shell) + 1, sizeof(*token));
+	token = ft_calloc(ft_token_len(tkn, shell) + 1, sizeof(*token));// !!! UNPROTECTED token_len !!!
 	if (!token)
 		return (0);
 	addr = tkn->start;
@@ -99,14 +99,25 @@ static char	*ft_token_translate(t_token *tkn, t_shell *shell)
 
 int	ft_token_assembler(t_token *tkn, t_shell *shell)
 {
-	char	*tmp;
+	int		len;
+	char	**tmp;
 
-	tmp = NULL;
-	ft_token_init_quotes(tkn);
-	tmp = ft_token_translate(tkn, shell);
-	if (!tmp)
+	tmp = tkn->token;
+	len = -1;
+	while (tmp && tmp[++len])
+		tmp[len] = tkn->token[len];
+	tkn->token = ft_calloc(len + 2, sizeof(*tkn->token));
+	if (!tkn->token)
 		return (0);
-	ft_printf("%s\n", tmp);
+	ft_token_init_quotes(tkn);
+	len = -1;
+	while (tmp && tmp[++len])
+		tkn->token[len] = tmp[len];
+	len += 1;
+	tkn->token[len] = ft_token_translate(tkn, shell);
+	if (!tkn->token[len])
+		return (0);
+	ft_printf("%s\n", tkn->token[len]);
 	free (tmp);
 	return (1);
 }
