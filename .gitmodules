@@ -1,0 +1,3 @@
+[submodule "docs/42_minishell.wiki"]
+	path = docs/42_minishell.wiki
+	url = git@github.com:/jmartini89/42_minishell.wiki.git
