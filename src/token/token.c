@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	ft_token_assembler(t_token *tkn, t_shell *shell)
+static int	ft_token_assembler_swap(t_shell *shell)
 {
 	int		len;
 	int		i;
@@ -22,10 +22,27 @@ static void	ft_token_assembler(t_token *tkn, t_shell *shell)
 		shell->token[i] = tmp[i];
 		i++;
 	}
-	ft_token_init_quotes(tkn);
-	shell->token[len] = ft_token_translate(tkn, shell);
 	free (tmp);
-	ft_printf("TOKEN : %s\n", shell->token[len]);
+	return (len);
+}
+
+static void	ft_token_assembler(t_token *tkn, t_shell *shell)
+{
+	int		len;
+	int		i;
+	char	**tmp;
+	char	*new_tkn;
+
+	ft_token_init_quotes(tkn);
+	new_tkn = ft_token_translate(tkn, shell);
+	if (*new_tkn)
+	{
+		len = ft_token_assembler_swap(shell);
+		shell->token[len] = new_tkn;
+		ft_printf("TOKEN : %s\n", shell->token[len]);
+	}
+	else
+		free (new_tkn);
 }
 
 int	ft_token(char *line, t_shell *shell)
@@ -47,5 +64,7 @@ int	ft_token(char *line, t_shell *shell)
 			ft_token_init_all(&tkn);
 		}
 	}
-	return (1);
+	if (shell->token)
+		return (1);
+	return (0);
 }
