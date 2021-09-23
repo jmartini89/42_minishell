@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_gc_token(char **token)
+void	ft_gc_token(char **token, int *literal)
 {
 	int	i;
 
@@ -8,6 +8,7 @@ void	ft_gc_token(char **token)
 	while (token[++i])
 		free (token[i]);
 	free (token);
+	free (literal);
 	token = NULL;
 }
 

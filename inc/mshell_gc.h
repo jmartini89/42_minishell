@@ -3,6 +3,6 @@
 
 void	ft_gc(t_shell *shell);
 void	ft_gc_env(char **env);
-void	ft_gc_token(char **token);
+void	ft_gc_token(char **token, int *literal);
 
 #endif

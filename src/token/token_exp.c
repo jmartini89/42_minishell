@@ -66,6 +66,8 @@ static void	ft_token_write(t_token *tkn, t_tkn_tmp *tmp, t_shell *shell)
 		else
 			tmp->token[tmp->i++] = *tmp->addr;
 	}
+	else
+		shell->literal = 1;
 }
 
 char	*ft_token_translate(t_token *tkn, t_shell *shell)
