@@ -46,21 +46,21 @@ static void	ft_token_assembler(t_token *tkn, t_shell *shell)
 int	ft_token(char *line, t_shell *shell)
 {
 	t_token	tkn;
-	int		i;
 
 	if (!ft_syntax(line))
 		return (0);
 	shell->token = NULL;
 	ft_token_init_all(&tkn);
-	i = -1;
-	while (line[++i])
+	while (*line)
 	{
-		ft_token_find(&tkn, &line[i]);
+		ft_token_find(&tkn, line);
 		if (tkn.end)
 		{
+			line = tkn.end;
 			ft_token_assembler(&tkn, shell);
 			ft_token_init_all(&tkn);
 		}
+		line++;
 	}
 	if (shell->token)
 		return (1);

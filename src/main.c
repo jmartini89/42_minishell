@@ -50,6 +50,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(line_read); // TODO : avoid repetitions
 			if (ft_token(line_read, &shell))
 			{
+				/*
 				pid = fork();
 				if (pid < 0)
 					ft_perror_exit(ERR_SYS_FORK);
@@ -83,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 					if (WEXITSTATUS(wstatus))
 						ft_printf("EXIT STATUS\t%d\n", WEXITSTATUS(wstatus));
 				}
+				*/
 				ft_gc_token(shell.token);
 			}
 		}
