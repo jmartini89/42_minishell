@@ -1,5 +1,0 @@
-git remote prune origin
-git fetch
-git branch -va
-git branch -d [local]
-git diff [master] [working branch]
