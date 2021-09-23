@@ -41,6 +41,12 @@ static void	ft_token_partition_operator(t_token *tkn, char *c)
 		tkn->start = c;
 		tkn->end = c + 1;
 	}
+	if ((operator == REDIR_IN || operator == REDIR_OUT)
+		&& !ft_is_operator(*(c + 1)))
+	{
+		tkn->start = c;
+		tkn->end = c;
+	}
 }
 
 static void	ft_token_partition(t_token *tkn, char *c)
