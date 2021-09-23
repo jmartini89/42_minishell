@@ -1,0 +1,1 @@
+![](https://c.tenor.com/c2B5YyIU8CcAAAAM/happy-back-to-school.gif)
