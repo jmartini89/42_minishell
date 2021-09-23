@@ -58,9 +58,9 @@ int	main(int argc, char **argv, char **envp)
 					if (execve(shell.token[0], exec_arg, shell.env) < 0)
 					{
 						err = errno;
-						ft_perror_exit(ERR_EXEC_NOFILE);
 						free (line_read);
 						line_read = NULL;
+						ft_perror_exit(ERR_EXEC_NOFILE);
 						if (err == ENOENT)
 							exit (127);
 						if (err == EPERM)
