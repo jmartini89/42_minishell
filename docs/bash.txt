@@ -50,3 +50,92 @@ and removes the redirection operators and their operands from the argument list.
 6. Executes the command.
 
 7. Optionally waits for the command to complete and collects its exit status.
+
+/*
+**	BUILTINS
+*/
+
+. (a period)
+		. filename [arguments]
+	Read and execute commands from the filename argument in the current shell
+	context. If filename does not contain a slash, the PATH variable is used to find
+	filename. When Bash is not in posix mode, the current directory is searched
+	if filename is not found in $PATH. If any arguments are supplied, they become
+	the positional parameters when filename is executed. Otherwise the positional
+	parameters are unchanged. If the -T option is enabled, source inherits any
+	trap on DEBUG; if it is not, any DEBUG trap string is saved and restored around
+	the call to source, and source unsets the DEBUG trap while it executes. If
+	-T is not set, and the sourced file changes the DEBUG trap, the new value is
+	retained when source completes. The return status is the exit status of the
+	last command executed, or zero if no commands are executed. If filename is
+	not found, or cannot be read, the return status is non-zero. This builtin is
+	equivalent to source.
+
+cd
+		cd [-L|[-P [-e]] [-@] [directory]
+	Change the current working directory to directory. If directory is not supplied,
+	the value of the HOME shell variable is used. Any additional arguments following
+	directory are ignored. If the shell variable CDPATH exists, it is used as a search
+	path: each directory name in CDPATH is searched for directory, with alternative
+	directory names in CDPATH separated by a colon (‘:’). If directory begins with
+	a slash, CDPATH is not used.
+	The -P option means to not follow symbolic links: symbolic links are resolved
+	while cd is traversing directory and before processing an instance of ‘..’ in
+	directory.
+	By default, or when the -L option is supplied, symbolic links in directory are
+	resolved after cd processes an instance of ‘..’ in directory.
+	If ‘..’ appears in directory, it is processed by removing the immediately pre-
+	ceding pathname component, back to a slash or the beginning of directory.
+	If the -e option is supplied with -P and the current working directory cannot
+	be successfully determined after a successful directory change, cd will return
+	an unsuccessful status.
+	On systems that support it, the -@ option presents the extended attributes
+	associated with a file as a directory.
+	If directory is ‘-’, it is converted to $OLDPWD before the directory change is
+	attempted.
+	If a non-empty directory name from CDPATH is used, or if ‘-’ is the first argu-
+	ment, and the directory change is successful, the absolute pathname of the new
+	working directory is written to the standard output.
+	The return status is zero if the directory is successfully changed, non-zero oth-
+	erwise.
+
+exit
+		exit [n]
+	Exit the shell, returning a status of n to the shell’s parent. If n is omitted, the
+	exit status is that of the last command executed. Any trap on EXIT is executed
+	before the shell terminates.
+
+export
+		export [-fn] [-p] [name[=value]]
+	Mark each name to be passed to child processes in the environment. If the
+	-f option is supplied, the names refer to shell functions; otherwise the names
+	refer to shell variables. The -n option means to no longer mark each name for
+	export. If no names are supplied, or if the -p option is given, a list of names
+	of all exported variables is displayed. The -p option displays output in a form
+	that may be reused as input. If a variable name is followed by =value, the value
+	of the variable is set to value.
+	The return status is zero unless an invalid option is supplied, one of the names
+	is not a valid shell variable name, or -f is supplied with a name that is not a
+	shell function.
+
+pwd
+		pwd [-LP]
+	Print the absolute pathname of the current working directory. If the -P option
+	is supplied, the pathname printed will not contain symbolic links. If the -L
+	option is supplied, the pathname printed may contain symbolic links. The
+	return status is zero unless an error is encountered while determining the name
+	of the current directory or an invalid option is supplied.
+
+unset
+		unset [-fnv] [name]
+	Remove each variable or function name. If the -v option is given, each name
+	refers to a shell variable and that variable is removed. If the -f option is given,
+	the names refer to shell functions, and the function definition is removed. If
+	the -n option is supplied, and name is a variable with the nameref attribute,
+	name will be unset rather than the variable it references. -n has no effect if
+	the -f option is supplied. If no options are supplied, each name refers to a
+	variable; if there is no variable by that name, a function with that name, if
+	any, is unset. Readonly variables and functions may not be unset. Some shell
+	variables lose their special behavior if they are unset; such behavior is noted in
+	the description of the individual variables. The return status is zero unless a
+	name is readonly.
