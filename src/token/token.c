@@ -29,8 +29,6 @@ static int	ft_token_assembler_swap(t_shell *shell)
 static void	ft_token_assembler(t_token *tkn, t_shell *shell)
 {
 	int		len;
-	int		i;
-	char	**tmp;
 	char	*new_tkn;
 
 	ft_token_init_quotes(tkn);
