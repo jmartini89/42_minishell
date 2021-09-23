@@ -2,7 +2,6 @@
 
 static void	ft_token_literal(t_shell *shell, int len)
 {
-	/* WIP WIP WIP */
 	int	*tmp;
 
 	tmp = shell->tkn_literal;
@@ -11,7 +10,10 @@ static void	ft_token_literal(t_shell *shell, int len)
 	shell->tkn_literal = ft_calloc(len + 1, sizeof(*shell->tkn_literal));
 	if (!shell->tkn_literal)
 		ft_perror_exit(ERR_SYS_MALLOC);
+	ft_memcpy(shell->tkn_literal, tmp, sizeof(*tmp) * len);
 	free (tmp);
+	if (shell->literal)
+		shell->tkn_literal[len] = 1;
 }
 
 static int	ft_token_assembler_swap(t_shell *shell)
@@ -53,7 +55,7 @@ static void	ft_token_assembler(t_token *tkn, t_shell *shell)
 		i = ft_token_assembler_swap(shell);
 		shell->token[i] = new_tkn;
 		ft_token_literal(shell, i);
-		ft_printf("TOKEN %d : %s\n", shell->literal, shell->token[i]);
+		ft_printf("TOKEN %d : %s\n", shell->tkn_literal[i], shell->token[i]);
 	}
 	else
 		free (new_tkn);
