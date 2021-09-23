@@ -7,7 +7,7 @@ WORD
 OPERATOR
     unquoted metacharacter
 ```
-
+test
 ### METACHARACTERS
 ```
 space, tab, newline
