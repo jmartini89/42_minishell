@@ -1,7 +1,7 @@
 .TH MAN 0 "2021-09-24" "GNU" "Minishell"
 
 .SH NAME
-Minishell permitted external functions
+Minishell builtin commands
 
 .SH . (a period)
 .B . filename [arguments]
