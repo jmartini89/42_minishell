@@ -1,0 +1,43 @@
+.TH MAN 0 "2021-09-24" "GNU" "Minishell"
+
+.SH NAME
+Minishell definitions
+
+.SH TOKEN
+WORD
+.br
+	sequence of characters treated as a unit
+.br
+	may not include unquoted metacharacters
+.LP
+OPERATOR
+.br
+	unquoted metacharacter
+
+.SH METACHARACTERS
+space, tab, newline
+.br
+| & ; ( ) < >
+
+.SH ESCAPE CHARACTER
+non-quoted backslash \\
+.br
+preserves literal value of next character that follows
+
+.SH BUILTIN
+command implemented in shell
+
+.SH QUOTES
+.br
+SINGLE
+.br
+	preserves the literal value of each character within the quotes
+.LP
+DOUBLE
+.br
+	preserves the literal value of all characters within the quotes
+.br
+	exception: $ ‘ \\ !
+
+.SH AUTHORS
+42_jmartini and 42_mcrisari
