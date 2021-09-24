@@ -5,8 +5,8 @@ int	ft_is_operator(char c)
 	if (c == '|')
 		return (PIPE);
 	if (c == '>')
-		return (REDIR_R);
+		return (REDIR_OUT);
 	if (c == '<')
-		return (REDIR_L);
-	return (0);
+		return (REDIR_IN);
+	return (WORD);
 }

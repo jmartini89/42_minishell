@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_token_quotes(t_token *tkn, char c)
+int	ft_token_quotes_status(t_token *tkn, char c)
 {
 	int	quote;
 	int	status;
@@ -25,14 +25,34 @@ int	ft_token_quotes(t_token *tkn, char c)
 	return (0);
 }
 
-/* TODO : OPERATOR PROPER IMPLEMENTATION */
-static void	ft_token_start_end(t_token *tkn, char *c)
+static void	ft_token_partition_operator(t_token *tkn, char *c)
 {
-	if (ft_is_operator(*c) && !tkn->start)
+	int	operator;
+
+	operator = ft_is_operator(*c);
+	if (operator == PIPE)
 	{
 		tkn->start = c;
 		tkn->end = c;
 	}
+	if ((operator == REDIR_IN || operator == REDIR_OUT)
+		&& ft_is_operator(*(c + 1)) == operator)
+	{
+		tkn->start = c;
+		tkn->end = c + 1;
+	}
+	if ((operator == REDIR_IN || operator == REDIR_OUT)
+		&& !ft_is_operator(*(c + 1)))
+	{
+		tkn->start = c;
+		tkn->end = c;
+	}
+}
+
+static void	ft_token_partition(t_token *tkn, char *c)
+{
+	if (ft_is_operator(*c) && !tkn->start)
+		ft_token_partition_operator(tkn, c);
 	if (!ft_is_space_tab(*c) && !tkn->start)
 		tkn->start = c;
 	if (ft_is_operator(*(c + 1))
@@ -47,6 +67,6 @@ static void	ft_token_start_end(t_token *tkn, char *c)
 
 void	ft_token_find(t_token *tkn, char *c)
 {
-	ft_token_quotes(tkn, *c);
-	ft_token_start_end(tkn, c);
+	ft_token_quotes_status(tkn, *c);
+	ft_token_partition(tkn, c);
 }

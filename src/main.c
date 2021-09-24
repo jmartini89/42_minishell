@@ -1,38 +1,34 @@
 #include "minishell.h"
 
-pid_t	g_pid;
-
-void	ft_sig_int(int sig)
+int	main(int argc, char **argv, char **envp)
 {
-	ft_printf("^C\n");//BUG IF FORKED
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	//ft_printf("DEBUG %d\n", g_pid);
-	if (getpid() == g_pid)
-		rl_redisplay();
-}
-
-void	ft_sig_quit(int sig)
-{
-}
-
-int	main(void)
-{
+	t_shell	shell;
 	char	*line_read;
 	char	**exec_arg;
-	int		tkn_status;
+	int		pid;
 	int		wstatus;
+	int		wexit;
 	int		err;
 
 	line_read = NULL;
 	exec_arg = NULL;
-	rl_catch_signals = 0;
-	signal(SIGINT, ft_sig_int);
-	signal(SIGQUIT, ft_sig_quit);
+
+	ft_env_init(&shell, envp);
+
+/*
+** CWD TEST
+	shell.cwd = getcwd(NULL, 0);
+	ft_printf("%s\n", shell.cwd);
+	chdir("..");
+	free (shell.cwd);`
+	shell.cwd = getcwd(NULL, 0);
+	ft_printf("%s\n", shell.cwd);
+	free (shell.cwd);
+*/
+
 	while (1)
 	{
-		g_pid = getpid();
-		//ft_printf("%d\n", g_pid);
+		ft_signal();
 		if (line_read)
 		{
 			free (line_read);
@@ -41,8 +37,7 @@ int	main(void)
 
 		line_read = readline("\e[32m"M_SHELL_NAME"\e[0m$ ");
 
-		if (line_read == NULL ||
-			(ft_strlen(line_read) == 4 && !ft_memcmp(line_read, "exit", 4)))
+		if (line_read == NULL) // TODO : EXIT COMMAND & EXIT STATUS
 		{
 			ft_printf("exit\n");
 			free (line_read);
@@ -52,33 +47,48 @@ int	main(void)
 
 		if (line_read && *line_read)
 		{
-			add_history(line_read); // BUG : same command
-			tkn_status = ft_token(line_read);
-			if (tkn_status > 0)
+			add_history(line_read); // TODO : avoid repetitions
+			if (ft_token(line_read, &shell))
 			{
 				/*
-				ft_printf(M_SHELL_NAME" echo : %s\n", line_read);
-				g_pid = fork();
-				if (!g_pid)
+				pid = fork();
+				if (pid < 0)
+					ft_perror_exit(ERR_SYS_FORK);
+				if (!pid)
 				{
-					if (execve(line_read, exec_arg, NULL) < 0)
+					if (execve(shell.token[0], exec_arg, shell.env) < 0)
 					{
 						err = errno;
-						ft_printf("%s\n", (strerror(err)));
 						free (line_read);
-						exit(err);
+						line_read = NULL;
+						ft_perror_exit(ERR_EXEC_NOFILE);
+						if (err == ENOENT)
+							exit (127);
+						if (err == EPERM)
+							exit (126);
+						else // TODO : PROPER EXIT
+							exit (err);
 					}
 				}
 				else
 				{
-					while (waitpid(-1, &wstatus, 0) > 0)
-						usleep (10);
+					signal(SIGINT, ft_sig_void);
+					wexit = wait(&wstatus);
+					if (wexit < 0)
+						ft_perror_exit(ERR_SYS_FORK);
+					if (WIFSIGNALED(wstatus))
+					{
+						ft_printf("\n");
+						ft_printf("EXIT STATUS\t%d\n", WTERMSIG(wstatus) + 128);
+					}
+					if (WEXITSTATUS(wstatus))
+						ft_printf("EXIT STATUS\t%d\n", WEXITSTATUS(wstatus));
 				}
 				*/
+				ft_gc_token(shell.token, shell.tkn_literal);
 			}
-			else if (tkn_status < 0)
-				return (EXIT_FAILURE);
 		}
 	}
+	ft_gc(&shell);
 	return (EXIT_SUCCESS);
 }
