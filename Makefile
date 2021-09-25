@@ -3,8 +3,8 @@ CC = gcc
 CFLAGS = $(CWARN) $(HEADERS)
 #CWARN = -Wall -Werror -Wextra
 HEADERS = -I./inc $(addprefix -I./, $(LIBPATH))
-MACOS_INC = -I/Users/jacopomartini/homebrew/opt/readline/include
-MACOS_LIB = -L/Users/jacopomartini/homebrew/opt/readline/lib
+MACOS_INC = -I$(HOME)/homebrew/opt/readline/include
+MACOS_LIB = -L$(HOME)/homebrew/opt/readline/lib
 DEBUG = -g -fsanitize=address
 UNAME = $(shell uname)
 ifeq ($(UNAME), Darwin)
