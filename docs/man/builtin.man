@@ -51,7 +51,9 @@ If -n is specified, the trailing newline is suppressed.
 echo does not interpret -- to mean the end of options.
 
 .SH env
-**TODO : not a BASH builtin**
+.B env
+.br
+Same as export with no name supplied: dislay a list of names of all exported variables.
 
 .SH exit
 .B exit [n]
