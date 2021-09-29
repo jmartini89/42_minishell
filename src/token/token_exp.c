@@ -35,7 +35,8 @@ static int	ft_token_len(t_token *tkn, t_shell *shell)
 			if (*addr == '$' && tkn->s_qts == QTS_CLOSE)
 			{
 				env = ft_token_expansion(tkn, shell, addr);
-				len += ft_strlen(env);
+				if (env)
+					len += ft_strlen(env);
 				while (*addr && !ft_is_quote(*addr) && *(addr + 1) != '$')
 					addr++;
 			}

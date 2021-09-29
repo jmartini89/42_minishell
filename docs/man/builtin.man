@@ -1,0 +1,103 @@
+.TH MAN 0 "2021-09-24" "GNU" "Minishell"
+
+.SH NAME
+Minishell builtin commands
+
+.SH . (a period)
+.B . filename [arguments]
+.br
+Read and execute commands from the filename argument in the current shell context.
+.br
+If filename does not contain a slash, the PATH variable is used to find filename.
+.br
+When Bash is not in posix mode, the current directory is searched if filename is not found in $PATH.
+.br
+If any arguments are supplied, they become the positional parameters when filename is executed. Otherwise the positional parameters are unchanged.
+.br
+The return status is the exit status of the last command executed, or zero if no commands are executed.
+.br
+If filename is not found, or cannot be read, the return status is non-zero.
+.br
+This builtin is equivalent to source.
+
+.SH cd
+.B cd [directory]
+.br
+Change the current working directory to directory. If directory is not supplied, the value of the HOME shell variable is used.
+.br
+Any additional arguments following directory are ignored.
+.br
+If the shell variable CDPATH exists, it is used as a search path: each directory name in CDPATH is searched for directory, with alternative directory names in CDPATH separated by a colon (‘:’). If directory begins with a slash, CDPATH is not used.
+.br
+By default symbolic links in directory are resolved after cd processes an instance of ‘..’ in directory.
+.br
+If ‘..’ appears in directory, it is processed by removing the immediately preceding pathname component, back to a slash or the beginning of directory.
+.br
+If directory is ‘-’, it is converted to $OLDPWD before the directory change is attempted.
+.br
+If a non-empty directory name from CDPATH is used, or if ‘-’ is the first argument, and the directory change is successful, the absolute pathname of the new working directory is written to the standard output.
+.br
+The return status is zero if the directory is successfully changed, non-zero otherwise.
+
+.SH echo
+.B echo [-n] [arg ...]
+.br
+Output the args, separated by spaces, terminated with a newline.
+.br
+The return status is 0 unless a write error occurs. 
+.br
+If -n is specified, the trailing newline is suppressed.
+.br
+echo does not interpret -- to mean the end of options.
+
+.SH env
+.B env
+.br
+Same as export with no name supplied: dislay a list of names of all exported variables.
+
+.SH exit
+.B exit [n]
+.br
+Exit the shell, returning a status of n to the shell’s parent.
+.br
+If n is omitted, the exit status is that of the last command executed.
+.br
+Any trap on EXIT is executed before the shell terminates.
+
+.SH export
+.B export [name[=value]]
+.br
+Mark each name to be passed to child processes in the environment.
+.br
+If no names are supplied, or if the -p option is given, a list of names of all exported variables is displayed.
+.br
+The return status is zero unless an invalid option is supplied, one of the names is not a valid shell variable name, or -f is supplied with a name that is not a shell function.
+
+.SH pwd
+.B pwd
+.br
+Print the absolute pathname of the current working directory.
+.br
+The return status is zero unless an error is encountered while determining the name of the current directory or an invalid option is supplied.
+
+.SH source
+.B source filename
+.br
+A synonym for .
+
+.SH unset
+.B unset [name]
+.br
+Remove each variable or function name.
+.br
+Each name refers to a variable; if there is no variable by that name, a function with that name, if any, is unset.
+.br
+Readonly variables and functions may not be unset.
+.br
+Some shell variables lose their special behavior if they are unset; such behavior is noted in the description of the individual variables.
+.br
+The return status is zero unless a name is readonly.
+tputs
+
+.SH AUTHORS
+42_jmartini and 42_mcrisari

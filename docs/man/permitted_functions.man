@@ -1,0 +1,63 @@
+.TH MAN 0 "2021-09-24" "GNU" "Minishell"
+
+.SH NAME
+Minishell permitted external functions
+
+.SH readline
+readline
+rl_on_new_line
+rl_replace_line
+rl_redisplay
+add_history
+.SH usual stuff
+printf
+malloc
+free
+write
+.SH file descriptor
+open
+read
+close
+.SH process
+fork
+wait
+waitpid
+wait3
+wait4
+signal
+kill
+exit
+.SH dir
+getcwd
+chdir
+stat
+lstat
+fstat
+unlink
+.SH execution
+execve
+dup
+dup2
+pipe
+opendir
+readdir
+closedir
+strerror
+errno
+.SH terminal
+isatty
+ttyname
+ttyslot
+ioctl
+getenv
+tcsetattr
+tcgetattr
+tgetent
+tgetflag
+tgetnum
+tgetstr
+tgoto
+tputs
+
+.SH AUTHORS
+42_jmartini and 42_mcrisari

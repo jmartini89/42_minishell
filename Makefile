@@ -3,11 +3,13 @@ CC = gcc
 CFLAGS = $(CWARN) $(HEADERS)
 #CWARN = -Wall -Werror -Wextra
 HEADERS = -I./inc $(addprefix -I./, $(LIBPATH))
-MACOS = -L~/homebrew/opt/readline/lib -I~/homebrew/opt/readline/include
+MACOS_INC = -I$(HOME)/homebrew/opt/readline/include
+MACOS_LIB = -L$(HOME)/homebrew/opt/readline/lib
 DEBUG = -g -fsanitize=address
 UNAME = $(shell uname)
 ifeq ($(UNAME), Darwin)
-CFLAGS += $(MACOS)
+CFLAGS += $(MACOS_INC)
+MACOS_LINK = $(MACOS_INC) $(MACOS_LIB)
 endif
 RM = rm -f
 
@@ -26,7 +28,7 @@ LIBSTAT = $(addprefix lib/,$(LIBNAME))
 LIBPATH = $(patsubst %, $(LIBDIR)/$(LIBDIR)%, $(LIB))
 LIBINC = $(addprefix -L, $(LIBDIR))
 LIBLINK = $(addprefix -l, $(LIB))
-INCLUDE = $(LIBINC) $(LIBLINK) -lreadline
+INCLUDE = $(LIBINC) $(LIBLINK) -lreadline $(MACOS_LINK)
 
 all : $(TARGET)
 
@@ -38,33 +40,33 @@ $(LIBSTAT) :
 clean :
 	@$(RM) $(TARGET) $(OBJECTS)
 	@$(RM) $(TESTBIN)
-	@echo "\e[33m"$(NAME)" clean completed\e[0m"
+	@echo "\033[33m"$(NAME)" clean completed\033[0m"
 
 fclean : clean
 	@make -s clean -C $(LIBDIR) -f lib.mk
 	@$(RM) -r $(OBJDIR) $(BINDIR)
-	@echo "\e[33mfull clean completed\e[0m"
+	@echo "\033[33mfull clean completed\033[0m"
 
 re : clean all
 
 debug : CFLAGS += $(DEBUG)
 debug : all
-	@echo "\e[31mDEBUG\e[0m"
+	@echo "\033[31mDEBUG\033[0m"
 
 TESTBIN = bin/test.out
 $(TESTBIN) :
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) test.c $(INCLUDE) -o $@
-	@echo "\e[34m"$@" compiled successfully\e[0m"
+	@echo "\033[34m"$@" compiled successfully\033[0m"
 
 #Link
 $(TARGET) : $(OBJECTS) | $(TESTBIN)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -o $@ $^ $(INCLUDE)
-	@echo "\e[32m"$@" compiled successfully\e[0m"
+	@echo "\033[32m"$@" compiled successfully\033[0m"
 
 #Compile
 $(OBJECTS) : $(OBJDIR)/%.o : $(SRCDIR)/%.c | $(LIBSTAT)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "\e[34m"$<" compiled successfully\e[0m"
+	@echo "\033[34m"$<" compiled successfully\033[0m"
