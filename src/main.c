@@ -85,6 +85,7 @@ int	main(int argc, char **argv, char **envp)
 						ft_printf("EXIT STATUS\t%d\n", WEXITSTATUS(wstatus));
 				}
 				*/
+				ft_export(&shell, shell.token);
 				ft_gc_token(shell.token, shell.tkn_literal);
 			}
 		}
