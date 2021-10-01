@@ -7,7 +7,7 @@ static void	ft_builtin_launch(t_shell *shell, char **arg, int status)
 	if (status == (BLTIN_ECHO))
 		;
 	if (status == (BLTIN_ENV))
-		ft_export(shell, arg);
+		ft_env(shell, arg);
 	if (status == (BLTIN_EXIT))
 		ft_exit(shell);
 	if (status == (BLTIN_EXEC))
