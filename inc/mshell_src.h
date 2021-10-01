@@ -10,6 +10,7 @@ typedef struct s_shell
 	char	**token;
 	int		*tkn_literal;
 	int		literal;
+	int		return_status;
 }	t_shell;
 
 #endif
