@@ -19,7 +19,9 @@ void	ft_env(t_shell *shell, char **argv)
 	if (argc > 1)
 	{
 		ft_perror(ERR_BLTIN_ENV);
+		ft_env_return(shell, 1);
 		return ;
 	}
 	ft_env_print(shell->env);
+	ft_env_return(shell, 0);
 }
