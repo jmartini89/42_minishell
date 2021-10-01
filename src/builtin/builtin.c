@@ -8,14 +8,14 @@ static void	ft_builtin_launch(t_shell *shell, char **argv, int status)
 		ft_echo(shell, argv);
 	if (status == (BLTIN_ENV))
 		ft_env(shell, argv);
-	if (status == (BLTIN_EXIT))
-		ft_exit(shell);
 	if (status == (BLTIN_EXEC))
 		ft_exec(shell);
+	if (status == (BLTIN_EXIT))
+		ft_exit(shell);
 	if (status == (BLTIN_EXPORT))
 		ft_export(shell, argv);
 	if (status == (BLTIN_PWD))
-		;
+		ft_pwd(shell, argv);
 	if (status == (BLTIN_UNSET))
 		;
 }
