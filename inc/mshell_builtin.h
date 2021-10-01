@@ -12,7 +12,9 @@ enum	e_builtin {
 	BLTIN_UNSET,
 };
 
-int	ft_builtin(t_shell *shell, char **arg);
-int	ft_export(t_shell *shell, char **argv);
+int		ft_builtin(t_shell *shell, char **arg);
+void	ft_exec(t_shell *shell);
+void	ft_exit(t_shell *shell);
+int		ft_export(t_shell *shell, char **argv);
 
 #endif
