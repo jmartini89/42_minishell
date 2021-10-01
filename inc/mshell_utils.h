@@ -18,7 +18,7 @@ static const char *const	g_errstr[] = {
 	"syntax error : unclosed quotes",
 	"syntax error : undefined special character",
 	"syntax error : unexpected token",
-	"builtin : env : arguments are not supported",
+	"env error : arguments are not supported",
 	"execve error : no such file or directory",
 };
 

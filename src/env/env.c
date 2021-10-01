@@ -1,5 +1,13 @@
 #include "minishell.h"
 
+void	ft_env_return(t_shell *shell, int ret)
+{
+	free (shell->ret_str);
+	shell->ret_str = ft_itoa(ret);
+	if (!shell->ret_str)
+		ft_perror_exit(ERR_SYS_MALLOC);
+}
+
 static void	ft_env_dup(t_shell *shell, char **envp)
 {
 	int		len;
@@ -48,6 +56,8 @@ static void	ft_env_custom(t_shell *shell)
 
 int	ft_env_init(t_shell *shell, char **envp)
 {
+	shell->ret_str = NULL;
+	ft_env_return(shell, 0);
 	ft_env_dup(shell, envp);
 	ft_env_custom(shell);
 	return (1);

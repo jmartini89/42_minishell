@@ -65,10 +65,14 @@ int	main(int argc, char **argv, char **envp)
 						if (WIFSIGNALED(wstatus))
 						{
 							ft_printf("\n");
-							ft_printf("EXIT STATUS\t%d\n", WTERMSIG(wstatus) + 128);
+							ft_env_return(&shell, WTERMSIG(wstatus) + 128);
+							ft_printf("EXIT STATUS\t%s\n", shell.ret_str);
 						}
 						if (WEXITSTATUS(wstatus))
-							ft_printf("EXIT STATUS\t%d\n", WEXITSTATUS(wstatus));
+						{
+							ft_env_return(&shell, WEXITSTATUS(wstatus));
+							ft_printf("EXIT STATUS\t%s\n", shell.ret_str);
+						}
 					}
 				}
 				ft_gc_token(shell.token, shell.tkn_literal);

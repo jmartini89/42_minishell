@@ -26,4 +26,5 @@ void	ft_gc_env(char **env)
 void	ft_gc(t_shell *shell)
 {
 	ft_gc_env(shell->env);
+	free (shell->ret_str);
 }
