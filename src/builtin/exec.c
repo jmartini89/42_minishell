@@ -36,12 +36,12 @@ void	ft_exec(t_shell *shell)
 		{
 			ft_printf("\n");
 			ft_env_return(shell, WTERMSIG(wstatus) + 128);
-			ft_printf("EXIT STATUS\t%s\n", shell->ret_str);
+			//ft_printf("EXIT STATUS\t%s\n", shell->ret_str);
 		}
 		if (WEXITSTATUS(wstatus))
 		{
 			ft_env_return(shell, WEXITSTATUS(wstatus));
-			ft_printf("EXIT STATUS\t%s\n", shell->ret_str);
+			//ft_printf("EXIT STATUS\t%s\n", shell->ret_str);
 		}
 	}
 }
