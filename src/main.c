@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_printf("exit\n");
 			free (shell.line_read);
 			shell.line_read = NULL;
-			ft_exit(&shell);
+			ft_exit(&shell, NULL);
 		}
 
 		if (shell.line_read && *shell.line_read)

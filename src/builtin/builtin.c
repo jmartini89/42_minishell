@@ -11,7 +11,7 @@ static void	ft_builtin_launch(t_shell *shell, char **argv, int status)
 	if (status == (BLTIN_EXEC))
 		ft_exec(shell);
 	if (status == (BLTIN_EXIT))
-		ft_exit(shell);
+		ft_exit(shell, argv);
 	if (status == (BLTIN_EXPORT))
 		ft_export(shell, argv);
 	if (status == (BLTIN_PWD))

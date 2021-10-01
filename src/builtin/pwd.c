@@ -10,7 +10,7 @@ void	ft_pwd(t_shell *shell, char **argv)
 		argc++;
 	if (argc > 1)
 	{
-		ft_perror(ERR_BLTIN_ENV);
+		ft_perror(ERR_BLTIN_ARGS);
 		ft_env_return(shell, 1);
 		return ;
 	}
