@@ -26,32 +26,23 @@ static void	ft_env_dup(t_shell *shell, char **envp)
 	}
 }
 
-static void	ft_env_custom(t_shell *shell)
+static void	ft_env_custom_lvl(t_shell *shell)
 {
-	int		i;
+	char	**custom;
+	char	*itoa;
 	char	*tmp;
-	char	*tmp2;
 
-	tmp = NULL;
-	tmp2 = NULL;
-	i = -1;
-	if (ft_getenv(shell, "SHLVL")) // ELSE EXPORT
-	{
-		while (shell->env[++i])
-		{
-			if (!ft_memcmp(shell->env[i], "SHLVL=", 6))
-			{
-				tmp = ft_itoa(ft_atoi(ft_getenv(shell, "SHLVL")) + 1);
-				tmp2 = ft_strjoin("SHLVL=", tmp);
-				if (!tmp || !tmp2)
-					ft_perror_exit(ERR_SYS_MALLOC);
-				free (tmp);
-				tmp = shell->env[i];
-				shell->env[i] = tmp2;
-				free (tmp);
-			}
-		}
-	}
+	custom = ft_calloc(3, sizeof(*custom));
+	custom[0] = "export";
+	itoa = ft_itoa(ft_atoi(ft_getenv(shell, "SHLVL")) + 1);
+	tmp = ft_strjoin("SHLVL=", itoa);
+	if (!itoa || !tmp)
+		ft_perror_exit(ERR_SYS_MALLOC);
+	free (itoa);
+	custom[1] = tmp;
+	ft_export(shell, custom);
+	free (tmp);
+	free (custom);
 }
 
 int	ft_env_init(t_shell *shell, char **envp)
@@ -59,6 +50,6 @@ int	ft_env_init(t_shell *shell, char **envp)
 	shell->ret_str = NULL;
 	ft_env_return(shell, 0);
 	ft_env_dup(shell, envp);
-	ft_env_custom(shell);
+	ft_env_custom_lvl(shell);
 	return (1);
 }
