@@ -17,7 +17,7 @@ static void	ft_builtin_launch(t_shell *shell, char **argv, int status)
 	if (status == (BLTIN_PWD))
 		ft_pwd(shell, argv);
 	if (status == (BLTIN_UNSET))
-		;
+		ft_unset(shell, argv);
 }
 
 int	ft_builtin(t_shell *shell, char **argv)

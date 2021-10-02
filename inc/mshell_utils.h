@@ -9,6 +9,7 @@ enum	e_err {
 	ERR_SYNTAX_CHAR,
 	ERR_SYNTAX_TKN,
 	ERR_BLTIN_ARGS,
+	ERR_BLTIN_UNSET,
 	ERR_EXEC_NOFILE,
 };
 static const char *const	g_errstr[] = {
@@ -19,6 +20,7 @@ static const char *const	g_errstr[] = {
 	"syntax error : undefined special character",
 	"syntax error : unexpected token",
 	"built-in error : arguments are not supported",
+	"unset : not a valid identifier",
 	"execve error : no such file or directory",
 };
 
