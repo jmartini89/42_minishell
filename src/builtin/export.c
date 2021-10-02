@@ -78,8 +78,7 @@ static void	ft_export_engine(t_shell *shell, char *arg)
 
 void	ft_export(t_shell *shell, char **argv)
 {
-	char	*tmp;
-	int		i;
+	int	i;
 
 	i = 1;
 	while (argv[i])
