@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_env_print(char **env)
+static void	ft_env_print(char **env)
 {
 	int	i;
 

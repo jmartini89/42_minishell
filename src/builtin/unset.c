@@ -1,12 +1,30 @@
 #include "minishell.h"
 
-void	ft_unset_remove(t_shell *shell, char *arg)
+static void	ft_unset_remove_supp(t_shell *shell, char *arg, char **tmp)
+{
+	int	arg_len;
+	int	i;
+	int	j;
+
+	arg_len = ft_strlen(arg);
+	i = -1;
+	j = 0;
+	while (tmp[++i])
+	{
+		if (ft_memcmp(arg, tmp[i], arg_len))
+		{
+			shell->env[j] = ft_strdup(tmp[i]);
+			if (!shell->env[j])
+				ft_perror_exit(ERR_SYS_MALLOC);
+			j++;
+		}
+	}
+}
+
+static void	ft_unset_remove(t_shell *shell, char *arg)
 {
 	char	**tmp;
 	int		len;
-	int		arg_len;
-	int		i;
-	int		j;
 
 	tmp = shell->env;
 	len = 0;
@@ -15,27 +33,11 @@ void	ft_unset_remove(t_shell *shell, char *arg)
 	shell->env = ft_calloc(len + 1, sizeof(*shell->env));
 	if (!shell->env)
 		ft_perror_exit(ERR_SYS_MALLOC);
-	arg_len = ft_strlen(arg);
-	i = 0;
-	j = 0;
-	while (tmp[i])
-	{
-		if (ft_memcmp(arg, tmp[i], arg_len))
-		{
-			shell->env[j] = ft_strdup(tmp[i]);
-			if (!shell->env[j])
-				ft_perror_exit(ERR_SYS_MALLOC);
-			i++;
-			j++;
-		}
-		else if (!ft_memcmp(arg, tmp[i], arg_len)
-			&& tmp[i][arg_len] == '=')
-			i++;
-	}
+	ft_unset_remove_supp(shell, arg, tmp);
 	ft_gc_env(tmp);
 }
 
-int	ft_unset_engine(t_shell *shell, char *arg)
+static int	ft_unset_engine(t_shell *shell, char *arg)
 {
 	int		i;
 
