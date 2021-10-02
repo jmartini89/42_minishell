@@ -46,7 +46,7 @@ static void	ft_export_add(t_shell *shell, char *arg)
 	ft_gc_env(tmp);
 }
 
-static void	ft_export_stuff(t_shell *shell, char *arg)
+static void	ft_export_engine(t_shell *shell, char *arg)
 {
 	char	*env_name;
 	char	*arg_heap;
@@ -82,7 +82,7 @@ void	ft_export(t_shell *shell, char **argv)
 	i = 1;
 	while (argv[i])
 	{
-		ft_export_stuff(shell, argv[i]);
+		ft_export_engine(shell, argv[i]);
 		i++;
 	}
 	if (i == 1)
