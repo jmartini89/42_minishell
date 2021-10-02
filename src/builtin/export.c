@@ -48,14 +48,10 @@ static void	ft_export_add(t_shell *shell, char *arg)
 
 static void	ft_export_stuff(t_shell *shell, char *arg)
 {
-	char	*env;
 	char	*env_name;
 	char	*arg_heap;
 	int		i;
 
-	env = NULL;
-	env_name = NULL;
-	arg_heap = NULL;
 	i = 0;
 	while (arg[i])
 	{
@@ -66,11 +62,10 @@ static void	ft_export_stuff(t_shell *shell, char *arg)
 			if (!env_name)
 				ft_perror_exit(ERR_SYS_MALLOC);
 			ft_memcpy(env_name, arg, i);
-			env = ft_getenv(shell, env_name);
 			arg_heap = ft_strdup(arg);
 			if (!arg_heap)
 				ft_perror_exit(ERR_SYS_MALLOC);
-			if (!env)
+			if (!ft_getenv(shell, env_name))
 				ft_export_add(shell, arg_heap);
 			else
 				ft_export_change(shell, arg_heap, env_name);
