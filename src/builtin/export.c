@@ -35,6 +35,8 @@ static void	ft_export_add(t_shell *shell, char *arg)
 	while (tmp[len])
 		len++;
 	shell->env = ft_calloc(len + 2, sizeof(*shell->env));
+	if (!shell->env)
+		ft_perror_exit(ERR_SYS_MALLOC);
 	i = -1;
 	while (++i < len)
 	{
