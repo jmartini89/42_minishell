@@ -7,7 +7,7 @@ void	ft_echo(t_shell *shell, char **argv)
 
 	newline = 1;
 	i = 1;
-	while (!ft_memcmp(argv[i], "-n", 2) && ft_strlen(argv[i]) == 2)
+	while (argv[i] && !ft_memcmp(argv[i], "-n", 2) && ft_strlen(argv[i]) == 2)
 	{
 		newline = 0;
 		i++;
