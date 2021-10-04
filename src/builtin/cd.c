@@ -8,6 +8,7 @@ void	ft_cd_home(t_shell *shell, char *arg)
 	if (home)
 	{
 		chdir(home);
+		ft_env_return(shell, 0);
 	}
 	else
 	{
@@ -34,8 +35,16 @@ void	ft_cd(t_shell *shell, char **argv)
 	else
 	{
 		stat(argv[1], &statbuf);
-		ft_printf("%u\n", S_ISDIR(statbuf.st_mode));
-		S_ISDIR(statbuf.st_mode);
-		S_ISREG(statbuf.st_mode);
+		if (S_ISDIR(statbuf.st_mode))
+		{
+			chdir(argv[1]);
+			// UPDATE PWD & OLDPWD
+			ft_env_return(shell, 0);
+		}
+		else
+		{
+			ft_perror(ERR_BLTIN_CD_NDIR);
+			ft_env_return(shell, 1);
+		}
 	}
 }
