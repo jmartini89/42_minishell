@@ -9,6 +9,9 @@ enum	e_err {
 	ERR_SYNTAX_CHAR,
 	ERR_SYNTAX_TKN,
 	ERR_BLTIN_ARGS,
+	ERR_BLTIN_CD_ARGS,
+	ERR_BLTIN_CD_NDIR,
+	ERR_BLTIN_CD_HOME,
 	ERR_BLTIN_UNSET,
 	ERR_EXEC_NOFILE,
 };
@@ -20,6 +23,9 @@ static const char *const	g_errstr[] = {
 	"syntax error : undefined special character",
 	"syntax error : unexpected token",
 	"built-in error : arguments are not supported",
+	"cd : too many arguments",
+	"cd : not a directory",
+	"cd : HOME not set",
 	"unset : not a valid identifier",
 	"execve error : no such file or directory",
 };
@@ -28,5 +34,6 @@ int		ft_perror(int err);
 void	ft_perror_exit(int err);
 void	ft_signal(void);
 void	ft_sig_void(int sig);
+int		ft_argc(char **argv);
 
 #endif

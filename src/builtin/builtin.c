@@ -3,13 +3,13 @@
 static void	ft_builtin_launch(t_shell *shell, char **argv, int status)
 {
 	if (status == (BLTIN_CD))
-		;
+		ft_cd(shell, argv);
 	if (status == (BLTIN_ECHO))
 		ft_echo(shell, argv);
 	if (status == (BLTIN_ENV))
 		ft_env(shell, argv);
 	if (status == (BLTIN_EXEC))
-		ft_exec(shell);
+		ft_exec(shell, argv);
 	if (status == (BLTIN_EXIT))
 		ft_exit(shell, argv);
 	if (status == (BLTIN_EXPORT))

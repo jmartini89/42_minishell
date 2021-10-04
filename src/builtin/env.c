@@ -13,7 +13,7 @@ void	ft_env(t_shell *shell, char **argv)
 {
 	int	argc;
 
-	argc = 0;
+	argc = ft_argc(argv);
 	while (argv && argv[argc])
 		argc++;
 	if (argc > 1)

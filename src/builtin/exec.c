@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_exec(t_shell *shell)
+void	ft_exec(t_shell *shell, char **argv)
 {
 	int		pid;
 	int		wstatus;
@@ -12,7 +12,7 @@ void	ft_exec(t_shell *shell)
 		ft_perror_exit(ERR_SYS_FORK);
 	if (!pid)
 	{
-		if (execve(shell->token[0], shell->token, shell->env) < 0)
+		if (execve(argv[0], argv, shell->env) < 0)
 		{
 			err = errno;
 			free (shell->line_read);

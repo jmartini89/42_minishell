@@ -9,6 +9,7 @@
 # include <errno.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <signal.h>
 /* LOCAL LIBRARIES*/
 # include "libft.h"

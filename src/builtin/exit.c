@@ -4,9 +4,7 @@ void	ft_exit(t_shell *shell, char **argv)
 {
 	int	argc;
 
-	argc = 0;
-	while (argv && argv[argc])
-		argc++;
+	argc = ft_argc(argv);
 	if (argc > 1)
 	{
 		ft_perror(ERR_BLTIN_ARGS);
