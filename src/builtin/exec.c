@@ -2,11 +2,19 @@
 
 void	ft_exec(t_shell *shell, char **argv)
 {
-	int		pid;
-	int		wstatus;
-	int		wexit;
-	int		err;
+	int				pid;
+	int				wstatus;
+	int				wexit;
+	int				err;
+	DIR				*dir;
+	struct dirent	*dirent;
 
+	/*
+	dir = opendir("/bin");
+	while (dirent = readdir(dir))
+		ft_printf("%s\n", dirent->d_name);
+	closedir(dir);
+	*/
 	pid = fork();
 	if (pid < 0)
 		ft_perror_exit(ERR_SYS_FORK);

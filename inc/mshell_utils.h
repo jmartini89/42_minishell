@@ -12,6 +12,7 @@ enum	e_err {
 	ERR_BLTIN_CD_ARGS,
 	ERR_BLTIN_CD_NDIR,
 	ERR_BLTIN_CD_HOME,
+	ERR_BLTIN_PWD_NDIR,
 	ERR_BLTIN_UNSET,
 	ERR_EXEC_NOFILE,
 };
@@ -26,6 +27,7 @@ static const char *const	g_errstr[] = {
 	"cd : too many arguments",
 	"cd : not a directory",
 	"cd : HOME not set",
+	"pwd : the current working directory has been unlinked",
 	"unset : not a valid identifier",
 	"execve error : no such file or directory",
 };
