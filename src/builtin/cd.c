@@ -1,11 +1,11 @@
 #include "minishell.h"
 
-static void	ft_cd_custom(t_shell *shell, char *custom)
+static void	ft_cd_home(t_shell *shell)
 {
 	int		err;
 	char	*env;
 
-	env = ft_getenv(shell, custom);
+	env = ft_getenv(shell, "HOME");
 	if (env)
 	{
 		if (chdir(env) < 0)
@@ -19,7 +19,7 @@ static void	ft_cd_custom(t_shell *shell, char *custom)
 	}
 	else
 	{
-		ft_perror(ERR_BLTIN_CD_ENV);
+		ft_perror(ERR_BLTIN_CD_HOME);
 		ft_env_return(shell, 1);
 		return ;
 	}
@@ -51,9 +51,7 @@ void	ft_cd(t_shell *shell, char **argv)
 	}
 	ft_pwd_export_old(shell);
 	if (argc == 1)
-		ft_cd_custom(shell, "HOME");
-	else if (ft_strlen(argv[1]) == 1 && !ft_memcmp("-", argv[1], 1))
-		ft_cd_custom(shell, "OLDPWD");
+		ft_cd_home(shell);
 	else
 		ft_chdir(shell, argv[1]);
 	ft_pwd_export_new(shell);
