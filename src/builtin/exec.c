@@ -23,8 +23,6 @@ void	ft_exec(t_shell *shell, char **argv)
 		if (execve(argv[0], argv, shell->env) < 0)
 		{
 			err = errno;
-			free (shell->line_read);
-			shell->line_read = NULL;
 			ft_perror(ERR_EXEC_NOFILE); // GENERIC
 			if (err == ENOENT)
 				exit (127);

@@ -5,7 +5,6 @@
 
 typedef struct s_shell
 {
-	char	*line_read;
 	char	**env;
 	char	*cwd;
 	char	**token;
