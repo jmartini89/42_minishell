@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_chdir_home(t_shell *shell, char *arg)
+void	ft_cd_home(t_shell *shell, char *arg)
 {
 	char	*home;
 
@@ -18,7 +18,7 @@ void	ft_chdir_home(t_shell *shell, char *arg)
 	}
 }
 
-void	ft_chdir(t_shell *shell, char **argv)
+void	ft_cd(t_shell *shell, char **argv)
 {
 	struct stat	statbuf;
 	int			argc;
