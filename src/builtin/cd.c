@@ -37,8 +37,9 @@ void	ft_cd(t_shell *shell, char **argv)
 		stat(argv[1], &statbuf);
 		if (S_ISDIR(statbuf.st_mode))
 		{
+			// UPDATE OLDPWD
 			chdir(argv[1]);
-			// UPDATE PWD & OLDPWD
+			// UPDATE PWD
 			ft_env_return(shell, 0);
 		}
 		else

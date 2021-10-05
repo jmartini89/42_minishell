@@ -25,7 +25,7 @@ void	ft_exec(t_shell *shell, char **argv)
 			err = errno;
 			free (shell->line_read);
 			shell->line_read = NULL;
-			ft_perror_exit(ERR_EXEC_NOFILE);
+			ft_perror(ERR_EXEC_NOFILE); // GENERIC
 			if (err == ENOENT)
 				exit (127);
 			if (err == EPERM)
