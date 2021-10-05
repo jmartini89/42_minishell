@@ -1,13 +1,25 @@
 #include "minishell.h"
 
+void	ft_pwd_update_old()
+{
+	//
+}
+
 void	ft_cd_home(t_shell *shell, char *arg)
 {
 	char	*home;
+	int		err;
 
 	home = ft_getenv(shell, "HOME");
 	if (home)
 	{
-		chdir(home);
+		if (chdir(home) < 0)
+		{
+			err = errno;
+			ft_strerror("cd", err);
+			ft_env_return(shell, 1);
+			return ;
+		}
 		ft_env_return(shell, 0);
 	}
 	else
@@ -20,8 +32,8 @@ void	ft_cd_home(t_shell *shell, char *arg)
 
 void	ft_cd(t_shell *shell, char **argv)
 {
-	struct stat	statbuf;
 	int			argc;
+	int			err;
 
 	argc = ft_argc(argv);
 	if (argc > 2)
@@ -34,18 +46,10 @@ void	ft_cd(t_shell *shell, char **argv)
 		ft_cd_home(shell, argv[1]);
 	else
 	{
-		stat(argv[1], &statbuf);
-		if (S_ISDIR(statbuf.st_mode))
+		if (chdir(argv[1]) < 0)
 		{
-			// UPDATE OLDPWD
-			chdir(argv[1]);
-			// UPDATE PWD
-			ft_env_return(shell, 0);
-		}
-		else
-		{
-			ft_perror(ERR_BLTIN_CD_NDIR);
-			ft_env_return(shell, 1);
+			err = errno;
+			ft_strerror("cd", err);
 		}
 	}
 }

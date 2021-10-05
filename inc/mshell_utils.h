@@ -10,7 +10,6 @@ enum	e_err {
 	ERR_SYNTAX_TKN,
 	ERR_BLTIN_ARGS,
 	ERR_BLTIN_CD_ARGS,
-	ERR_BLTIN_CD_NDIR,
 	ERR_BLTIN_CD_HOME,
 	ERR_BLTIN_PWD_NDIR,
 	ERR_BLTIN_UNSET,
@@ -25,7 +24,6 @@ static const char *const	g_errstr[] = {
 	"syntax error : unexpected token",
 	"built-in error : arguments are not supported",
 	"cd : too many arguments",
-	"cd : not a directory",
 	"cd : HOME not set",
 	"pwd : the current working directory has been unlinked",
 	"unset : not a valid identifier",
@@ -34,6 +32,7 @@ static const char *const	g_errstr[] = {
 
 int		ft_perror(int err);
 void	ft_perror_exit(int err);
+int		ft_strerror(char *type, int err);
 void	ft_signal(void);
 void	ft_sig_void(int sig);
 int		ft_argc(char **argv);
