@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	**ft_exec_env_path_split(t_shell *shell)
+static char	**ft_exec_path_split(t_shell *shell)
 {
 	char	*env_path;
 	char	**path_dirs;
@@ -14,35 +14,44 @@ char	**ft_exec_env_path_split(t_shell *shell)
 	return (path_dirs);
 }
 
-char	*ft_exec_src_path(char **path, char *arg)
+static int	ft_exec_src_file(DIR *dir, char *arg)
+{
+	struct dirent	*dirent;
+	int				arg_len;
+
+	arg_len = ft_strlen(arg);
+	while (1)
+	{
+		dirent = readdir(dir);
+		if (!dirent)
+			break ;
+		else
+		{
+			if (!ft_memcmp(dirent->d_name, arg, arg_len)
+				&& !dirent->d_name[arg_len])
+			{
+				closedir(dir);
+				return (1);
+			}
+		}
+	}
+	return (0);
+}
+
+char	*ft_exec_src_dir(char **path, char *arg)
 {
 	DIR				*dir;
 	struct dirent	*dirent;
 	int				i;
-	int				arg_len;
 
-	arg_len = ft_strlen(arg);
 	i = -1;
 	while (path[++i])
 	{
 		dir = opendir(path[i]);
 		if (dir)
 		{
-			while (1)
-			{
-				dirent = readdir(dir);
-				if (!dirent)
-					break ;
-				else
-				{
-					if (!ft_memcmp(dirent->d_name, arg, arg_len)
-						&& !dirent->d_name[arg_len])
-					{
-						closedir(dir);
-						return (path[i]);
-					}
-				}
-			}
+			if (ft_exec_src_file(dir, arg))
+				return (path[i]);
 			closedir(dir);
 		}
 	}
@@ -55,10 +64,10 @@ void	ft_exec_env_path(t_shell *shell, char **arg)
 	char	*dir;
 	int		i;
 
-	path = ft_exec_env_path_split(shell);
+	path = ft_exec_path_split(shell);
 	if (!path)
 		return ;
-	dir = ft_exec_src_path(path, *arg);
+	dir = ft_exec_src_dir(path, *arg);
 	if (!dir)
 		return (ft_gc_arr_str(path));
 	ft_printf("%s/%s\n", dir, *arg);
