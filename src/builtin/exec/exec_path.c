@@ -29,10 +29,7 @@ static int	ft_exec_src_file(DIR *dir, char *arg)
 		{
 			if (!ft_memcmp(dirent->d_name, arg, arg_len)
 				&& !dirent->d_name[arg_len])
-			{
-				closedir(dir);
 				return (1);
-			}
 		}
 	}
 	return (0);
@@ -50,7 +47,10 @@ char	*ft_exec_src_dir(char **path, char *arg)
 		if (dir)
 		{
 			if (ft_exec_src_file(dir, arg))
+			{
+				closedir(dir);
 				return (path[i]);
+			}
 			closedir(dir);
 		}
 	}
