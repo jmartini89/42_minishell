@@ -23,10 +23,10 @@ static const char *const	g_errstr[] = {
 	"syntax error : undefined special character",
 	"syntax error : unexpected token",
 	"built-in error : arguments are not supported",
-	"cd : too many arguments",
-	"cd : HOME not set",
-	"pwd : the current working directory has been unlinked",
-	"unset : not a valid identifier",
+	"cd error : too many arguments",
+	"cd error : HOME not set",
+	"pwd error : the current working directory has been unlinked",
+	"unset error : not a valid identifier",
 	"execve error : no such file or directory",
 };
 

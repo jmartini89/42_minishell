@@ -34,7 +34,7 @@ static void	ft_unset_remove(t_shell *shell, char *arg)
 	if (!shell->env)
 		ft_perror_exit(ERR_SYS_MALLOC);
 	ft_unset_remove_supp(shell, arg, tmp);
-	ft_gc_env(tmp);
+	ft_gc_arr_str(tmp);
 }
 
 static int	ft_unset_engine(t_shell *shell, char *arg)

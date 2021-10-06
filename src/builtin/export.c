@@ -45,7 +45,7 @@ static void	ft_export_add(t_shell *shell, char *arg)
 			ft_perror_exit(ERR_SYS_MALLOC);
 	}
 	shell->env[len] = arg;
-	ft_gc_env(tmp);
+	ft_gc_arr_str(tmp);
 }
 
 static void	ft_export_engine(t_shell *shell, char *arg)
