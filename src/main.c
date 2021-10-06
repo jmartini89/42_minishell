@@ -20,7 +20,7 @@ int	main(int argc, char **argv, char **envp)
 			line_read = NULL;
 		}
 
-		line_read = readline("\e[32m"M_SHELL_NAME"\e[0m$ ");
+		line_read = readline(M_SHELL_PROMPT);
 
 		if (line_read == NULL) // TODO : EXIT COMMAND & EXIT STATUS
 		{
