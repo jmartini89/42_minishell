@@ -7,6 +7,8 @@ char	*ft_getenv(t_shell *shell, char *str)
 
 	len = ft_strlen(str);
 	i = -1;
+	if (!ft_memcmp(str, "?", 1) && ft_strlen(str) == 1)
+		return (shell->ret_str);
 	while (shell->env[++i])
 	{
 		if (!ft_memcmp(shell->env[i], str, len)

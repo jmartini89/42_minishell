@@ -55,7 +55,7 @@ static void	ft_token_assembler(t_token *tkn, t_shell *shell)
 		i = ft_token_assembler_swap(shell);
 		shell->token[i] = new_tkn;
 		ft_token_literal(shell, i);
-		ft_printf("TOKEN %d : %s\n", shell->tkn_literal[i], shell->token[i]);
+		//ft_printf("TOKEN %d : %s\n", shell->tkn_literal[i], shell->token[i]);
 	}
 	else
 		free (new_tkn);
