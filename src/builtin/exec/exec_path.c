@@ -40,9 +40,8 @@ static int	ft_exec_src_file(DIR *dir, char *arg)
 
 char	*ft_exec_src_dir(char **path, char *arg)
 {
-	DIR				*dir;
-	struct dirent	*dirent;
-	int				i;
+	DIR	*dir;
+	int	i;
 
 	i = -1;
 	while (path[++i])
@@ -62,6 +61,8 @@ void	ft_exec_env_path(t_shell *shell, char **arg)
 {
 	char	**path;
 	char	*dir;
+	char	*dir_heap;
+	char	*tmp;
 	int		i;
 
 	path = ft_exec_path_split(shell);
@@ -70,6 +71,12 @@ void	ft_exec_env_path(t_shell *shell, char **arg)
 	dir = ft_exec_src_dir(path, *arg);
 	if (!dir)
 		return (ft_gc_arr_str(path));
-	ft_printf("%s/%s\n", dir, *arg);
+	dir_heap = ft_strjoin(dir, "/");
+	if (!dir_heap)
+		ft_perror_exit(ERR_SYS_MALLOC);
+	tmp = *arg;
+	*arg = ft_strjoin(dir_heap, *arg);
+	free (dir_heap);
+	free (tmp);
 	ft_gc_arr_str(path);
 }
