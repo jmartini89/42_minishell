@@ -30,11 +30,22 @@ static const char *const	g_errstr[] = {
 	"execve error : no such file or directory",
 };
 
+/* ERROR */
 int		ft_perror(int err);
 void	ft_perror_exit(int err);
 int		ft_strerror(char *type, int err);
+
+/* GARBAGE COLLECTOR */
+void	ft_gc(t_shell *shell);
+void	ft_gc_arr_str(char **heap);
+void	ft_gc_token(char **token, int *literal);
+
+/* SIGNAL */
 void	ft_signal(void);
 void	ft_sig_void(int sig);
+
+/* ARGS */
 int		ft_argc(char **argv);
+char	**ft_argv_dup(char **argv);
 
 #endif
