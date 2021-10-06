@@ -10,8 +10,8 @@ void	ft_env_return(t_shell *shell, int ret)
 
 static void	ft_env_dup(t_shell *shell, char **envp)
 {
-	int		len;
-	int		i;
+	int	len;
+	int	i;
 
 	len = 0;
 	while (envp[len])
