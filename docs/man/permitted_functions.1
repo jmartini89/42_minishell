@@ -9,6 +9,7 @@ rl_on_new_line
 rl_replace_line
 rl_redisplay
 add_history
+rl_clear_history
 .SH usual stuff
 printf
 malloc
@@ -45,7 +46,7 @@ dup2
 pipe
 .SH error
 strerror
-errno
+perror
 .SH terminal
 isatty
 ttyname
