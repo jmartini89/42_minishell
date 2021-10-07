@@ -23,10 +23,11 @@ int	main(int argc, char **argv, char **envp)
 		line_read = readline(M_SHELL_PROMPT);
 		if (line_read == NULL)
 		{
-			ft_printf("exit\n");
 			free (line_read);
 			line_read = NULL;
-			ft_exit(&shell, NULL);
+			//ft_exit(&shell, NULL);
+			ft_printf("exit\n"); // DEBUG
+			break ; // DEBUG
 		}
 		if (line_read && *line_read)
 		{
