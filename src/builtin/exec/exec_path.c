@@ -63,7 +63,6 @@ int	ft_exec_env_path(t_shell *shell, char **arg)
 	char	*dir;
 	char	*dir_heap;
 	char	*tmp;
-	int		i;
 
 	path = ft_exec_path_split(shell);
 	if (!path)

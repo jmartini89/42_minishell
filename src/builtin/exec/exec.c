@@ -54,18 +54,18 @@ void	ft_exec(t_shell *shell, char **argv)
 	}
 	else
 	{
-		wexit = wait(&wstatus);
+		wexit = waitpid(-1, &wstatus, WUNTRACED);
 		if (wexit < 0)
 			ft_perrno_exit(ERR_SYS_FORK);
+		if (WIFSTOPPED(wstatus))
+			ft_env_return(shell, WSTOPSIG(wstatus) + 128);
 		if (WIFSIGNALED(wstatus))
 		{
 			ft_printf("\n");
 			ft_env_return(shell, WTERMSIG(wstatus) + 128);
 		}
-		if (WEXITSTATUS(wstatus))
-		{
+		if (WIFEXITED(wstatus))
 			ft_env_return(shell, WEXITSTATUS(wstatus));
-		}
 	}
 	ft_gc_arr_str(argv_heap);
 }

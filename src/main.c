@@ -4,10 +4,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 	char	*line_read;
-	int		pid;
-	int		wstatus;
-	int		wexit;
-	int		err;
 
 	ft_env_init(&shell, envp);
 	line_read = NULL;
@@ -33,7 +29,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(line_read);
 			if (ft_token(line_read, &shell))
 			{
-				signal(SIGINT, SIG_IGN); // TEST PURPOSE, MAYBE NOT A GOOD IDEA
+				signal(SIGINT, SIG_IGN);
 				ft_builtin(&shell, shell.token);
 				ft_gc_token(shell.token, shell.tkn_literal);
 				signal(SIGINT, ft_sig_int);
