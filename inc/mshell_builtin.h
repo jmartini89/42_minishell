@@ -13,7 +13,7 @@ void	ft_unset(t_shell *shell, char **argv);
 
 /* EXEC */
 void	ft_exec(t_shell *shell, char **argv);
-void	ft_exec_env_path(t_shell *shell, char **arg);
+int		ft_exec_env_path(t_shell *shell, char **arg);
 
 /* UTILS */
 char	*ft_getcwd(t_shell *shell);

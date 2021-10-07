@@ -24,7 +24,15 @@ void	ft_exec(t_shell *shell, char **argv)
 
 	argv_heap = ft_argv_dup(argv);
 	if (!ft_exec_is_path(argv_heap[0]))
-		ft_exec_env_path(shell, &argv_heap[0]);
+	{
+		if (!ft_exec_env_path(shell, &argv_heap[0]))
+		{
+			ft_gc_arr_str(argv_heap);
+			ft_perrno(ERR_EXEC_NOCMD, NULL);
+			ft_env_return(shell, 1);
+			return ;
+		}
+	}
 	pid = fork();
 	if (pid < 0)
 		ft_perrno_exit(ERR_SYS_FORK);
@@ -46,7 +54,6 @@ void	ft_exec(t_shell *shell, char **argv)
 	}
 	else
 	{
-		//signal(SIGINT, SIG_IGN);
 		wexit = wait(&wstatus);
 		if (wexit < 0)
 			ft_perrno_exit(ERR_SYS_FORK);
@@ -54,12 +61,10 @@ void	ft_exec(t_shell *shell, char **argv)
 		{
 			ft_printf("\n");
 			ft_env_return(shell, WTERMSIG(wstatus) + 128);
-			//ft_printf("EXIT STATUS\t%s\n", shell->ret_str);
 		}
 		if (WEXITSTATUS(wstatus))
 		{
 			ft_env_return(shell, WEXITSTATUS(wstatus));
-			//ft_printf("EXIT STATUS\t%s\n", shell->ret_str);
 		}
 	}
 	ft_gc_arr_str(argv_heap);

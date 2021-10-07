@@ -57,7 +57,7 @@ char	*ft_exec_src_dir(char **path, char *arg)
 	return (NULL);
 }
 
-void	ft_exec_env_path(t_shell *shell, char **arg)
+int	ft_exec_env_path(t_shell *shell, char **arg)
 {
 	char	**path;
 	char	*dir;
@@ -67,10 +67,13 @@ void	ft_exec_env_path(t_shell *shell, char **arg)
 
 	path = ft_exec_path_split(shell);
 	if (!path)
-		return ;
+		return (0);
 	dir = ft_exec_src_dir(path, *arg);
 	if (!dir)
-		return (ft_gc_arr_str(path));
+	{
+		ft_gc_arr_str(path);
+		return (0);
+	}
 	dir_heap = ft_strjoin(dir, "/");
 	if (!dir_heap)
 		ft_perrno_exit(ERR_SYS_MALLOC);
@@ -79,4 +82,5 @@ void	ft_exec_env_path(t_shell *shell, char **arg)
 	free (dir_heap);
 	free (tmp);
 	ft_gc_arr_str(path);
+	return (1);
 }
