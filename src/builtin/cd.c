@@ -11,7 +11,7 @@ static void	ft_cd_home(t_shell *shell)
 		if (chdir(env) < 0)
 		{
 			err = errno;
-			ft_perrno_ext("cd", err);
+			ft_perrno_sys("cd", err);
 			ft_env_return(shell, 1);
 			return ;
 		}
@@ -32,7 +32,7 @@ static void	ft_chdir(t_shell *shell, char *arg)
 	if (chdir(arg) < 0)
 	{
 		err = errno;
-		ft_perrno_ext("cd", err);
+		ft_perrno_sys("cd", err);
 		ft_env_return(shell, 1);
 	}
 	ft_env_return(shell, 0);

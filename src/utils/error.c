@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_perrno_ext(char *type, int err)
+int	ft_perrno_sys(char *type, int err)
 {
 	ft_putstr_fd(M_SHELL_NAME" : ", 2);
 	ft_putstr_fd(type, 2);
