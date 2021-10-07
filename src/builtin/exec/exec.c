@@ -33,7 +33,9 @@ void	ft_exec(t_shell *shell, char **argv)
 		if (execve(argv_heap[0], argv_heap, shell->env) < 0)
 		{
 			err = errno;
+			rl_clear_history();
 			ft_perror(ERR_EXEC_NOFILE); // GENERIC
+			ft_printf("ERRNO %d\n", err);
 			if (err == ENOENT)
 				exit (127);
 			if (err == EPERM)
@@ -44,7 +46,7 @@ void	ft_exec(t_shell *shell, char **argv)
 	}
 	else
 	{
-		signal(SIGINT, ft_sig_void);
+		//signal(SIGINT, SIG_IGN);
 		wexit = wait(&wstatus);
 		if (wexit < 0)
 			ft_perror_exit(ERR_SYS_FORK);

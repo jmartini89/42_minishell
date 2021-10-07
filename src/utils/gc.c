@@ -25,6 +25,7 @@ void	ft_gc_arr_str(char **heap)
 
 void	ft_gc(t_shell *shell)
 {
+	rl_clear_history();
 	ft_gc_arr_str(shell->env);
 	free (shell->ret_str);
 }

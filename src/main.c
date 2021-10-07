@@ -11,30 +11,29 @@ int	main(int argc, char **argv, char **envp)
 
 	ft_env_init(&shell, envp);
 	line_read = NULL;
+	ft_signal();
 	while (1)
 	{
-		ft_signal();
+		signal(SIGINT, ft_sig_int);
 		if (line_read)
 		{
 			free (line_read);
 			line_read = NULL;
 		}
-
 		line_read = readline(M_SHELL_PROMPT);
-
-		if (line_read == NULL) // TODO : EXIT COMMAND & EXIT STATUS
+		if (line_read == NULL)
 		{
 			ft_printf("exit\n");
 			free (line_read);
 			line_read = NULL;
 			ft_exit(&shell, NULL);
 		}
-
 		if (line_read && *line_read)
 		{
-			add_history(line_read); // TODO : avoid repetitions
+			add_history(line_read);
 			if (ft_token(line_read, &shell))
 			{
+				signal(SIGINT, SIG_IGN); // TEST PURPOSE, MAYBE NOT A GOOD IDEA
 				ft_builtin(&shell, shell.token);
 				ft_gc_token(shell.token, shell.tkn_literal);
 			}
