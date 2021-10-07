@@ -35,28 +35,27 @@ void	ft_exec(t_shell *shell, char **argv)
 	}
 	pid = fork();
 	if (pid < 0)
-		ft_perrno_exit(ERR_SYS_FORK);
+		ft_perrno_exit(ERR_SYS_FORK, EXIT_FAILURE);
 	if (!pid)
 	{
-		ft_signal_dfl();
+		ft_signal_default();
 		if (execve(argv_heap[0], argv_heap, shell->env) < 0)
 		{
 			err = errno;
 			rl_clear_history();
-			ft_perrno(ERR_EXEC_NOFILE, NULL); // GENERIC
 			if (err == ENOENT)
-				exit (127);
-			if (err == EPERM)
-				exit (126);
-			else // TODO : PROPER EXIT
-				exit (err);
+				ft_perrno_exit(ERR_EXEC_NOFILE, 127);
+			if (err == EACCES)
+				ft_perrno_exit(ERR_EXEC_PERM, 126);
+			else
+				ft_perrno_exit(ERR_EXEC_UNKWN, EXIT_FAILURE);
 		}
 	}
 	else
 	{
 		wexit = waitpid(-1, &wstatus, WUNTRACED);
 		if (wexit < 0)
-			ft_perrno_exit(ERR_SYS_FORK);
+			ft_perrno_exit(ERR_SYS_FORK, EXIT_FAILURE);
 		if (WIFSTOPPED(wstatus))
 			ft_env_return(shell, WSTOPSIG(wstatus) + 128);
 		if (WIFSIGNALED(wstatus))

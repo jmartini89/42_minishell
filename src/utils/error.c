@@ -1,11 +1,11 @@
 #include "minishell.h"
 
-void	ft_perrno_exit(int err)
+void	ft_perrno_exit(int err, int status)
 {
 	ft_putstr_fd(M_SHELL_NAME" : ", 2);
 	ft_putstr_fd((char *)g_errstr[err], 2);
 	ft_putstr_fd("\n", 2);
-	exit (EXIT_FAILURE);
+	exit (status);
 }
 
 void	ft_perrno(int err, char *libc)

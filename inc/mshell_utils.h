@@ -14,7 +14,9 @@ enum	e_err {
 	ERR_BLTIN_PWD_NDIR,
 	ERR_BLTIN_UNSET,
 	ERR_EXEC_NOFILE,
+	ERR_EXEC_PERM,
 	ERR_EXEC_NOCMD,
+	ERR_EXEC_UNKWN,
 };
 static const char *const	g_errstr[] = {
 	"Undefined",
@@ -29,12 +31,14 @@ static const char *const	g_errstr[] = {
 	"pwd: the current working directory has been unlinked",
 	"unset: not a valid identifier",
 	"execve: no such file or directory",
+	"execve: permission denied",
 	"execve: command not found",
+	"execve: unknown error",
 };
 
 /* ERROR */
 void	ft_perrno(int err, char *libc);
-void	ft_perrno_exit(int err);
+void	ft_perrno_exit(int err, int status);
 
 /* GARBAGE COLLECTOR */
 void	ft_gc(t_shell *shell);
@@ -44,7 +48,7 @@ void	ft_gc_token(char **token, int *literal);
 /* SIGNAL */
 void	ft_signal(void);
 void	ft_sig_int(int sig);
-void	ft_signal_dfl(void);
+void	ft_signal_default(void);
 
 /* ARGS */
 int		ft_argc(char **argv);

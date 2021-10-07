@@ -8,7 +8,7 @@ void	ft_sig_int(int sig)
 	rl_redisplay();
 }
 
-void	ft_signal_dfl(void)
+void	ft_signal_default(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);

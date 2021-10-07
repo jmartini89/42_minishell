@@ -5,7 +5,7 @@ void	ft_env_return(t_shell *shell, int ret)
 	free (shell->ret_str);
 	shell->ret_str = ft_itoa(ret);
 	if (!shell->ret_str)
-		ft_perrno_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 }
 
 static void	ft_env_custom_lvl(t_shell *shell)
@@ -24,7 +24,7 @@ static void	ft_env_custom_lvl(t_shell *shell)
 		itoa = "1";
 	tmp = ft_strjoin("SHLVL=", itoa);
 	if (!itoa || !tmp)
-		ft_perrno_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	if (lvl)
 		free (itoa);
 	custom[1] = tmp;

@@ -10,7 +10,7 @@ static char	**ft_exec_path_split(t_shell *shell)
 		return (NULL);
 	path_dirs = ft_split(env_path, ':');
 	if (!path_dirs)
-		ft_perrno_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	return (path_dirs);
 }
 
@@ -75,7 +75,7 @@ int	ft_exec_env_path(t_shell *shell, char **arg)
 	}
 	dir_heap = ft_strjoin(dir, "/");
 	if (!dir_heap)
-		ft_perrno_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	tmp = *arg;
 	*arg = ft_strjoin(dir_heap, *arg);
 	free (dir_heap);
