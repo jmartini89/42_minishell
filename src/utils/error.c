@@ -10,11 +10,11 @@ void	ft_perrno_exit(int err)
 
 void	ft_perrno(int err, char *libc)
 {
-	ft_putstr_fd(M_SHELL_NAME" : ", 2);
+	ft_putstr_fd(M_SHELL_NAME": ", 2);
 	if (libc)
 	{
 		ft_putstr_fd(libc, 2);
-		ft_putstr_fd(" : ", 2);
+		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(strerror(err), 2);
 	}
 	else
