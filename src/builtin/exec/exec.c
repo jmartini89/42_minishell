@@ -35,7 +35,7 @@ void	ft_exec(t_shell *shell, char **argv)
 		{
 			err = errno;
 			rl_clear_history();
-			ft_perrno_int(ERR_EXEC_NOFILE); // GENERIC
+			ft_perrno(ERR_EXEC_NOFILE, NULL); // GENERIC
 			ft_printf("ERRNO %d\n", err);
 			if (err == ENOENT)
 				exit (127);

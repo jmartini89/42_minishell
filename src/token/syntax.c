@@ -51,7 +51,7 @@ int	ft_syntax(char *line_read)
 	err = ft_is_valid_line(line_read);
 	if (err)
 	{
-		ft_perrno_int(err);
+		ft_perrno(err, NULL);
 		return (0);
 	}
 	return (1);

@@ -7,7 +7,7 @@ void	ft_exit(t_shell *shell, char **argv)
 	argc = ft_argc(argv);
 	if (argc > 1)
 	{
-		ft_perrno_int(ERR_BLTIN_ARGS);
+		ft_perrno(ERR_BLTIN_ARGS, NULL);
 		ft_env_return(shell, 1);
 		return ;
 	}

@@ -11,7 +11,7 @@ static void	ft_cd_home(t_shell *shell)
 		if (chdir(env) < 0)
 		{
 			err = errno;
-			ft_perrno_sys(err, "cd");
+			ft_perrno(err, "cd");
 			ft_env_return(shell, 1);
 			return ;
 		}
@@ -19,7 +19,7 @@ static void	ft_cd_home(t_shell *shell)
 	}
 	else
 	{
-		ft_perrno_int(ERR_BLTIN_CD_HOME);
+		ft_perrno(ERR_BLTIN_CD_HOME, NULL);
 		ft_env_return(shell, 1);
 		return ;
 	}
@@ -32,7 +32,7 @@ static void	ft_chdir(t_shell *shell, char *arg)
 	if (chdir(arg) < 0)
 	{
 		err = errno;
-		ft_perrno_sys(err, "cd");
+		ft_perrno(err, "cd");
 		ft_env_return(shell, 1);
 	}
 	ft_env_return(shell, 0);
@@ -45,7 +45,7 @@ void	ft_cd(t_shell *shell, char **argv)
 	argc = ft_argc(argv);
 	if (argc > 2)
 	{
-		ft_perrno_int(ERR_BLTIN_CD_ARGS);
+		ft_perrno(ERR_BLTIN_CD_ARGS, NULL);
 		ft_env_return(shell, 1);
 		return ;
 	}

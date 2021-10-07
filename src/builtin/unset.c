@@ -61,7 +61,7 @@ void	ft_unset(t_shell *shell, char **argv)
 	{
 		if (!ft_unset_engine(shell, argv[i]))
 		{
-			ft_perrno_int(ERR_BLTIN_UNSET);
+			ft_perrno(ERR_BLTIN_UNSET, NULL);
 			ft_env_return(shell, 1);
 			return ;
 		}
