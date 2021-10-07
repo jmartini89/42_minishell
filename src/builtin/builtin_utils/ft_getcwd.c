@@ -10,11 +10,11 @@ char	*ft_getcwd(t_shell *shell)
 	{
 		err = errno;
 		if (err == ENOMEM)
-			ft_perror_exit(ERR_SYS_MALLOC);
+			ft_perrno_exit(ERR_SYS_MALLOC);
 		if (err == ENOENT)
-			ft_perror(ERR_BLTIN_PWD_NDIR);
+			ft_perrno_int(ERR_BLTIN_PWD_NDIR);
 		else
-			ft_strerror("pwd", err);
+			ft_perrno_ext("pwd", err);
 		return (NULL);
 	}
 	return (cwd);

@@ -13,7 +13,7 @@ void	ft_pwd_export_old(t_shell *shell)
 		return (free (custom));
 	tmp = ft_strjoin("OLDPWD=", old_pwd);
 	if (!tmp)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC);
 	custom[1] = tmp;
 	ft_export(shell, custom);
 	free (tmp);
@@ -34,7 +34,7 @@ void	ft_pwd_export_new(t_shell *shell)
 	tmp = ft_strjoin("PWD=", cwd);
 	free (cwd);
 	if (!tmp)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC);
 	custom[1] = tmp;
 	ft_export(shell, custom);
 	free (tmp);

@@ -9,7 +9,7 @@ static void	ft_token_literal(t_shell *shell, int len)
 		ft_memcpy(tmp, shell->tkn_literal, sizeof(*tmp) * len);
 	shell->tkn_literal = ft_calloc(len + 1, sizeof(*shell->tkn_literal));
 	if (!shell->tkn_literal)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC);
 	ft_memcpy(shell->tkn_literal, tmp, sizeof(*tmp) * len);
 	free (tmp);
 	if (shell->literal)
@@ -31,7 +31,7 @@ static int	ft_token_assembler_swap(t_shell *shell)
 	}
 	shell->token = ft_calloc(len + 2, sizeof(*shell->token));
 	if (!shell->token)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC);
 	i = 0;
 	while (tmp && tmp[i])
 	{

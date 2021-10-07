@@ -15,7 +15,7 @@ static void	ft_unset_remove_supp(t_shell *shell, char *arg, char **tmp)
 		{
 			shell->env[j] = ft_strdup(tmp[i]);
 			if (!shell->env[j])
-				ft_perror_exit(ERR_SYS_MALLOC);
+				ft_perrno_exit(ERR_SYS_MALLOC);
 			j++;
 		}
 	}
@@ -32,7 +32,7 @@ static void	ft_unset_remove(t_shell *shell, char *arg)
 		len++;
 	shell->env = ft_calloc(len + 1, sizeof(*shell->env));
 	if (!shell->env)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC);
 	ft_unset_remove_supp(shell, arg, tmp);
 	ft_gc_arr_str(tmp);
 }
@@ -61,7 +61,7 @@ void	ft_unset(t_shell *shell, char **argv)
 	{
 		if (!ft_unset_engine(shell, argv[i]))
 		{
-			ft_perror(ERR_BLTIN_UNSET);
+			ft_perrno_int(ERR_BLTIN_UNSET);
 			ft_env_return(shell, 1);
 			return ;
 		}

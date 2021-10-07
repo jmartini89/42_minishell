@@ -36,13 +36,13 @@ static void	ft_export_add(t_shell *shell, char *arg)
 		len++;
 	shell->env = ft_calloc(len + 2, sizeof(*shell->env));
 	if (!shell->env)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC);
 	i = -1;
 	while (++i < len)
 	{
 		shell->env[i] = ft_strdup(tmp[i]);
 		if (!shell->env[i])
-			ft_perror_exit(ERR_SYS_MALLOC);
+			ft_perrno_exit(ERR_SYS_MALLOC);
 	}
 	shell->env[len] = arg;
 	ft_gc_arr_str(tmp);
@@ -62,11 +62,11 @@ static void	ft_export_engine(t_shell *shell, char *arg)
 		{
 			env_name = ft_calloc(i, sizeof(*env_name));
 			if (!env_name)
-				ft_perror_exit(ERR_SYS_MALLOC);
+				ft_perrno_exit(ERR_SYS_MALLOC);
 			ft_memcpy(env_name, arg, i);
 			arg_heap = ft_strdup(arg);
 			if (!arg_heap)
-				ft_perror_exit(ERR_SYS_MALLOC);
+				ft_perrno_exit(ERR_SYS_MALLOC);
 			if (!ft_getenv(shell, env_name))
 				ft_export_add(shell, arg_heap);
 			else

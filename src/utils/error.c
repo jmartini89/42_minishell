@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_strerror(char *type, int err)
+int	ft_perrno_ext(char *type, int err)
 {
 	ft_putstr_fd(M_SHELL_NAME" : ", 2);
 	ft_putstr_fd(type, 2);
@@ -10,7 +10,7 @@ int	ft_strerror(char *type, int err)
 	return (0);
 }
 
-void	ft_perror_exit(int err)
+void	ft_perrno_exit(int err)
 {
 	ft_putstr_fd(M_SHELL_NAME" : ", 2);
 	ft_putstr_fd((char *)g_errstr[err], 2);
@@ -18,7 +18,7 @@ void	ft_perror_exit(int err)
 	exit (EXIT_FAILURE);
 }
 
-int	ft_perror(int err)
+int	ft_perrno_int(int err)
 {
 	ft_putstr_fd(M_SHELL_NAME" : ", 2);
 	ft_putstr_fd((char *)g_errstr[err], 2);

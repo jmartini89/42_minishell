@@ -13,7 +13,7 @@ static char	*ft_token_expansion(t_token *tkn, t_shell *shell, char *addr)
 		len++;
 	tmp = ft_calloc(len + 1, sizeof(*tmp));
 	if (!tmp)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC);
 	ft_memcpy(tmp, addr, len);
 	env = ft_getenv(shell, tmp);
 	free (tmp);
@@ -78,7 +78,7 @@ char	*ft_token_translate(t_token *tkn, t_shell *shell)
 	tmp.token = ft_calloc(
 			ft_token_len(tkn, shell) + 1, sizeof(*tmp.token));
 	if (!tmp.token)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC);
 	tmp.addr = tkn->start;
 	tmp.i = 0;
 	while (tmp.addr <= tkn->end)
