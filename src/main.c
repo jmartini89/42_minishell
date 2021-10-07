@@ -14,7 +14,6 @@ int	main(int argc, char **argv, char **envp)
 	ft_signal();
 	while (1)
 	{
-		signal(SIGINT, ft_sig_int);
 		if (line_read)
 		{
 			free (line_read);
@@ -37,6 +36,7 @@ int	main(int argc, char **argv, char **envp)
 				signal(SIGINT, SIG_IGN); // TEST PURPOSE, MAYBE NOT A GOOD IDEA
 				ft_builtin(&shell, shell.token);
 				ft_gc_token(shell.token, shell.tkn_literal);
+				signal(SIGINT, ft_sig_int);
 			}
 		}
 	}

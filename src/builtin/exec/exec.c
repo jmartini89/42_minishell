@@ -30,6 +30,7 @@ void	ft_exec(t_shell *shell, char **argv)
 		ft_perrno_exit(ERR_SYS_FORK);
 	if (!pid)
 	{
+		ft_signal_dfl();
 		if (execve(argv_heap[0], argv_heap, shell->env) < 0)
 		{
 			err = errno;

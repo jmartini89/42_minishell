@@ -43,6 +43,7 @@ void	ft_gc_token(char **token, int *literal);
 /* SIGNAL */
 void	ft_signal(void);
 void	ft_sig_int(int sig);
+void	ft_signal_dfl(void);
 
 /* ARGS */
 int		ft_argc(char **argv);
