@@ -31,9 +31,9 @@ static const char *const	g_errstr[] = {
 };
 
 /* ERROR */
-int		ft_perrno_int(int err);
+void	ft_perrno_int(int err);
 void	ft_perrno_exit(int err);
-int		ft_perrno_sys(char *type, int err);
+void	ft_perrno_sys(int err, char *type);
 
 /* GARBAGE COLLECTOR */
 void	ft_gc(t_shell *shell);

@@ -14,7 +14,7 @@ char	*ft_getcwd(t_shell *shell)
 		if (err == ENOENT)
 			ft_perrno_int(ERR_BLTIN_PWD_NDIR);
 		else
-			ft_perrno_sys("pwd", err);
+			ft_perrno_sys(err, "pwd");
 		return (NULL);
 	}
 	return (cwd);
