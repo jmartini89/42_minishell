@@ -5,7 +5,8 @@ CFLAGS = $(CWARN) $(HEADERS)
 HEADERS = -I./inc $(addprefix -I./, $(LIBPATH))
 MACOS_INC = -I$(HOME)/homebrew/opt/readline/include
 MACOS_LIB = -L$(HOME)/homebrew/opt/readline/lib
-DEBUG = -g -fsanitize=address
+DEBUG = -g
+DEBUG_ADDR = -fsanitize=address
 UNAME = $(shell uname)
 ifeq ($(UNAME), Darwin)
 CFLAGS += $(MACOS_INC)
@@ -52,6 +53,10 @@ re : clean all
 debug : CFLAGS += $(DEBUG)
 debug : all
 	@echo "\033[31mDEBUG\033[0m"
+
+leak : CFLAGS += $(DEBUG) $(DEBUG_ADDR)
+leak : all
+	@echo "\033[31mDEBUG ADDRESS\033[0m"
 
 TESTBIN = bin/test.out
 $(TESTBIN) :

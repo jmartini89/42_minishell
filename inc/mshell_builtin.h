@@ -20,4 +20,6 @@ char	*ft_getcwd(t_shell *shell);
 void	ft_pwd_export_old(t_shell *shell);
 void	ft_pwd_export_new(t_shell *shell);
 
+void	ft_test_pipe(t_shell *shell); // DEBUG
+
 #endif

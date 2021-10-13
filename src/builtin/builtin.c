@@ -16,6 +16,8 @@ void	ft_builtin(t_shell *shell, char **argv)
 		ft_pwd(shell, argv);
 	else if (!ft_memcmp(argv[0], "unset", 5) && ft_strlen(argv[0]) == 5)
 		ft_unset(shell, argv);
+	else if (!ft_memcmp(argv[0], "pipe", 4) && ft_strlen(argv[0]) == 4) // DEBUG
+		ft_test_pipe(shell);
 	else
 		ft_exec(shell, argv);
 }
