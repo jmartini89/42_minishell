@@ -13,6 +13,7 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <signal.h>
+# include <fcntl.h>
 
 /* LOCAL LIBRARIES*/
 # include "libft.h"
