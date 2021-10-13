@@ -58,14 +58,8 @@ leak : CFLAGS += $(DEBUG) $(DEBUG_ADDR)
 leak : all
 	@echo "\033[31mDEBUG ADDRESS\033[0m"
 
-TESTBIN = bin/test.out
-$(TESTBIN) :
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) test.c $(INCLUDE) -o $@
-	@echo "\033[34m"$@" compiled successfully\033[0m"
-
 #Link
-$(TARGET) : $(OBJECTS) | $(TESTBIN)
+$(TARGET) : $(OBJECTS)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -o $@ $^ $(INCLUDE)
 	@echo "\033[32m"$@" compiled successfully\033[0m"
