@@ -32,8 +32,7 @@ int
 			if (ft_token(line_read, &shell))
 			{
 				signal(SIGINT, SIG_IGN);
-				// ft_builtin(&shell, shell.token);
-				// ft_pipe_test(&shell); // TEST
+				ft_builtin(&shell, shell.token);
 				ft_gc_token(shell.token, shell.tkn_literal);
 				signal(SIGINT, ft_sig_int);
 			}

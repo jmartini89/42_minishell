@@ -22,32 +22,6 @@ static void
 
 	int pipe_read = next[0];
 	int pipe_write = next[1];
-
-	// int bltin = ft_builtin(shell, argv);
-	// if (bltin)
-	// {
-	// 	if (close(pipe_read) == -1)
-	// 		fail("close");
-	// 	if (close(STDIN_FILENO) == -1)
-	// 		fail("close");
-	// 	if (dup2(fd_stdin, STDIN_FILENO) == -1)
-	// 		fail("dup2");
-
-	// 	ft_builtin_launch(shell, argv, bltin);
-	// 	if (*argv_end)
-	// 	{
-	// 		if (close(STDOUT_FILENO) == -1)
-	// 			fail("close");
-	// 		if (dup2(pipe_write, STDOUT_FILENO) == -1)
-	// 		{
-	// 			ft_printf("DEBUG\n");
-	// 			fail("dup2");
-	// 		}
-	// 		do_exec(shell, argv_end + 1, pipe_read);
-	// 	}
-	// 	else
-	// 		return ;
-	// }
 	pid_t child = fork();
 
 	if (child == -1)

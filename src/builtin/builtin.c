@@ -25,6 +25,11 @@ int
 	int	status;
 
 	status = 0;
+	if (!ft_memcmp(argv[0], "pipe", 4) && ft_strlen(argv[0]) == 4)
+	{
+		ft_test_pipe(shell);
+		return (666);
+	}
 	if (!ft_memcmp(argv[0], "cd", 2) && ft_strlen(argv[0]) == 2)
 		status = (BLTIN_CD);
 	if (!ft_memcmp(argv[0], "echo", 4) && ft_strlen(argv[0]) == 4)
@@ -39,7 +44,7 @@ int
 		status = (BLTIN_PWD);
 	if (!ft_memcmp(argv[0], "unset", 5) && ft_strlen(argv[0]) == 5)
 		status = (BLTIN_UNSET);
-	if (status) // TEST
+	if (status) // TMP TEST
 		ft_builtin_launch(shell, argv, status);
 	else
 		ft_exec(shell, argv);
