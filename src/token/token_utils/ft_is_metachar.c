@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-int	ft_is_metachar(char c)
+int
+	ft_is_metachar(char c)
 {
 	if (c == '\\' || c == '&' || c == ';'
 		|| c == '(' || c == ')')

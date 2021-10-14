@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static void	ft_cd_home(t_shell *shell)
+static void
+	ft_cd_home(t_shell *shell)
 {
 	int		err;
 	char	*env;
@@ -25,7 +26,8 @@ static void	ft_cd_home(t_shell *shell)
 	}
 }
 
-static void	ft_chdir(t_shell *shell, char *arg)
+static void
+	ft_chdir(t_shell *shell, char *arg)
 {
 	int	err;
 
@@ -38,7 +40,8 @@ static void	ft_chdir(t_shell *shell, char *arg)
 	ft_env_return(shell, 0);
 }
 
-void	ft_cd(t_shell *shell, char **argv)
+void
+	ft_cd(t_shell *shell, char **argv)
 {
 	int	argc;
 

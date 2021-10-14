@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-void	ft_test_pipe(t_shell *shell)
+void
+	ft_test_pipe(t_shell *shell)
 {
 	// int		pipefd[2];
 	// pid_t	pid;

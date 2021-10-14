@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-void	ft_pwd_export_old(t_shell *shell)
+void
+	ft_pwd_export_old(t_shell *shell)
 {
 	char	**custom;
 	char	*tmp;
@@ -20,7 +21,8 @@ void	ft_pwd_export_old(t_shell *shell)
 	free (custom);
 }
 
-void	ft_pwd_export_new(t_shell *shell)
+void
+	ft_pwd_export_new(t_shell *shell)
 {
 	char	**custom;
 	char	*tmp;

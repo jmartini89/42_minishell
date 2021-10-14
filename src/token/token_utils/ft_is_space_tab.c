@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-int	ft_is_space_tab(char c)
+int
+	ft_is_space_tab(char c)
 {
 	if (c == ' ' || c == '\t')
 		return (1);

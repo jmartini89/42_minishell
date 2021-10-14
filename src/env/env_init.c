@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-void	ft_env_return(t_shell *shell, int ret)
+void
+	ft_env_return(t_shell *shell, int ret)
 {
 	free (shell->ret_str);
 	shell->ret_str = ft_itoa(ret);
@@ -8,7 +9,8 @@ void	ft_env_return(t_shell *shell, int ret)
 		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 }
 
-static void	ft_env_custom_lvl(t_shell *shell)
+static void
+	ft_env_custom_lvl(t_shell *shell)
 {
 	char	**custom;
 	char	*itoa;
@@ -33,7 +35,8 @@ static void	ft_env_custom_lvl(t_shell *shell)
 	free (custom);
 }
 
-int	ft_env_init(t_shell *shell, char **envp)
+int
+	ft_env_init(t_shell *shell, char **envp)
 {
 	shell->ret_str = NULL;
 	ft_env_return(shell, 0);

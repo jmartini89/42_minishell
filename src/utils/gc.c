@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-void	ft_gc_token(char **token, int *literal)
+void
+	ft_gc_token(char **token, int *literal)
 {
 	int	i;
 
@@ -12,7 +13,8 @@ void	ft_gc_token(char **token, int *literal)
 	token = NULL;
 }
 
-void	ft_gc_arr_str(char **heap)
+void
+	ft_gc_arr_str(char **heap)
 {
 	int	i;
 
@@ -23,7 +25,8 @@ void	ft_gc_arr_str(char **heap)
 	heap = NULL;
 }
 
-void	ft_gc(t_shell *shell)
+void
+	ft_gc(t_shell *shell)
 {
 	rl_clear_history();
 	ft_gc_arr_str(shell->env);

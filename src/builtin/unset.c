@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static void	ft_unset_remove_supp(t_shell *shell, char *arg, char **tmp)
+static void
+	ft_unset_remove_supp(t_shell *shell, char *arg, char **tmp)
 {
 	int	arg_len;
 	int	i;
@@ -21,7 +22,8 @@ static void	ft_unset_remove_supp(t_shell *shell, char *arg, char **tmp)
 	}
 }
 
-static void	ft_unset_remove(t_shell *shell, char *arg)
+static void
+	ft_unset_remove(t_shell *shell, char *arg)
 {
 	char	**tmp;
 	int		len;
@@ -37,7 +39,8 @@ static void	ft_unset_remove(t_shell *shell, char *arg)
 	ft_gc_arr_str(tmp);
 }
 
-static int	ft_unset_engine(t_shell *shell, char *arg)
+static int
+	ft_unset_engine(t_shell *shell, char *arg)
 {
 	int		i;
 
@@ -52,7 +55,8 @@ static int	ft_unset_engine(t_shell *shell, char *arg)
 	return (1);
 }
 
-void	ft_unset(t_shell *shell, char **argv)
+void
+	ft_unset(t_shell *shell, char **argv)
 {
 	int	i;
 

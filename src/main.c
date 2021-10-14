@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int
+	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 	char	*line_read;
@@ -31,7 +32,8 @@ int	main(int argc, char **argv, char **envp)
 			if (ft_token(line_read, &shell))
 			{
 				signal(SIGINT, SIG_IGN);
-				ft_builtin(&shell, shell.token);
+				// ft_builtin(&shell, shell.token);
+				// ft_pipe_test(&shell); // TEST
 				ft_gc_token(shell.token, shell.tkn_literal);
 				signal(SIGINT, ft_sig_int);
 			}

@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-void	ft_echo(t_shell *shell, char **argv)
+void
+	ft_echo(t_shell *shell, char **argv)
 {
 	int	i;
 	int	newline;

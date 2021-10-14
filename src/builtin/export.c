@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static void	ft_export_change(t_shell *shell, char *arg, char *env_name)
+static void
+	ft_export_change(t_shell *shell, char *arg, char *env_name)
 {
 	char	*tmp;
 	int		len;
@@ -24,7 +25,8 @@ static void	ft_export_change(t_shell *shell, char *arg, char *env_name)
 	}
 }
 
-static void	ft_export_add(t_shell *shell, char *arg)
+static void
+	ft_export_add(t_shell *shell, char *arg)
 {
 	char	**tmp;
 	int		len;
@@ -48,7 +50,8 @@ static void	ft_export_add(t_shell *shell, char *arg)
 	ft_gc_arr_str(tmp);
 }
 
-static void	ft_export_engine(t_shell *shell, char *arg)
+static void
+	ft_export_engine(t_shell *shell, char *arg)
 {
 	char	*env_name;
 	char	*arg_heap;
@@ -76,7 +79,8 @@ static void	ft_export_engine(t_shell *shell, char *arg)
 	}
 }
 
-void	ft_export(t_shell *shell, char **argv)
+void
+	ft_export(t_shell *shell, char **argv)
 {
 	int	i;
 

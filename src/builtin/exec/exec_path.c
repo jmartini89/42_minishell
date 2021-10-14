@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static char	**ft_exec_path_split(t_shell *shell)
+static char **
+	ft_exec_path_split(t_shell *shell)
 {
 	char	*env_path;
 	char	**path_dirs;
@@ -14,7 +15,8 @@ static char	**ft_exec_path_split(t_shell *shell)
 	return (path_dirs);
 }
 
-static int	ft_exec_src_file(DIR *dir, char *arg)
+static int
+	ft_exec_src_file(DIR *dir, char *arg)
 {
 	struct dirent	*dirent;
 	int				arg_len;
@@ -35,7 +37,8 @@ static int	ft_exec_src_file(DIR *dir, char *arg)
 	return (0);
 }
 
-char	*ft_exec_src_dir(char **path, char *arg)
+char
+	*ft_exec_src_dir(char **path, char *arg)
 {
 	DIR	*dir;
 	int	i;
@@ -57,7 +60,8 @@ char	*ft_exec_src_dir(char **path, char *arg)
 	return (NULL);
 }
 
-int	ft_exec_env_path(t_shell *shell, char **arg)
+int
+	ft_exec_env_path(t_shell *shell, char **arg)
 {
 	char	**path;
 	char	*dir;

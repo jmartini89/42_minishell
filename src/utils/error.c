@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-void	ft_perrno_exit(int err, int status)
+void
+	ft_perrno_exit(int err, int status)
 {
 	ft_putstr_fd(M_SHELL_NAME" : ", 2);
 	ft_putstr_fd((char *)g_errstr[err], 2);
@@ -8,7 +9,8 @@ void	ft_perrno_exit(int err, int status)
 	exit (status);
 }
 
-void	ft_perrno(int err, char *libc)
+void
+	ft_perrno(int err, char *libc)
 {
 	ft_putstr_fd(M_SHELL_NAME": ", 2);
 	if (libc)

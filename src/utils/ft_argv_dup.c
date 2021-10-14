@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-char	**ft_argv_dup(char **argv)
+char **
+	ft_argv_dup(char **argv)
 {
 	char	**heap;
 	int		len;

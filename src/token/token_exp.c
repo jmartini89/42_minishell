@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static char	*ft_token_expansion(t_token *tkn, t_shell *shell, char *addr)
+static char *
+	ft_token_expansion(t_token *tkn, t_shell *shell, char *addr)
 {
 	int		len;
 	char	*tmp;
@@ -20,7 +21,8 @@ static char	*ft_token_expansion(t_token *tkn, t_shell *shell, char *addr)
 	return (env);
 }
 
-static int	ft_token_len(t_token *tkn, t_shell *shell)
+static int
+	ft_token_len(t_token *tkn, t_shell *shell)
 {
 	char	*addr;
 	char	*env;
@@ -48,7 +50,8 @@ static int	ft_token_len(t_token *tkn, t_shell *shell)
 	return (len);
 }
 
-static void	ft_token_write(t_token *tkn, t_tkn_tmp *tmp, t_shell *shell)
+static void
+	ft_token_write(t_token *tkn, t_tkn_tmp *tmp, t_shell *shell)
 {
 	if (!ft_token_quotes_status(tkn, *tmp->addr))
 	{
@@ -71,7 +74,8 @@ static void	ft_token_write(t_token *tkn, t_tkn_tmp *tmp, t_shell *shell)
 		shell->literal = 1;
 }
 
-char	*ft_token_translate(t_token *tkn, t_shell *shell)
+char
+	*ft_token_translate(t_token *tkn, t_shell *shell)
 {
 	t_tkn_tmp	tmp;
 

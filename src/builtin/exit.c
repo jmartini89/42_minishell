@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-void	ft_exit(t_shell *shell, char **argv)
+void
+	ft_exit(t_shell *shell, char **argv)
 {
 	int	argc;
 

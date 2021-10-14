@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static int	ft_exec_is_path(char *arg)
+static int
+	ft_exec_is_path(char *arg)
 {
 	int	i;
 
@@ -14,7 +15,8 @@ static int	ft_exec_is_path(char *arg)
 	return (0);
 }
 
-void	ft_exec(t_shell *shell, char **argv)
+void
+	ft_exec(t_shell *shell, char **argv)
 {
 	char	**argv_heap;
 	int		pid;
