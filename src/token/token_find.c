@@ -58,7 +58,7 @@ static void
 		ft_token_partition_operator(tkn, c);
 	if (!ft_is_space_tab(*c) && !tkn->start)
 		tkn->start = c;
-	if (ft_is_operator(*(c + 1))
+	if (ft_is_operator(*(c + 1)) && !ft_is_space_tab(*c)
 		&& tkn->start && !tkn->end && tkn->quotes_status == QTS_CLOSE)
 		tkn->end = c;
 	if (ft_is_space_tab(*c)
