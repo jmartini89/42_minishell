@@ -30,7 +30,7 @@ typedef struct s_token
 int		ft_token(char *line, t_shell *shell);
 
 /* SYNTAX */
-int		ft_syntax(char *line);
+int		ft_syntax(char *line, t_shell *shell);
 
 /* TOKEN_INIT */
 void	ft_token_init_all(t_token *tkn);

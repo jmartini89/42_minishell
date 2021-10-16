@@ -69,7 +69,7 @@ int
 {
 	t_token	tkn;
 
-	if (!ft_syntax(line))
+	if (!ft_syntax(line, shell))
 		return (0);
 	shell->token = NULL;
 	shell->tkn_literal = NULL;

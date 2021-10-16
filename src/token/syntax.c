@@ -47,7 +47,7 @@ static int
 }
 
 int
-	ft_syntax(char *line_read)
+	ft_syntax(char *line_read, t_shell *shell)
 {
 	int	err;
 
@@ -55,6 +55,7 @@ int
 	if (err)
 	{
 		ft_perrno(err, NULL);
+		ft_env_return(shell, 2);
 		return (0);
 	}
 	return (1);
