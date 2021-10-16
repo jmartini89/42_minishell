@@ -25,5 +25,6 @@
 # include "mshell_env.h"
 # include "mshell_token.h"
 # include "mshell_builtin.h"
+# include "mshell_exec.h"
 
 #endif

@@ -19,7 +19,7 @@ void
 	if (!tmp)
 		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	custom[1] = tmp;
-	ft_export(shell, custom);
+	ft_export(shell, custom, 0);
 	free (tmp);
 	free (custom);
 }
@@ -44,7 +44,7 @@ void
 	if (!tmp)
 		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	custom[1] = tmp;
-	ft_export(shell, custom);
+	ft_export(shell, custom, 0);
 	free (tmp);
 	free (custom);
 }

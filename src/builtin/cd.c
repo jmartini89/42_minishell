@@ -37,11 +37,12 @@ static void
 		ft_perrno(err, "cd");
 		ft_env_return(shell, 1);
 	}
-	ft_env_return(shell, 0);
+	else
+		ft_env_return(shell, 0);
 }
 
 void
-	ft_cd(t_shell *shell, char **argv)
+	ft_cd(t_shell *shell, char **argv, int process)
 {
 	int	argc;
 
@@ -58,4 +59,6 @@ void
 	else
 		ft_chdir(shell, argv[1]);
 	ft_pwd_export_new(shell);
+	if (process)
+		exit (ft_atoi(shell->ret_str));
 }

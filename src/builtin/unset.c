@@ -56,7 +56,7 @@ static int
 }
 
 void
-	ft_unset(t_shell *shell, char **argv)
+	ft_unset(t_shell *shell, char **argv, int process)
 {
 	int	i;
 
@@ -67,9 +67,13 @@ void
 		{
 			ft_perrno(ERR_BLTIN_UNSET, NULL);
 			ft_env_return(shell, 1);
+			if (process)
+				exit (ft_atoi(shell->ret_str));
 			return ;
 		}
 		i++;
 	}
 	ft_env_return(shell, 0);
+	if (process)
+		exit (ft_atoi(shell->ret_str));
 }

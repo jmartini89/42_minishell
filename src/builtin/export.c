@@ -88,7 +88,7 @@ static int
 }
 
 void
-	ft_export(t_shell *shell, char **argv)
+	ft_export(t_shell *shell, char **argv, int process)
 {
 	int	i;
 
@@ -99,14 +99,18 @@ void
 		{
 			ft_perrno(ERR_BLTIN_EXPORT, NULL);
 			ft_env_return(shell, 1);
+			if (process)
+				exit (ft_atoi(shell->ret_str));
 			return ;
 		}
 		i++;
 	}
 	if (i == 1)
 	{
-		ft_env(shell, NULL);
+		ft_env(shell, NULL, 0);
 		return ;
 	}
 	ft_env_return(shell, 0);
+	if (process)
+		exit (ft_atoi(shell->ret_str));
 }

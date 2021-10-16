@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 void
-	ft_echo(t_shell *shell, char **argv)
+	ft_echo(t_shell *shell, char **argv, int process)
 {
 	int	i;
 	int	newline;
@@ -23,4 +23,6 @@ void
 	if (newline)
 		ft_printf("\n");
 	ft_env_return(shell, 0);
+	if (process)
+		exit (ft_atoi(shell->ret_str));
 }

@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 void
-	ft_pwd(t_shell *shell, char **argv)
+	ft_pwd(t_shell *shell, char **argv, int process)
 {
 	char	*cwd;
 	int		argc;
@@ -11,6 +11,8 @@ void
 	{
 		ft_perrno(ERR_BLTIN_ARGS, NULL);
 		ft_env_return(shell, 1);
+		if (process)
+			exit (ft_atoi(shell->ret_str));
 		return ;
 	}
 	cwd = ft_getcwd(shell);
@@ -22,4 +24,6 @@ void
 	}
 	else
 		ft_env_return(shell, 1);
+	if (process)
+		exit (ft_atoi(shell->ret_str));
 }

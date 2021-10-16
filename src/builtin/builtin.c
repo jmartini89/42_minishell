@@ -4,19 +4,19 @@ void
 	ft_builtin_launch(t_shell *shell, char **argv, int status)
 {
 	if (status == (BLTIN_CD))
-		ft_cd(shell, argv);
+		ft_cd(shell, argv, 0);
 	if (status == (BLTIN_ECHO))
-		ft_echo(shell, argv);
+		ft_echo(shell, argv, 0);
 	if (status == (BLTIN_ENV))
-		ft_env(shell, argv);
+		ft_env(shell, argv, 0);
 	if (status == (BLTIN_EXIT))
 		ft_exit(shell, argv);
 	if (status == (BLTIN_EXPORT))
-		ft_export(shell, argv);
+		ft_export(shell, argv, 0);
 	if (status == (BLTIN_PWD))
-		ft_pwd(shell, argv);
+		ft_pwd(shell, argv, 0);
 	if (status == (BLTIN_UNSET))
-		ft_unset(shell, argv);
+		ft_unset(shell, argv, 0);
 }
 
 int
