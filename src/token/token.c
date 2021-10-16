@@ -87,7 +87,6 @@ int
 	if (tkn.token)
 	{
 		ft_cmd_asm(&tkn, shell);
-		ft_gc_token(tkn.token, tkn.tkn_literal);
 		return (1);
 	}
 	return (0);

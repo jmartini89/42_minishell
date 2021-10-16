@@ -14,11 +14,11 @@ static void
 	{
 		if (ft_memcmp(arg, tmp[i], arg_len))
 		{
-			shell->env[j] = ft_strdup(tmp[i]);
-			if (!shell->env[j])
-				ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+			shell->env[j] = tmp[i];
 			j++;
 		}
+		else
+			free (tmp[i]);
 	}
 }
 
@@ -29,14 +29,12 @@ static void
 	int		len;
 
 	tmp = shell->env;
-	len = 0;
-	while (tmp[len])
-		len++;
+	len = ft_argc(tmp);
 	shell->env = ft_calloc(len + 1, sizeof(*shell->env));
 	if (!shell->env)
 		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	ft_unset_remove_supp(shell, arg, tmp);
-	ft_gc_arr_str(tmp);
+	free (tmp);
 }
 
 static int

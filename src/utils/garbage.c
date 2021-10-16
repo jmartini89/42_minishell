@@ -4,26 +4,22 @@ void
 	ft_gc_cmd(char ***cmd) // WIP
 {
 	int	i;
+	int	j;
 
-	i = -1;
-	while (cmd[0][++i])
-		free (cmd[0][i]);
-	free (cmd[0]);
+	i = 0;
+	while (cmd[i])
+	{
+		j = 0;
+		while (cmd[i][j])
+		{
+			free (cmd[i][j]);
+			j++;
+		}
+		free (cmd[i]);
+		i++;
+	}
 	free (cmd);
 	cmd = NULL;
-}
-
-void
-	ft_gc_token(char **token, int *literal)
-{
-	int	i;
-
-	i = -1;
-	while (token[++i])
-		free (token[i]);
-	free (token);
-	free (literal);
-	token = NULL;
 }
 
 void

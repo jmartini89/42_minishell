@@ -33,21 +33,15 @@ static void
 	int		i;
 
 	tmp = shell->env;
-	len = 0;
-	while (tmp[len])
-		len++;
+	len = ft_argc(shell->env);
 	shell->env = ft_calloc(len + 2, sizeof(*shell->env));
 	if (!shell->env)
 		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	i = -1;
 	while (++i < len)
-	{
-		shell->env[i] = ft_strdup(tmp[i]);
-		if (!shell->env[i])
-			ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
-	}
+		shell->env[i] = tmp[i];
 	shell->env[len] = arg;
-	ft_gc_arr_str(tmp);
+	free (tmp);
 }
 
 static void
