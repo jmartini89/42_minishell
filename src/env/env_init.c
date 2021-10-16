@@ -21,11 +21,15 @@ static void
 	custom[0] = "export";
 	lvl = ft_getenv(shell, "SHLVL");
 	if (lvl)
+	{
 		itoa = ft_itoa(ft_atoi(lvl) + 1);
+		if (!itoa)
+			ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+	}
 	else
 		itoa = "1";
 	tmp = ft_strjoin("SHLVL=", itoa);
-	if (!itoa || !tmp)
+	if (!tmp)
 		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	if (lvl)
 		free (itoa);

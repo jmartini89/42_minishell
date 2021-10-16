@@ -51,32 +51,40 @@ static void
 }
 
 static void
+	ft_export_choice(t_shell *shell, char *arg, char *env_name)
+{
+	if (!ft_getenv(shell, env_name))
+		ft_export_add(shell, arg);
+	else
+		ft_export_change(shell, arg, env_name);
+	free (env_name);
+}
+
+static int
 	ft_export_engine(t_shell *shell, char *arg)
 {
 	char	*env_name;
 	char	*arg_heap;
 	int		i;
 
-	i = 0;
-	while (arg[i])
+	i = -1;
+	while (arg[++i])
 	{
-		i++;
 		if (arg[i] == '=')
 		{
-			env_name = ft_calloc(i, sizeof(*env_name));
+			if (!i)
+				return (0);
+			env_name = ft_calloc(i + 1, sizeof(*env_name));
 			if (!env_name)
 				ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 			ft_memcpy(env_name, arg, i);
 			arg_heap = ft_strdup(arg);
 			if (!arg_heap)
 				ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
-			if (!ft_getenv(shell, env_name))
-				ft_export_add(shell, arg_heap);
-			else
-				ft_export_change(shell, arg_heap, env_name);
-			free (env_name);
+			ft_export_choice(shell, arg_heap, env_name);
 		}
 	}
+	return (1);
 }
 
 void
@@ -87,7 +95,12 @@ void
 	i = 1;
 	while (argv[i])
 	{
-		ft_export_engine(shell, argv[i]);
+		if (!ft_export_engine(shell, argv[i]))
+		{
+			ft_perrno(ERR_BLTIN_EXPORT, NULL);
+			ft_env_return(shell, 1);
+			return ;
+		}
 		i++;
 	}
 	if (i == 1)

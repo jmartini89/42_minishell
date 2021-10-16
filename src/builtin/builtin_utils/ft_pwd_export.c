@@ -11,7 +11,10 @@ void
 	custom[0] = "export";
 	old_pwd = ft_getenv(shell, "PWD");
 	if (!old_pwd)
-		return (free (custom));
+	{
+		free (custom);
+		return ;
+	}
 	tmp = ft_strjoin("OLDPWD=", old_pwd);
 	if (!tmp)
 		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
@@ -32,7 +35,10 @@ void
 	custom[0] = "export";
 	cwd = ft_getcwd(shell);
 	if (!cwd)
-		return (free (custom));
+	{
+		free (custom);
+		return ;
+	}
 	tmp = ft_strjoin("PWD=", cwd);
 	free (cwd);
 	if (!tmp)
