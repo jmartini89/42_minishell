@@ -46,6 +46,7 @@ void	ft_perrno_exit(int err, int status);
 void	ft_gc(t_shell *shell);
 void	ft_gc_arr_str(char **heap);
 void	ft_gc_token(char **token, int *literal);
+void	ft_gc_cmd(char ***cmd);
 
 /* SIGNAL */
 void	ft_signal(void);

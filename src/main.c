@@ -32,8 +32,8 @@ int
 			if (ft_token(line_read, &shell))
 			{
 				signal(SIGINT, SIG_IGN);
-				ft_builtin(&shell, shell.token);
-				ft_gc_token(shell.token, shell.tkn_literal);
+				ft_builtin(&shell, shell.cmd[0]);
+				ft_gc_cmd(shell.cmd);
 				signal(SIGINT, ft_sig_int);
 			}
 		}

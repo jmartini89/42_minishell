@@ -1,6 +1,19 @@
 #include "minishell.h"
 
 void
+	ft_gc_cmd(char ***cmd) // WIP
+{
+	int	i;
+
+	i = -1;
+	while (cmd[0][++i])
+		free (cmd[0][i]);
+	free (cmd[0]);
+	free (cmd);
+	cmd = NULL;
+}
+
+void
 	ft_gc_token(char **token, int *literal)
 {
 	int	i;
