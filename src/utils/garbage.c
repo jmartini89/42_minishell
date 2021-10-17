@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 void
-	ft_gc_cmd(char ***cmd) // WIP
+	ft_gc_cmd(char ***cmd, int *cmd_operator)
 {
 	int	i;
 	int	j;
@@ -19,6 +19,7 @@ void
 		i++;
 	}
 	free (cmd);
+	free (cmd_operator);
 	cmd = NULL;
 }
 

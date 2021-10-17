@@ -33,7 +33,7 @@ int
 			{
 				signal(SIGINT, SIG_IGN);
 				ft_builtin_check(&shell, shell.cmd[0]);
-				ft_gc_cmd(shell.cmd);
+				ft_gc_cmd(shell.cmd, shell.cmd_operator);
 				signal(SIGINT, ft_sig_int);
 			}
 		}

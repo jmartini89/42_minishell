@@ -10,6 +10,7 @@ typedef struct s_shell
 	char	*cwd;
 	char	*ret_str;
 	char	***cmd;
+	int		*cmd_operator;
 }	t_shell;
 
 #endif

@@ -45,7 +45,7 @@ void	ft_perrno_exit(int err, int status);
 /* GARBAGE COLLECTOR */
 void	ft_gc(t_shell *shell);
 void	ft_gc_arr_str(char **heap);
-void	ft_gc_cmd(char ***cmd);
+void	ft_gc_cmd(char ***cmd, int *cmd_operator);
 
 /* SIGNAL */
 void	ft_signal(void);
