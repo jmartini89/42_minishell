@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static void	ft_env_print(char **env)
+static void
+	ft_env_print(char **env)
 {
 	int	i;
 
@@ -9,7 +10,8 @@ static void	ft_env_print(char **env)
 		ft_printf("%s\n", env[i]);
 }
 
-void	ft_env(t_shell *shell, char **argv)
+void
+	ft_env(t_shell *shell, char **argv, int process)
 {
 	int	argc;
 
@@ -18,10 +20,14 @@ void	ft_env(t_shell *shell, char **argv)
 		argc++;
 	if (argc > 1)
 	{
-		ft_perror(ERR_BLTIN_ARGS);
+		ft_perrno(ERR_BLTIN_ARGS, NULL);
 		ft_env_return(shell, 1);
+		if (process)
+			exit (ft_atoi(shell->ret_str));
 		return ;
 	}
 	ft_env_print(shell->env);
 	ft_env_return(shell, 0);
+	if (process)
+		exit (ft_atoi(shell->ret_str));
 }

@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-int	ft_argc(char **argv)
+int
+	ft_argc(char **argv)
 {
 	int	i;
 

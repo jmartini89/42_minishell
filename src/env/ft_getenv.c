@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-char	*ft_getenv(t_shell *shell, char *str)
+char *
+	ft_getenv(t_shell *shell, char *str)
 {
 	int	i;
 	int	len;

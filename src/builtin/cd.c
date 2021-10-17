@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static void	ft_cd_home(t_shell *shell)
+static void
+	ft_cd_home(t_shell *shell)
 {
 	int		err;
 	char	*env;
@@ -11,7 +12,7 @@ static void	ft_cd_home(t_shell *shell)
 		if (chdir(env) < 0)
 		{
 			err = errno;
-			ft_strerror("cd", err);
+			ft_perrno(err, "cd");
 			ft_env_return(shell, 1);
 			return ;
 		}
@@ -19,33 +20,36 @@ static void	ft_cd_home(t_shell *shell)
 	}
 	else
 	{
-		ft_perror(ERR_BLTIN_CD_HOME);
+		ft_perrno(ERR_BLTIN_CD_HOME, NULL);
 		ft_env_return(shell, 1);
 		return ;
 	}
 }
 
-static void	ft_chdir(t_shell *shell, char *arg)
+static void
+	ft_chdir(t_shell *shell, char *arg)
 {
 	int	err;
 
 	if (chdir(arg) < 0)
 	{
 		err = errno;
-		ft_strerror("cd", err);
+		ft_perrno(err, "cd");
 		ft_env_return(shell, 1);
 	}
-	ft_env_return(shell, 0);
+	else
+		ft_env_return(shell, 0);
 }
 
-void	ft_cd(t_shell *shell, char **argv)
+void
+	ft_cd(t_shell *shell, char **argv, int process)
 {
 	int	argc;
 
 	argc = ft_argc(argv);
 	if (argc > 2)
 	{
-		ft_perror(ERR_BLTIN_CD_ARGS);
+		ft_perrno(ERR_BLTIN_CD_ARGS, NULL);
 		ft_env_return(shell, 1);
 		return ;
 	}
@@ -55,4 +59,6 @@ void	ft_cd(t_shell *shell, char **argv)
 	else
 		ft_chdir(shell, argv[1]);
 	ft_pwd_export_new(shell);
+	if (process)
+		exit (ft_atoi(shell->ret_str));
 }

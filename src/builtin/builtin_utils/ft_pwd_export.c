@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-void	ft_pwd_export_old(t_shell *shell)
+void
+	ft_pwd_export_old(t_shell *shell)
 {
 	char	**custom;
 	char	*tmp;
@@ -10,17 +11,21 @@ void	ft_pwd_export_old(t_shell *shell)
 	custom[0] = "export";
 	old_pwd = ft_getenv(shell, "PWD");
 	if (!old_pwd)
-		return (free (custom));
+	{
+		free (custom);
+		return ;
+	}
 	tmp = ft_strjoin("OLDPWD=", old_pwd);
 	if (!tmp)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	custom[1] = tmp;
-	ft_export(shell, custom);
+	ft_export(shell, custom, 0);
 	free (tmp);
 	free (custom);
 }
 
-void	ft_pwd_export_new(t_shell *shell)
+void
+	ft_pwd_export_new(t_shell *shell)
 {
 	char	**custom;
 	char	*tmp;
@@ -30,13 +35,16 @@ void	ft_pwd_export_new(t_shell *shell)
 	custom[0] = "export";
 	cwd = ft_getcwd(shell);
 	if (!cwd)
-		return (free (custom));
+	{
+		free (custom);
+		return ;
+	}
 	tmp = ft_strjoin("PWD=", cwd);
 	free (cwd);
 	if (!tmp)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	custom[1] = tmp;
-	ft_export(shell, custom);
+	ft_export(shell, custom, 0);
 	free (tmp);
 	free (custom);
 }

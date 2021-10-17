@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-int	ft_token_quotes_status(t_token *tkn, char c)
+int
+	ft_token_quotes_status(t_token *tkn, char c)
 {
 	int	quote;
 	int	status;
@@ -25,7 +26,8 @@ int	ft_token_quotes_status(t_token *tkn, char c)
 	return (0);
 }
 
-static void	ft_token_partition_operator(t_token *tkn, char *c)
+static void
+	ft_token_partition_operator(t_token *tkn, char *c)
 {
 	int	operator;
 
@@ -49,13 +51,14 @@ static void	ft_token_partition_operator(t_token *tkn, char *c)
 	}
 }
 
-static void	ft_token_partition(t_token *tkn, char *c)
+static void
+	ft_token_partition(t_token *tkn, char *c)
 {
 	if (ft_is_operator(*c) && !tkn->start)
 		ft_token_partition_operator(tkn, c);
 	if (!ft_is_space_tab(*c) && !tkn->start)
 		tkn->start = c;
-	if (ft_is_operator(*(c + 1))
+	if (ft_is_operator(*(c + 1)) && !ft_is_space_tab(*c)
 		&& tkn->start && !tkn->end && tkn->quotes_status == QTS_CLOSE)
 		tkn->end = c;
 	if (ft_is_space_tab(*c)
@@ -65,7 +68,8 @@ static void	ft_token_partition(t_token *tkn, char *c)
 		tkn->end = c;
 }
 
-void	ft_token_find(t_token *tkn, char *c)
+void
+	ft_token_find(t_token *tkn, char *c)
 {
 	ft_token_quotes_status(tkn, *c);
 	ft_token_partition(tkn, c);

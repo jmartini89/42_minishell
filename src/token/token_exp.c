@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static char	*ft_token_expansion(t_token *tkn, t_shell *shell, char *addr)
+static char *
+	ft_token_expansion(t_token *tkn, t_shell *shell, char *addr)
 {
 	int		len;
 	char	*tmp;
@@ -13,14 +14,15 @@ static char	*ft_token_expansion(t_token *tkn, t_shell *shell, char *addr)
 		len++;
 	tmp = ft_calloc(len + 1, sizeof(*tmp));
 	if (!tmp)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	ft_memcpy(tmp, addr, len);
 	env = ft_getenv(shell, tmp);
 	free (tmp);
 	return (env);
 }
 
-static int	ft_token_len(t_token *tkn, t_shell *shell)
+static int
+	ft_token_len(t_token *tkn, t_shell *shell)
 {
 	char	*addr;
 	char	*env;
@@ -48,7 +50,8 @@ static int	ft_token_len(t_token *tkn, t_shell *shell)
 	return (len);
 }
 
-static void	ft_token_write(t_token *tkn, t_tkn_tmp *tmp, t_shell *shell)
+static void
+	ft_token_write(t_token *tkn, t_tkn_tmp *tmp, t_shell *shell)
 {
 	if (!ft_token_quotes_status(tkn, *tmp->addr))
 	{
@@ -68,17 +71,18 @@ static void	ft_token_write(t_token *tkn, t_tkn_tmp *tmp, t_shell *shell)
 			tmp->token[tmp->i++] = *tmp->addr;
 	}
 	else
-		shell->literal = 1;
+		tkn->literal = 1;
 }
 
-char	*ft_token_translate(t_token *tkn, t_shell *shell)
+char
+	*ft_token_translate(t_token *tkn, t_shell *shell)
 {
 	t_tkn_tmp	tmp;
 
 	tmp.token = ft_calloc(
 			ft_token_len(tkn, shell) + 1, sizeof(*tmp.token));
 	if (!tmp.token)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	tmp.addr = tkn->start;
 	tmp.i = 0;
 	while (tmp.addr <= tkn->end)

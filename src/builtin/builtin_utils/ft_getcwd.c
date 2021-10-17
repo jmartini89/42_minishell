@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-char	*ft_getcwd(t_shell *shell)
+char *
+	ft_getcwd(t_shell *shell)
 {
 	char	*cwd;
 	int		err;
@@ -10,11 +11,11 @@ char	*ft_getcwd(t_shell *shell)
 	{
 		err = errno;
 		if (err == ENOMEM)
-			ft_perror_exit(ERR_SYS_MALLOC);
+			ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 		if (err == ENOENT)
-			ft_perror(ERR_BLTIN_PWD_NDIR);
+			ft_perrno(ERR_BLTIN_PWD_NDIR, NULL);
 		else
-			ft_strerror("pwd", err);
+			ft_perrno(err, "pwd");
 		return (NULL);
 	}
 	return (cwd);

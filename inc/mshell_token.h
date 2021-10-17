@@ -24,13 +24,17 @@ typedef struct s_token
 	int		s_qts;
 	int		d_qts;
 	int		quotes_status;
+	char	**token;
+	int		*tkn_literal;
+	int		literal;
 }	t_token;
 
 /* TOKEN */
 int		ft_token(char *line, t_shell *shell);
+void	ft_cmd_asm(t_token *tkn, t_shell *shell);
 
 /* SYNTAX */
-int		ft_syntax(char *line);
+int		ft_syntax(char *line, t_shell *shell);
 
 /* TOKEN_INIT */
 void	ft_token_init_all(t_token *tkn);

@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static int	ft_is_valid_operator(t_token *parser, char *c)
+static int
+	ft_is_valid_operator(t_token *parser, char *c)
 {
 	int	operator;
 
@@ -21,7 +22,8 @@ static int	ft_is_valid_operator(t_token *parser, char *c)
 	return (1);
 }
 
-static int	ft_is_valid_line(char *line)
+static int
+	ft_is_valid_line(char *line)
 {
 	t_token	parser;
 	int		i;
@@ -44,12 +46,17 @@ static int	ft_is_valid_line(char *line)
 	return (0);
 }
 
-int	ft_syntax(char *line_read)
+int
+	ft_syntax(char *line_read, t_shell *shell)
 {
 	int	err;
 
 	err = ft_is_valid_line(line_read);
 	if (err)
-		return (ft_perror(err));
+	{
+		ft_perrno(err, NULL);
+		ft_env_return(shell, 2);
+		return (0);
+	}
 	return (1);
 }

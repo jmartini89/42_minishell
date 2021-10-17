@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static void	ft_unset_remove_supp(t_shell *shell, char *arg, char **tmp)
+static void
+	ft_unset_remove_supp(t_shell *shell, char *arg, char **tmp)
 {
 	int	arg_len;
 	int	i;
@@ -13,31 +14,31 @@ static void	ft_unset_remove_supp(t_shell *shell, char *arg, char **tmp)
 	{
 		if (ft_memcmp(arg, tmp[i], arg_len))
 		{
-			shell->env[j] = ft_strdup(tmp[i]);
-			if (!shell->env[j])
-				ft_perror_exit(ERR_SYS_MALLOC);
+			shell->env[j] = tmp[i];
 			j++;
 		}
+		else
+			free (tmp[i]);
 	}
 }
 
-static void	ft_unset_remove(t_shell *shell, char *arg)
+static void
+	ft_unset_remove(t_shell *shell, char *arg)
 {
 	char	**tmp;
 	int		len;
 
 	tmp = shell->env;
-	len = 0;
-	while (tmp[len])
-		len++;
+	len = ft_argc(tmp);
 	shell->env = ft_calloc(len + 1, sizeof(*shell->env));
 	if (!shell->env)
-		ft_perror_exit(ERR_SYS_MALLOC);
+		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	ft_unset_remove_supp(shell, arg, tmp);
-	ft_gc_arr_str(tmp);
+	free (tmp);
 }
 
-static int	ft_unset_engine(t_shell *shell, char *arg)
+static int
+	ft_unset_engine(t_shell *shell, char *arg)
 {
 	int		i;
 
@@ -52,7 +53,8 @@ static int	ft_unset_engine(t_shell *shell, char *arg)
 	return (1);
 }
 
-void	ft_unset(t_shell *shell, char **argv)
+void
+	ft_unset(t_shell *shell, char **argv, int process)
 {
 	int	i;
 
@@ -61,11 +63,15 @@ void	ft_unset(t_shell *shell, char **argv)
 	{
 		if (!ft_unset_engine(shell, argv[i]))
 		{
-			ft_perror(ERR_BLTIN_UNSET);
+			ft_perrno(ERR_BLTIN_UNSET, NULL);
 			ft_env_return(shell, 1);
+			if (process)
+				exit (ft_atoi(shell->ret_str));
 			return ;
 		}
 		i++;
 	}
 	ft_env_return(shell, 0);
+	if (process)
+		exit (ft_atoi(shell->ret_str));
 }

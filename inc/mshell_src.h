@@ -8,10 +8,9 @@ typedef struct s_shell
 {
 	char	**env;
 	char	*cwd;
-	char	**token;
-	int		*tkn_literal;
-	int		literal;
 	char	*ret_str;
+	char	***cmd;
+	int		*cmd_operator;
 }	t_shell;
 
 #endif
