@@ -8,14 +8,13 @@ static void
 	int		i;
 	int		env_name_len;
 
-	len = 0;
-	while (shell->env[len])
-		len++;
+	len = ft_argc(shell->env);
 	env_name_len = ft_strlen(env_name);
 	i = -1;
 	while (++i < len)
 	{
 		if (!ft_memcmp(env_name, shell->env[i], env_name_len)
+			&& shell->env[i][env_name_len]
 			&& shell->env[i][env_name_len] == '=')
 		{
 			tmp = shell->env[i];

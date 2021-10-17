@@ -2,7 +2,7 @@
 # define MSHELL_SRC_H
 
 # define M_SHELL_NAME "miniscell"
-# define M_SHELL_PROMPT "\e[32m"M_SHELL_NAME"\e[0m$ "
+# define M_SHELL_PROMPT "\001\e[32m\002"M_SHELL_NAME"\001\e[0m\002$ "
 
 typedef struct s_shell
 {
