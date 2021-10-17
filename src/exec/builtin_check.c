@@ -20,7 +20,7 @@ void
 }
 
 int
-	ft_builtin(t_shell *shell, char **argv)
+	ft_builtin_check(t_shell *shell, char **argv)
 {
 	int	status;
 

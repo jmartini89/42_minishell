@@ -13,8 +13,6 @@ enum	e_builtin {
 };
 
 /* BUILT-IN */
-int		ft_builtin(t_shell *shell, char **argv);
-void	ft_builtin_launch(t_shell *shell, char **argv, int status);
 void	ft_cd(t_shell *shell, char **argv, int process);
 void	ft_echo(t_shell *shell, char **argv, int process);
 void	ft_env(t_shell *shell, char **argv, int process);
