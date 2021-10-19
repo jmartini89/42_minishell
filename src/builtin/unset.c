@@ -7,11 +7,11 @@ static void
 	int	i;
 	int	j;
 
-	arg_len = ft_strlen(arg);
 	i = -1;
 	j = 0;
 	while (tmp[++i])
 	{
+		arg_len = ft_lencmp(arg, tmp[i]);
 		if (ft_memcmp(arg, tmp[i], arg_len))
 		{
 			shell->env[j] = tmp[i];
