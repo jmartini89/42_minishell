@@ -22,7 +22,7 @@ static void
 	lvl = ft_getenv(shell, "SHLVL");
 	if (lvl)
 	{
-		itoa = ft_itoa(ft_atoi(lvl) + 1);
+		itoa = ft_itoa_shlvl(lvl);
 		if (!itoa)
 			ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
 	}
