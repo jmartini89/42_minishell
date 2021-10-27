@@ -55,7 +55,7 @@ void
 	}
 	else
 	{
-		wexit = waitpid(-1, &wstatus, WUNTRACED);
+		wexit = waitpid(pid, &wstatus, WUNTRACED);
 		if (wexit < 0)
 			ft_perrno_exit(ERR_SYS_FORK, EXIT_FAILURE);
 		if (WIFSTOPPED(wstatus))
