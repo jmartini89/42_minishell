@@ -63,7 +63,7 @@ static void
 		sub_cnt = ft_cmd_sub_counter(tkn, j);
 		shell->cmd[i] = ft_calloc(sub_cnt + 1, sizeof(**shell->cmd));
 		if (!shell->cmd[i])
-			ft_perrno_exit(ERR_SYS_MALLOC, 1);
+			ft_error_exit(errno, "malloc", EXIT_FAILURE);
 		if (ft_is_operator(tkn->token[j][0]) && !tkn->tkn_literal[j])
 			shell->cmd_operator[i] = 1;
 		k = 0;
@@ -90,7 +90,7 @@ void
 	shell->cmd = ft_calloc(cmd_cnt + 1, sizeof(*shell->cmd));
 	shell->cmd_operator = ft_calloc(cmd_cnt, sizeof(*shell->cmd_operator));
 	if (!shell->cmd || !shell->cmd_operator)
-		ft_perrno_exit(ERR_SYS_MALLOC, 1);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	ft_cmd_write(tkn, shell, cmd_cnt);
 	free (tkn->token);
 	free (tkn->tkn_literal);

@@ -35,7 +35,7 @@ static void
 	len = ft_argc(shell->env);
 	shell->env = ft_calloc(len + 2, sizeof(*shell->env));
 	if (!shell->env)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	i = -1;
 	while (++i < len)
 		shell->env[i] = tmp[i];
@@ -69,11 +69,11 @@ static int
 				return (0);
 			env_name = ft_calloc(i + 1, sizeof(*env_name));
 			if (!env_name)
-				ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+				ft_error_exit(errno, "malloc", EXIT_FAILURE);
 			ft_memcpy(env_name, arg, i);
 			arg_heap = ft_strdup(arg);
 			if (!arg_heap)
-				ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+				ft_error_exit(errno, "malloc", EXIT_FAILURE);
 			ft_export_choice(shell, arg_heap, env_name);
 		}
 	}
@@ -90,7 +90,7 @@ void
 	{
 		if (!ft_export_engine(shell, argv[i]))
 		{
-			ft_perrno(ERR_BLTIN_EXPORT, NULL);
+			ft_error(ERR_BLTIN_EXPORT, NULL);
 			ft_env_return(shell, 1);
 			if (process)
 				exit (ft_atoi(shell->ret_str));

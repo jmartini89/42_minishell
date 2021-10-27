@@ -3,9 +3,6 @@
 
 enum	e_err {
 	ERR_UNDEF,
-	ERR_SYS_MALLOC,
-	ERR_SYS_FORK,
-	ERR_SYS_WAIT,
 	ERR_SYNTAX_QUOTES,
 	ERR_SYNTAX_CHAR,
 	ERR_SYNTAX_TKN,
@@ -22,9 +19,6 @@ enum	e_err {
 };
 static const char *const	g_errstr[] = {
 	"Undefined",
-	"*** SYSTEM ERROR : MALLOC FAIL ***",
-	"*** SYSTEM ERROR : FORK FAIL ***",
-	"*** SYSTEM ERROR : WAIT FAIL ***",
 	"syntax error: unclosed quotes",
 	"syntax error: undefined special character",
 	"syntax error: unexpected token",
@@ -41,8 +35,8 @@ static const char *const	g_errstr[] = {
 };
 
 /* ERROR */
-void	ft_perrno(int err, char *libc);
-void	ft_perrno_exit(int err, int status);
+void	ft_error(int err, char *libc);
+void	ft_error_exit(int err, char *libc, int status);
 
 /* GARBAGE COLLECTOR */
 void	ft_gc(t_shell *shell);

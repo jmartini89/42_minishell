@@ -6,7 +6,7 @@ void
 	free (shell->ret_str);
 	shell->ret_str = ft_itoa(ret);
 	if (!shell->ret_str)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 }
 
 static void
@@ -24,13 +24,13 @@ static void
 	{
 		itoa = ft_itoa_shlvl(lvl);
 		if (!itoa)
-			ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+			ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	}
 	else
 		itoa = "1";
 	tmp = ft_strjoin("SHLVL=", itoa);
 	if (!tmp)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	if (lvl)
 		free (itoa);
 	custom[1] = tmp;

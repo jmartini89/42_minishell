@@ -11,7 +11,7 @@ static char **
 		return (NULL);
 	path_dirs = ft_split(env_path, ':');
 	if (!path_dirs)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	return (path_dirs);
 }
 
@@ -79,7 +79,7 @@ int
 	}
 	dir_heap = ft_strjoin(dir, "/");
 	if (!dir_heap)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	tmp = *arg;
 	*arg = ft_strjoin(dir_heap, *arg);
 	free (dir_heap);

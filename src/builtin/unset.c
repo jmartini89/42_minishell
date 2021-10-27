@@ -32,7 +32,7 @@ static void
 	len = ft_argc(tmp);
 	shell->env = ft_calloc(len + 1, sizeof(*shell->env));
 	if (!shell->env)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	ft_unset_remove_supp(shell, arg, tmp);
 	free (tmp);
 }
@@ -63,7 +63,7 @@ void
 	{
 		if (!ft_unset_engine(shell, argv[i]))
 		{
-			ft_perrno(ERR_BLTIN_UNSET, NULL);
+			ft_error(ERR_BLTIN_UNSET, NULL);
 			ft_env_return(shell, 1);
 			if (process)
 				exit (ft_atoi(shell->ret_str));

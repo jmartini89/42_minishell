@@ -32,7 +32,7 @@ void
 	// else
 	// {
 	// 	if (write(1, "ciao\n", 6) == -1)
-	// 		ft_perrno(errno, "write");
+	// 		ft_error(errno, "write");
 	// 	dup2(pipefd[1], STDOUT_FILENO);
 	// 	ft_echo(shell, arg2, 0);
 	// 	close (pipefd[0]);

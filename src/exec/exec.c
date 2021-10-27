@@ -15,7 +15,7 @@ void
 	{
 		pid = fork();
 		if (pid < 0)
-			ft_perrno_exit(ERR_SYS_FORK, EXIT_FAILURE);
+			ft_error_exit(errno, "fork", EXIT_FAILURE);
 		if (!pid)
 		{
 			ft_signal_default();
@@ -28,25 +28,25 @@ void
 			if (!ft_exec_is_path(argv[0]))
 			{
 				if (!ft_exec_env_path(shell, &argv[0]))
-					ft_perrno_exit(ERR_EXEC_NOCMD, 1);
+					ft_error_exit(ERR_EXEC_NOCMD, NULL, EXIT_FAILURE);
 			}
 			if (execve(argv[0], argv, shell->env) == -1)
 			{
 				err = errno;
 				rl_clear_history();
 				if (err == ENOENT)
-					ft_perrno_exit(ERR_EXEC_NOFILE, 127);
+					ft_error_exit(ERR_EXEC_NOFILE, NULL, 127);
 				if (err == EACCES)
-					ft_perrno_exit(ERR_EXEC_PERM, 126);
+					ft_error_exit(ERR_EXEC_PERM, NULL, 126);
 				else
-					ft_perrno_exit(ERR_EXEC_UNKWN, EXIT_FAILURE);
+					ft_error_exit(ERR_EXEC_UNKWN, NULL, EXIT_FAILURE);
 			}
 		}
 		else
 		{
 			wexit = waitpid(pid, &wstatus, WUNTRACED);
 			if (wexit == -1)
-				ft_perrno_exit(ERR_SYS_FORK, EXIT_FAILURE);
+				ft_error_exit(errno, "waitpid", EXIT_FAILURE);
 			if (WIFSTOPPED(wstatus))
 				ft_env_return(shell, WSTOPSIG(wstatus) + 128);
 			if (WIFSIGNALED(wstatus))
