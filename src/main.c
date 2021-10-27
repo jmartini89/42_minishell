@@ -9,7 +9,6 @@ int
 	ft_env_init(&shell, envp);
 	line_read = NULL;
 	ft_signal();
-	ft_printf("%d\n", getpid()); // DEBUG
 	while (1)
 	{
 		if (line_read)
