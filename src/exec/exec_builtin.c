@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 void
-	ft_builtin_launch(t_shell *shell, char **argv, int status)
+	ft_builtin_launch(t_shell *shell, char **argv, int status, int process)
 {
 	if (status == (BLTIN_CD))
 		ft_cd(shell, argv, 0);
@@ -25,11 +25,7 @@ int
 	int	status;
 
 	status = 0;
-	if (!ft_memcmp(argv[0], "pipe", 4) && ft_strlen(argv[0]) == 4)
-	{
-		ft_test_pipe(shell);
-		return (666);
-	}
+
 	if (!ft_memcmp(argv[0], "cd", 2) && ft_strlen(argv[0]) == 2)
 		status = (BLTIN_CD);
 	if (!ft_memcmp(argv[0], "echo", 4) && ft_strlen(argv[0]) == 4)

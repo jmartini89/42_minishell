@@ -49,7 +49,7 @@ static int
 }
 
 static void
-	ft_cmd_write(t_token *tkn, t_shell *shell, int cmd_cnt)
+	ft_cmd_write(t_token *tkn, t_shell *shell)
 {
 	int	i;
 	int	j;
@@ -58,7 +58,7 @@ static void
 
 	i = 0;
 	j = 0;
-	while (i < cmd_cnt)
+	while (i < shell->cmd_cnt)
 	{
 		sub_cnt = ft_cmd_sub_counter(tkn, j);
 		shell->cmd[i] = ft_calloc(sub_cnt + 1, sizeof(**shell->cmd));
@@ -83,15 +83,14 @@ void
 	int	i;
 	int	j;
 	int	k;
-	int	cmd_cnt;
-	int	sub_cnt;
 
-	cmd_cnt = ft_cmd_counter(tkn);
-	shell->cmd = ft_calloc(cmd_cnt + 1, sizeof(*shell->cmd));
-	shell->cmd_operator = ft_calloc(cmd_cnt, sizeof(*shell->cmd_operator));
+	shell->cmd_cnt = ft_cmd_counter(tkn);
+	shell->cmd = ft_calloc(shell->cmd_cnt + 1, sizeof(*shell->cmd));
+	shell->cmd_operator = ft_calloc(
+		shell->cmd_cnt, sizeof(*shell->cmd_operator));
 	if (!shell->cmd || !shell->cmd_operator)
 		ft_error_exit(errno, "malloc", EXIT_FAILURE);
-	ft_cmd_write(tkn, shell, cmd_cnt);
+	ft_cmd_write(tkn, shell);
 	free (tkn->token);
 	free (tkn->tkn_literal);
 }
