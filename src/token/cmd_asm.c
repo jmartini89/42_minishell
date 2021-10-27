@@ -16,10 +16,9 @@ static int
 				cnt++;
 			if (tkn->token[i + 1])
 			{
-				if (ft_is_operator(tkn->token[i + 1][0])
+				if ((ft_is_operator(tkn->token[i + 1][0])
 					&& tkn->tkn_literal[i + 1])
-					cnt++;
-				if (!ft_is_operator(tkn->token[i + 1][0]))
+					|| !ft_is_operator(tkn->token[i + 1][0]))
 					cnt++;
 			}
 		}
@@ -49,20 +48,14 @@ static int
 	return (cnt);
 }
 
-void
-	ft_cmd_asm(t_token *tkn, t_shell *shell)
+static void
+	ft_cmd_write(t_token *tkn, t_shell *shell, int cmd_cnt)
 {
 	int	i;
 	int	j;
 	int	k;
-	int	cmd_cnt;
 	int	sub_cnt;
 
-	cmd_cnt = ft_cmd_counter(tkn);
-	shell->cmd = ft_calloc(cmd_cnt + 1, sizeof(*shell->cmd));
-	shell->cmd_operator = ft_calloc(cmd_cnt, sizeof(*shell->cmd_operator));
-	if (!shell->cmd || !shell->cmd_operator)
-		ft_perrno_exit(ERR_SYS_MALLOC, 1);
 	i = 0;
 	j = 0;
 	while (i < cmd_cnt)
@@ -77,11 +70,29 @@ void
 		while (k < sub_cnt)
 		{
 			shell->cmd[i][k] = tkn->token[j];
+			ft_printf("CMD\t%d\t%s\n", i, shell->cmd[i][k]); //	DEBUG
 			j++;
 			k++;
 		}
 		i++;
 	}
+}
+
+void
+	ft_cmd_asm(t_token *tkn, t_shell *shell)
+{
+	int	i;
+	int	j;
+	int	k;
+	int	cmd_cnt;
+	int	sub_cnt;
+
+	cmd_cnt = ft_cmd_counter(tkn);
+	shell->cmd = ft_calloc(cmd_cnt + 1, sizeof(*shell->cmd));
+	shell->cmd_operator = ft_calloc(cmd_cnt, sizeof(*shell->cmd_operator));
+	if (!shell->cmd || !shell->cmd_operator)
+		ft_perrno_exit(ERR_SYS_MALLOC, 1);
+	ft_cmd_write(tkn, shell, cmd_cnt);
 	free (tkn->token);
 	free (tkn->tkn_literal);
 }
