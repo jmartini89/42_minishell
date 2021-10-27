@@ -1,7 +1,19 @@
 #ifndef MSHELL_EXEC_H
 # define MSHELL_EXEC_H
 
-void	ft_exec(t_shell *shell, char **argv);
+enum	e_builtin {
+	BLTIN_EXEC,
+	BLTIN_CD,
+	BLTIN_ECHO,
+	BLTIN_ENV,
+	BLTIN_EXIT,
+	BLTIN_EXPORT,
+	BLTIN_PWD,
+	BLTIN_UNSET,
+};
+
+void	ft_exec(t_shell *shell);
+int		ft_exec_is_path(char *arg);
 int		ft_exec_env_path(t_shell *shell, char **arg);
 
 int		ft_builtin_check(t_shell *shell, char **argv);

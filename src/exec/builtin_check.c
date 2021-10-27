@@ -44,9 +44,5 @@ int
 		status = (BLTIN_PWD);
 	if (!ft_memcmp(argv[0], "unset", 5) && ft_strlen(argv[0]) == 5)
 		status = (BLTIN_UNSET);
-	if (status) // TMP TEST
-		ft_builtin_launch(shell, argv, status);
-	else
-		ft_exec(shell, argv);
 	return (status);
 }

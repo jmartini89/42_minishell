@@ -1,17 +1,6 @@
 #ifndef MSHELL_BUILTIN_H
 # define MSHELL_BUILTIN_H
 
-enum	e_builtin {
-	BLTIN_EXEC,
-	BLTIN_CD,
-	BLTIN_ECHO,
-	BLTIN_ENV,
-	BLTIN_EXIT,
-	BLTIN_EXPORT,
-	BLTIN_PWD,
-	BLTIN_UNSET,
-};
-
 /* BUILT-IN */
 void	ft_cd(t_shell *shell, char **argv, int process);
 void	ft_echo(t_shell *shell, char **argv, int process);

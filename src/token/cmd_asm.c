@@ -70,7 +70,6 @@ static void
 		while (k < sub_cnt)
 		{
 			shell->cmd[i][k] = tkn->token[j];
-			ft_printf("CMD\t%d\t%s\n", i, shell->cmd[i][k]); //	DEBUG
 			j++;
 			k++;
 		}

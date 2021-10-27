@@ -1,5 +1,24 @@
 #include "minishell.h"
 
+static void
+	ft_debug_cmd(t_shell *shell)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (shell->cmd[i])
+	{
+		j = 0;
+		while (shell->cmd[i][j])
+		{
+			ft_printf("CMD\t%d\t%s\n", i, shell->cmd[i][j]);
+			j++;
+		}
+		i++;
+	}
+}
+
 int
 	main(int argc, char **argv, char **envp)
 {
@@ -31,7 +50,7 @@ int
 			if (ft_token(line_read, &shell))
 			{
 				signal(SIGINT, SIG_IGN);
-				ft_builtin_check(&shell, shell.cmd[0]);
+				ft_exec(&shell);
 				ft_gc_cmd(shell.cmd, shell.cmd_operator);
 				signal(SIGINT, ft_sig_int);
 			}

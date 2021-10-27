@@ -1,72 +1,62 @@
 #include "minishell.h"
 
-static int
-	ft_exec_is_path(char *arg)
-{
-	int	i;
-
-	i = 0;
-	while (arg[i])
-	{
-		if (arg[i] == '/')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 void
-	ft_exec(t_shell *shell, char **argv)
+	ft_exec(t_shell *shell)
 {
-	char	**argv_heap;
+	char	**argv;
 	int		pid;
 	int		wstatus;
 	int		wexit;
 	int		err;
 
-	argv_heap = ft_argv_dup(argv);
-	if (!ft_exec_is_path(argv_heap[0]))
+	int	i;
+	i = 0;
+	while (shell->cmd[i])
 	{
-		if (!ft_exec_env_path(shell, &argv_heap[0]))
-		{
-			ft_gc_arr_str(argv_heap);
-			ft_perrno(ERR_EXEC_NOCMD, NULL);
-			ft_env_return(shell, 1);
-			return ;
-		}
-	}
-	pid = fork();
-	if (pid < 0)
-		ft_perrno_exit(ERR_SYS_FORK, EXIT_FAILURE);
-	if (!pid)
-	{
-		ft_signal_default();
-		if (execve(argv_heap[0], argv_heap, shell->env) < 0)
-		{
-			err = errno;
-			rl_clear_history();
-			if (err == ENOENT)
-				ft_perrno_exit(ERR_EXEC_NOFILE, 127);
-			if (err == EACCES)
-				ft_perrno_exit(ERR_EXEC_PERM, 126);
-			else
-				ft_perrno_exit(ERR_EXEC_UNKWN, EXIT_FAILURE);
-		}
-	}
-	else
-	{
-		wexit = waitpid(pid, &wstatus, WUNTRACED);
-		if (wexit < 0)
+		pid = fork();
+		if (pid < 0)
 			ft_perrno_exit(ERR_SYS_FORK, EXIT_FAILURE);
-		if (WIFSTOPPED(wstatus))
-			ft_env_return(shell, WSTOPSIG(wstatus) + 128);
-		if (WIFSIGNALED(wstatus))
+		if (!pid)
 		{
-			ft_printf("\n");
-			ft_env_return(shell, WTERMSIG(wstatus) + 128);
+			ft_signal_default();
+			argv = ft_argv_dup(shell->cmd[i]);
+			/* DEBUG */
+			ft_printf("--------------------------------\n");
+			ft_printf("DEBUG\n%d\t%s\n", i, argv[0]);
+			ft_printf("--------------------------------\n");
+			/**/
+			if (!ft_exec_is_path(argv[0]))
+			{
+				if (!ft_exec_env_path(shell, &argv[0]))
+					ft_perrno_exit(ERR_EXEC_NOCMD, 1);
+			}
+			if (execve(argv[0], argv, shell->env) == -1)
+			{
+				err = errno;
+				rl_clear_history();
+				if (err == ENOENT)
+					ft_perrno_exit(ERR_EXEC_NOFILE, 127);
+				if (err == EACCES)
+					ft_perrno_exit(ERR_EXEC_PERM, 126);
+				else
+					ft_perrno_exit(ERR_EXEC_UNKWN, EXIT_FAILURE);
+			}
 		}
-		if (WIFEXITED(wstatus))
-			ft_env_return(shell, WEXITSTATUS(wstatus));
+		else
+		{
+			wexit = waitpid(pid, &wstatus, WUNTRACED);
+			if (wexit == -1)
+				ft_perrno_exit(ERR_SYS_FORK, EXIT_FAILURE);
+			if (WIFSTOPPED(wstatus))
+				ft_env_return(shell, WSTOPSIG(wstatus) + 128);
+			if (WIFSIGNALED(wstatus))
+			{
+				ft_printf("\n");
+				ft_env_return(shell, WTERMSIG(wstatus) + 128);
+			}
+			if (WIFEXITED(wstatus))
+				ft_env_return(shell, WEXITSTATUS(wstatus));
+		}
+		i++;
 	}
-	ft_gc_arr_str(argv_heap);
 }
