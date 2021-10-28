@@ -87,18 +87,3 @@ int
 	ft_gc_arr_str(path);
 	return (1);
 }
-
-int
-	ft_exec_is_path(char *arg)
-{
-	int	i;
-
-	i = 0;
-	while (arg[i])
-	{
-		if (arg[i] == '/')
-			return (1);
-		i++;
-	}
-	return (0);
-}

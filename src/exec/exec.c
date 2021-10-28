@@ -1,29 +1,40 @@
 #include "minishell.h"
 
+static int
+	ft_test(t_shell *shell)
+{
+	if (!ft_memcmp(shell->cmd[0][0], "pipe", 4) && ft_strlen(shell->cmd[0][0]) == 4)
+	{
+		ft_test_pipe(shell);
+		return (1);
+	}
+	return (0);
+}
+
 void
 	ft_exec(t_shell *shell)
 {
-	char	**argv;
 	int		builtin;
 	int		pid;
+	int		*pid_arr;
 	int		wstatus;
 	int		wexit;
 	int		err;
 	int		i;
 
-	/* PIPE TEST */
-	if (!ft_memcmp(shell->cmd[0][0], "pipe", 4) && ft_strlen(shell->cmd[0][0]) == 4)
-	{
-		ft_test_pipe(shell);
+	if (ft_test(shell)) // TEST
 		return ;
-	}
-	/**/
+
 	builtin = ft_builtin_check(shell, shell->cmd[0]);
 	if (shell->cmd_cnt == 1 && builtin)
 	{
 		ft_builtin_launch(shell, shell->cmd[0], builtin, 0);
 		return ;
 	}
+
+	if (!ft_cmd_syntax(shell))
+		return ;
+
 	i = 0;
 	while (shell->cmd[i])
 	{
@@ -42,7 +53,7 @@ void
 				builtin = ft_builtin_check(shell, shell->cmd[i]);
 				if (builtin)
 					ft_builtin_launch(shell, shell->cmd[i], builtin, 1);
-				else if (!ft_exec_is_path(shell->cmd[i][0]))
+				else if (!ft_is_path(shell->cmd[i][0]))
 					if (!ft_exec_env_path(shell, &shell->cmd[i][0]))
 						ft_error_exit(ERR_EXEC_NOCMD, NULL, 127);
 				if (execve(shell->cmd[i][0], shell->cmd[i], shell->env) == -1)
