@@ -10,7 +10,7 @@ static void
 		ft_memcpy(tmp, tkn->tkn_literal, sizeof(*tmp) * len);
 	tkn->tkn_literal = ft_calloc(len + 1, sizeof(*tkn->tkn_literal));
 	if (!tkn->tkn_literal)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	ft_memcpy(tkn->tkn_literal, tmp, sizeof(*tmp) * len);
 	free (tmp);
 	if (tkn->literal)
@@ -33,7 +33,7 @@ static int
 	}
 	tkn->token = ft_calloc(len + 2, sizeof(*tkn->token));
 	if (!tkn->token)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	i = 0;
 	while (tmp && tmp[i])
 	{

@@ -54,7 +54,7 @@ int
 	err = ft_is_valid_line(line_read);
 	if (err)
 	{
-		ft_perrno(err, NULL);
+		ft_error(err, NULL);
 		ft_env_return(shell, 2);
 		return (0);
 	}

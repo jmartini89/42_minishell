@@ -1,72 +1,78 @@
 #include "minishell.h"
 
-static int
-	ft_exec_is_path(char *arg)
-{
-	int	i;
-
-	i = 0;
-	while (arg[i])
-	{
-		if (arg[i] == '/')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 void
-	ft_exec(t_shell *shell, char **argv)
+	ft_exec(t_shell *shell)
 {
-	char	**argv_heap;
+	char	**argv;
+	int		builtin;
 	int		pid;
 	int		wstatus;
 	int		wexit;
 	int		err;
+	int		i;
 
-	argv_heap = ft_argv_dup(argv);
-	if (!ft_exec_is_path(argv_heap[0]))
+	/* PIPE TEST */
+	if (!ft_memcmp(shell->cmd[0][0], "pipe", 4) && ft_strlen(shell->cmd[0][0]) == 4)
 	{
-		if (!ft_exec_env_path(shell, &argv_heap[0]))
-		{
-			ft_gc_arr_str(argv_heap);
-			ft_perrno(ERR_EXEC_NOCMD, NULL);
-			ft_env_return(shell, 1);
-			return ;
-		}
+		ft_test_pipe(shell);
+		return ;
 	}
-	pid = fork();
-	if (pid < 0)
-		ft_perrno_exit(ERR_SYS_FORK, EXIT_FAILURE);
-	if (!pid)
+	/**/
+	builtin = ft_builtin_check(shell, shell->cmd[0]);
+	if (shell->cmd_cnt == 1 && builtin)
 	{
-		ft_signal_default();
-		if (execve(argv_heap[0], argv_heap, shell->env) < 0)
+		ft_builtin_launch(shell, shell->cmd[0], builtin, 0);
+		return ;
+	}
+	i = 0;
+	while (shell->cmd[i])
+	{
+		if (!shell->cmd_operator[i])
 		{
-			err = errno;
-			rl_clear_history();
-			if (err == ENOENT)
-				ft_perrno_exit(ERR_EXEC_NOFILE, 127);
-			if (err == EACCES)
-				ft_perrno_exit(ERR_EXEC_PERM, 126);
+			if (i && shell->cmd_operator[i - 1])
+				ft_printf("***\tPIPE L TODO\n");
+			if (shell->cmd[i + 1] && shell->cmd_operator[i + 1])
+				ft_printf("***\tPIPE R TODO\n");
+			pid = fork();
+			if (pid < 0)
+				ft_error_exit(errno, "fork", EXIT_FAILURE);
+			if (!pid)
+			{
+				ft_signal_default();
+				builtin = ft_builtin_check(shell, shell->cmd[i]);
+				if (builtin)
+					ft_builtin_launch(shell, shell->cmd[i], builtin, 1);
+				else if (!ft_exec_is_path(shell->cmd[i][0]))
+					if (!ft_exec_env_path(shell, &shell->cmd[i][0]))
+						ft_error_exit(ERR_EXEC_NOCMD, NULL, 127);
+				if (execve(shell->cmd[i][0], shell->cmd[i], shell->env) == -1)
+				{
+					err = errno;
+					rl_clear_history();
+					if (err == ENOENT)
+						ft_error_exit(ERR_EXEC_NOFILE, NULL, 127);
+					if (err == EACCES)
+						ft_error_exit(ERR_EXEC_PERM, NULL, 126);
+					else
+						ft_error_exit(ERR_EXEC_UNKWN, NULL, EXIT_FAILURE);
+				}
+			}
 			else
-				ft_perrno_exit(ERR_EXEC_UNKWN, EXIT_FAILURE);
+			{
+				wexit = waitpid(pid, &wstatus, WUNTRACED);
+				if (wexit == -1)
+					ft_error_exit(errno, "waitpid", EXIT_FAILURE);
+				if (WIFSTOPPED(wstatus))
+					ft_env_return(shell, WSTOPSIG(wstatus) + 128);
+				if (WIFSIGNALED(wstatus))
+				{
+					ft_printf("\n");
+					ft_env_return(shell, WTERMSIG(wstatus) + 128);
+				}
+				if (WIFEXITED(wstatus))
+					ft_env_return(shell, WEXITSTATUS(wstatus));
+			}
 		}
+		i++;
 	}
-	else
-	{
-		wexit = waitpid(-1, &wstatus, WUNTRACED);
-		if (wexit < 0)
-			ft_perrno_exit(ERR_SYS_FORK, EXIT_FAILURE);
-		if (WIFSTOPPED(wstatus))
-			ft_env_return(shell, WSTOPSIG(wstatus) + 128);
-		if (WIFSIGNALED(wstatus))
-		{
-			ft_printf("\n");
-			ft_env_return(shell, WTERMSIG(wstatus) + 128);
-		}
-		if (WIFEXITED(wstatus))
-			ft_env_return(shell, WEXITSTATUS(wstatus));
-	}
-	ft_gc_arr_str(argv_heap);
 }

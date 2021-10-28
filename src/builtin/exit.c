@@ -8,7 +8,7 @@ void
 	argc = ft_argc(argv);
 	if (argc > 1)
 	{
-		ft_perrno(ERR_BLTIN_ARGS, NULL);
+		ft_error(ERR_BLTIN_ARGS, NULL);
 		ft_env_return(shell, 1);
 		return ;
 	}

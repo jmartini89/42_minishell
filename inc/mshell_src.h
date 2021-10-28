@@ -11,6 +11,7 @@ typedef struct s_shell
 	char	*ret_str;
 	char	***cmd;
 	int		*cmd_operator;
+	int		cmd_cnt;
 }	t_shell;
 
 #endif

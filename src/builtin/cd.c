@@ -12,7 +12,7 @@ static void
 		if (chdir(env) < 0)
 		{
 			err = errno;
-			ft_perrno(err, "cd");
+			ft_error(err, "cd");
 			ft_env_return(shell, 1);
 			return ;
 		}
@@ -20,7 +20,7 @@ static void
 	}
 	else
 	{
-		ft_perrno(ERR_BLTIN_CD_HOME, NULL);
+		ft_error(ERR_BLTIN_CD_HOME, NULL);
 		ft_env_return(shell, 1);
 		return ;
 	}
@@ -34,7 +34,7 @@ static void
 	if (chdir(arg) < 0)
 	{
 		err = errno;
-		ft_perrno(err, "cd");
+		ft_error(err, "cd");
 		ft_env_return(shell, 1);
 	}
 	else
@@ -49,7 +49,7 @@ void
 	argc = ft_argc(argv);
 	if (argc > 2)
 	{
-		ft_perrno(ERR_BLTIN_CD_ARGS, NULL);
+		ft_error(ERR_BLTIN_CD_ARGS, NULL);
 		ft_env_return(shell, 1);
 		return ;
 	}

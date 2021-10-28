@@ -11,11 +11,11 @@ char *
 	{
 		err = errno;
 		if (err == ENOMEM)
-			ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+			ft_error_exit(errno, "malloc", EXIT_FAILURE);
 		if (err == ENOENT)
-			ft_perrno(ERR_BLTIN_PWD_NDIR, NULL);
+			ft_error(ERR_BLTIN_PWD_NDIR, NULL);
 		else
-			ft_perrno(err, "pwd");
+			ft_error(err, "pwd");
 		return (NULL);
 	}
 	return (cwd);

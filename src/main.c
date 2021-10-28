@@ -9,6 +9,7 @@ int
 	ft_env_init(&shell, envp);
 	line_read = NULL;
 	ft_signal();
+	ft_header();
 	while (1)
 	{
 		if (line_read)
@@ -31,7 +32,7 @@ int
 			if (ft_token(line_read, &shell))
 			{
 				signal(SIGINT, SIG_IGN);
-				ft_builtin_check(&shell, shell.cmd[0]);
+				ft_exec(&shell);
 				ft_gc_cmd(shell.cmd, shell.cmd_operator);
 				signal(SIGINT, ft_sig_int);
 			}

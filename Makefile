@@ -40,7 +40,6 @@ $(LIBSTAT) :
 
 clean :
 	@$(RM) $(TARGET) $(OBJECTS)
-	@$(RM) $(TESTBIN)
 	@echo "\033[33m"$(NAME)" clean completed\033[0m"
 
 fclean : clean

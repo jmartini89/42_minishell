@@ -17,7 +17,7 @@ void
 	}
 	tmp = ft_strjoin("OLDPWD=", old_pwd);
 	if (!tmp)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	custom[1] = tmp;
 	ft_export(shell, custom, 0);
 	free (tmp);
@@ -42,7 +42,7 @@ void
 	tmp = ft_strjoin("PWD=", cwd);
 	free (cwd);
 	if (!tmp)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	custom[1] = tmp;
 	ft_export(shell, custom, 0);
 	free (tmp);

@@ -14,7 +14,7 @@ static char *
 		len++;
 	tmp = ft_calloc(len + 1, sizeof(*tmp));
 	if (!tmp)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	ft_memcpy(tmp, addr, len);
 	env = ft_getenv(shell, tmp);
 	free (tmp);
@@ -82,7 +82,7 @@ char
 	tmp.token = ft_calloc(
 			ft_token_len(tkn, shell) + 1, sizeof(*tmp.token));
 	if (!tmp.token)
-		ft_perrno_exit(ERR_SYS_MALLOC, EXIT_FAILURE);
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	tmp.addr = tkn->start;
 	tmp.i = 0;
 	while (tmp.addr <= tkn->end)
