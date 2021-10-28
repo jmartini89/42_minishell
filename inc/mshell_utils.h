@@ -52,4 +52,6 @@ void	ft_signal_default(void);
 int		ft_argc(char **argv);
 char	**ft_argv_dup(char **argv);
 
+void	ft_header(void);
+
 #endif

@@ -1,24 +1,5 @@
 #include "minishell.h"
 
-static void
-	ft_debug_cmd(t_shell *shell)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (shell->cmd[i])
-	{
-		j = 0;
-		while (shell->cmd[i][j])
-		{
-			ft_printf("CMD\t%d\t%s\n", i, shell->cmd[i][j]);
-			j++;
-		}
-		i++;
-	}
-}
-
 int
 	main(int argc, char **argv, char **envp)
 {
@@ -28,6 +9,7 @@ int
 	ft_env_init(&shell, envp);
 	line_read = NULL;
 	ft_signal();
+	ft_header();
 	while (1)
 	{
 		if (line_read)
