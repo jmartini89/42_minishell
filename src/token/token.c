@@ -68,7 +68,7 @@ int
 {
 	t_token	tkn;
 
-	if (!ft_syntax(line, shell))
+	if (!ft_token_syntax(line, shell))
 		return (0);
 	tkn.token = NULL;
 	tkn.tkn_literal = NULL;

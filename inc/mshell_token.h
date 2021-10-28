@@ -34,7 +34,7 @@ int		ft_token(char *line, t_shell *shell);
 void	ft_cmd_asm(t_token *tkn, t_shell *shell);
 
 /* SYNTAX */
-int		ft_syntax(char *line, t_shell *shell);
+int		ft_token_syntax(char *line, t_shell *shell);
 
 /* TOKEN_INIT */
 void	ft_token_init_all(t_token *tkn);
