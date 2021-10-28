@@ -14,9 +14,9 @@ static int
 void
 	ft_exec(t_shell *shell)
 {
-	char	**argv;
 	int		builtin;
 	int		pid;
+	int		*pid_arr;
 	int		wstatus;
 	int		wexit;
 	int		err;
@@ -31,6 +31,8 @@ void
 		ft_builtin_launch(shell, shell->cmd[0], builtin, 0);
 		return ;
 	}
+
+	// TODO : SYNTAX CHECK
 
 	i = 0;
 	while (shell->cmd[i])
