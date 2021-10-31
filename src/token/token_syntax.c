@@ -17,7 +17,7 @@ static int
 			if (!tkn->token[i + 1])
 				return (0);
 			if (tkn->token[i + 1]
-				&& ft_operator_type(tkn->token[i + 1]) > PIPE)
+				&& ft_operator_type(tkn->token[i + 1]) == PIPE)
 				return (0);
 		}
 		i++;
