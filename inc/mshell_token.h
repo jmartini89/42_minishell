@@ -1,9 +1,11 @@
 #ifndef MSHELL_TOKEN_H
 # define MSHELL_TOKEN_H
-# define WORD 0
-# define PIPE 1
-# define REDIR_OUT 2
-# define REDIR_IN 3
+# define WORD 00
+# define PIPE 01
+# define R_OUT 02
+# define APPEND 04
+# define R_IN 010
+# define HERE 020
 # define QTS_SINGLE 1
 # define QTS_DOUBLE 2
 # define QTS_OPEN -1
@@ -34,7 +36,8 @@ int		ft_token(char *line, t_shell *shell);
 void	ft_cmd_asm(t_token *tkn, t_shell *shell);
 
 /* SYNTAX */
-int		ft_token_syntax(char *line, t_shell *shell);
+int		ft_line_syntax(char *line, t_shell *shell);
+int		ft_token_syntax(t_token *tkn, t_shell *shell);
 
 /* TOKEN_INIT */
 void	ft_token_init_all(t_token *tkn);
@@ -53,5 +56,6 @@ int		ft_is_metachar(char c);
 int		ft_is_quote(char c);
 int		ft_is_operator(char c);
 int		ft_is_space_tab(char c);
+int		ft_operator_type(char *arg);
 
 #endif

@@ -32,9 +32,6 @@ void
 		return ;
 	}
 
-	if (!ft_cmd_syntax(shell))
-		return ;
-
 	i = 0;
 	while (shell->cmd[i])
 	{
