@@ -1,9 +1,11 @@
 #ifndef MSHELL_TOKEN_H
 # define MSHELL_TOKEN_H
-# define WORD 0
-# define PIPE 1
-# define REDIR_OUT 2
-# define REDIR_IN 3
+# define WORD 00
+# define PIPE 01
+# define R_OUT 02
+# define APPEND 04
+# define R_IN 010
+# define HERE 020
 # define QTS_SINGLE 1
 # define QTS_DOUBLE 2
 # define QTS_OPEN -1
