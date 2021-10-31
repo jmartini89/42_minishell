@@ -21,7 +21,12 @@ int
 	{
 		type = ft_operator_type(tkn->token[i]);
 		if (type == PIPE)
-			cnt += 2;
+		{
+			cnt++;
+			if (tkn->token[i + 1]
+				&& ft_operator_type(tkn->token[i + 1]) == WORD)
+				cnt++;
+		}
 		if (type > PIPE)
 		{
 			cnt++;
@@ -46,6 +51,5 @@ void
 
 	/* NO LEAK DEBUG */
 	ft_gc_arr_str(tkn->token);
-	// free (tkn->token);
 	free (tkn->tkn_literal);
 }
