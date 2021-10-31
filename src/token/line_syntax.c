@@ -12,7 +12,7 @@ static int
 			&& ft_is_operator(*(c + 1)) == operator)
 			return (0);
 	}
-	if (operator == REDIR_OUT || operator == REDIR_IN)
+	if (operator == R_OUT || operator == R_IN)
 	{
 		if (*(c + 1) && *(c + 2)
 			&& ft_is_operator(*(c + 1)) == operator
@@ -47,7 +47,7 @@ static int
 }
 
 int
-	ft_token_syntax(char *line_read, t_shell *shell)
+	ft_line_syntax(char *line_read, t_shell *shell)
 {
 	int	err;
 

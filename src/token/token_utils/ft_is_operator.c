@@ -6,8 +6,8 @@ int
 	if (c == '|')
 		return (PIPE);
 	if (c == '>')
-		return (REDIR_OUT);
+		return (R_OUT);
 	if (c == '<')
-		return (REDIR_IN);
+		return (R_IN);
 	return (WORD);
 }

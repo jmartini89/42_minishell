@@ -37,13 +37,13 @@ static void
 		tkn->start = c;
 		tkn->end = c;
 	}
-	if ((operator == REDIR_IN || operator == REDIR_OUT)
+	if ((operator == R_IN || operator == R_OUT)
 		&& ft_is_operator(*(c + 1)) == operator)
 	{
 		tkn->start = c;
 		tkn->end = c + 1;
 	}
-	if ((operator == REDIR_IN || operator == REDIR_OUT)
+	if ((operator == R_IN || operator == R_OUT)
 		&& !ft_is_operator(*(c + 1)))
 	{
 		tkn->start = c;

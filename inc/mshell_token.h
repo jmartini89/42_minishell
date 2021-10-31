@@ -36,7 +36,7 @@ int		ft_token(char *line, t_shell *shell);
 void	ft_cmd_asm(t_token *tkn, t_shell *shell);
 
 /* SYNTAX */
-int		ft_token_syntax(char *line, t_shell *shell);
+int		ft_line_syntax(char *line, t_shell *shell);
 
 /* TOKEN_INIT */
 void	ft_token_init_all(t_token *tkn);
@@ -55,5 +55,6 @@ int		ft_is_metachar(char c);
 int		ft_is_quote(char c);
 int		ft_is_operator(char c);
 int		ft_is_space_tab(char c);
+int		ft_operator_type(char *arg);
 
 #endif

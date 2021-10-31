@@ -13,9 +13,11 @@ void
 		while (cmd[i][j])
 		{
 			free (cmd[i][j]);
+			cmd[i][j] = NULL;
 			j++;
 		}
 		free (cmd[i]);
+		cmd[i] = NULL;
 		i++;
 	}
 	free (cmd);
@@ -30,7 +32,10 @@ void
 
 	i = -1;
 	while (heap[++i])
+	{
 		free (heap[i]);
+		heap[i] = NULL;
+	}
 	free (heap);
 	heap = NULL;
 }
@@ -41,4 +46,5 @@ void
 	rl_clear_history();
 	ft_gc_arr_str(shell->env);
 	free (shell->ret_str);
+	shell->ret_str = NULL;
 }

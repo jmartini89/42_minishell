@@ -1,96 +1,51 @@
 #include "minishell.h"
 
-static int
-	ft_cmd_counter(t_token *tkn)
+static void
+	ft_cmd_init(t_shell *shell)
+{
+	shell->cmd = NULL;
+	shell->cmd_operator = NULL;
+	shell->cmd_cnt = 0;
+}
+
+int
+	ft_cmd_cnt(t_token *tkn)
 {
 	int	i;
 	int	cnt;
+	int	type;
 
 	i = 0;
 	cnt = 1;
 	while (tkn->token[i])
 	{
-		if (ft_is_operator(tkn->token[i][0]) && !tkn->tkn_literal[i])
+		type = ft_operator_type(tkn->token[i]);
+		if (type == PIPE)
+			cnt += 2;
+		if (type > PIPE)
 		{
-			if (i)
-				cnt++;
-			if (tkn->token[i + 1])
-			{
-				if ((ft_is_operator(tkn->token[i + 1][0])
-					&& tkn->tkn_literal[i + 1])
-					|| !ft_is_operator(tkn->token[i + 1][0]))
-					cnt++;
-			}
+			cnt++;
+			while (tkn->token[i + 2] 
+				&& ft_operator_type(tkn->token[i + 2]) > PIPE)
+				i += 2;
 		}
 		i++;
 	}
 	return (cnt);
-}
-
-static int
-	ft_cmd_sub_counter(t_token *tkn, int i)
-{
-	int	cnt;
-
-	cnt = 0;
-	while (tkn->token[i])
-	{
-		cnt++;
-		if (ft_is_operator(tkn->token[i][0])
-			&& !tkn->tkn_literal[i])
-			return (cnt);
-		if (tkn->token[i + 1]
-			&& ft_is_operator(tkn->token[i + 1][0])
-			&& !tkn->tkn_literal[i + 1])
-			return (cnt);
-		i++;
-	}
-	return (cnt);
-}
-
-static void
-	ft_cmd_write(t_token *tkn, t_shell *shell)
-{
-	int	i;
-	int	j;
-	int	k;
-	int	sub_cnt;
-
-	i = 0;
-	j = 0;
-	while (i < shell->cmd_cnt)
-	{
-		sub_cnt = ft_cmd_sub_counter(tkn, j);
-		shell->cmd[i] = ft_calloc(sub_cnt + 1, sizeof(**shell->cmd));
-		if (!shell->cmd[i])
-			ft_error_exit(errno, "malloc", EXIT_FAILURE);
-		if (ft_is_operator(tkn->token[j][0]) && !tkn->tkn_literal[j])
-			shell->cmd_operator[i] = 1;
-		k = 0;
-		while (k < sub_cnt)
-		{
-			shell->cmd[i][k] = tkn->token[j];
-			j++;
-			k++;
-		}
-		i++;
-	}
 }
 
 void
 	ft_cmd_asm(t_token *tkn, t_shell *shell)
 {
-	int	i;
-	int	j;
-	int	k;
+	int	cmd_cnt;
 
-	shell->cmd_cnt = ft_cmd_counter(tkn);
-	shell->cmd = ft_calloc(shell->cmd_cnt + 1, sizeof(*shell->cmd));
-	shell->cmd_operator = ft_calloc(
-		shell->cmd_cnt, sizeof(*shell->cmd_operator));
-	if (!shell->cmd || !shell->cmd_operator)
-		ft_error_exit(errno, "malloc", EXIT_FAILURE);
-	ft_cmd_write(tkn, shell);
-	free (tkn->token);
+	ft_cmd_init(shell);
+	cmd_cnt = ft_cmd_cnt(tkn);
+
+	printf("%d\n", cmd_cnt);
+
+	/* NO LEAK DEBUG */
+	ft_gc_arr_str(tkn->token);
+	// free (tkn->token);
 	free (tkn->tkn_literal);
 }
