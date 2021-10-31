@@ -86,8 +86,8 @@ int
 	}
 	if (tkn.token)
 	{
-		// if (!ft_token_syntax(&tkn))
-		// 	return (0);
+		if (!ft_token_syntax(&tkn, shell))
+			return (0);
 		ft_cmd_asm(&tkn, shell);
 		return (1);
 	}
