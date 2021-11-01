@@ -30,7 +30,7 @@ int
 		if (type > PIPE)
 		{
 			cnt++;
-			while (tkn->token[i + 2]
+			while (tkn->token[i + 1] && tkn->token[i + 2]
 				&& ft_operator_type(tkn->token[i + 2]) > PIPE)
 				i += 2;
 		}
