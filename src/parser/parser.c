@@ -5,10 +5,9 @@ int
 {
 	t_token	tkn;
 
-	if (ft_lexer(line, &tkn, shell))
-	{
-		ft_cmd_asm(&tkn, shell);
-		return (1);
-	}
-	return (0);
+	if (ft_token(line, &tkn, shell) == 0
+		|| ft_lexer(&tkn, shell) == 0)
+		return (0);
+	ft_cmd_asm(&tkn, shell);
+	return (1);
 }
