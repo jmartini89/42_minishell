@@ -30,7 +30,7 @@ int
 {
 	if (!ft_token_validity(tkn))
 	{
-		ft_gc_arr_str(tkn->token);
+		ft_gc_2p_str(tkn->token);
 		free (tkn->tkn_literal);
 		ft_error(ERR_SYNTAX_TKN, NULL);
 		ft_env_return(shell, 2);

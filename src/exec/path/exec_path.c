@@ -74,7 +74,7 @@ int
 	dir = ft_exec_src_dir(path, *arg);
 	if (!dir)
 	{
-		ft_gc_arr_str(path);
+		ft_gc_2p_str(path);
 		return (0);
 	}
 	dir_heap = ft_strjoin(dir, "/");
@@ -84,6 +84,6 @@ int
 	*arg = ft_strjoin(dir_heap, *arg);
 	free (dir_heap);
 	free (tmp);
-	ft_gc_arr_str(path);
+	ft_gc_2p_str(path);
 	return (1);
 }

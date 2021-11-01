@@ -50,6 +50,6 @@ void
 	printf("%d\n", cmd_cnt);
 
 	/* NO LEAK DEBUG */
-	ft_gc_arr_str(tkn->token);
+	ft_gc_2p_str(tkn->token);
 	free (tkn->tkn_literal);
 }
