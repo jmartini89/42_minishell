@@ -1,32 +1,31 @@
 #include "minishell.h"
 
 void
-	ft_gc_cmd(char ***cmd, int *cmd_operator)
+	ft_gc_3p_str(char ***heap)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (cmd[i])
+	while (heap[i])
 	{
 		j = 0;
-		while (cmd[i][j])
+		while (heap[i][j])
 		{
-			free (cmd[i][j]);
-			cmd[i][j] = NULL;
+			free (heap[i][j]);
+			heap[i][j] = NULL;
 			j++;
 		}
-		free (cmd[i]);
-		cmd[i] = NULL;
+		free (heap[i]);
+		heap[i] = NULL;
 		i++;
 	}
-	free (cmd);
-	free (cmd_operator);
-	cmd = NULL;
+	free (heap);
+	heap = NULL;
 }
 
 void
-	ft_gc_arr_str(char **heap)
+	ft_gc_2p_str(char **heap)
 {
 	int	i;
 
@@ -41,10 +40,18 @@ void
 }
 
 void
+	ft_gc_cmd(char ***heap_c, int *heap_i)
+{
+	ft_gc_3p_str(heap_c);
+	free (heap_i);
+	heap_i = NULL;
+}
+
+void
 	ft_gc(t_shell *shell)
 {
 	rl_clear_history();
-	ft_gc_arr_str(shell->env);
+	ft_gc_2p_str(shell->env);
 	free (shell->ret_str);
 	shell->ret_str = NULL;
 }

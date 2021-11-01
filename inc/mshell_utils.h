@@ -40,8 +40,9 @@ void	ft_error_exit(int err, char *libc, int status);
 
 /* GARBAGE COLLECTOR */
 void	ft_gc(t_shell *shell);
-void	ft_gc_arr_str(char **heap);
-void	ft_gc_cmd(char ***cmd, int *cmd_operator);
+void	ft_gc_cmd(char ***heap_c, int *heap_i);
+void	ft_gc_2p_str(char **heap);
+void	ft_gc_3p_str(char ***heap);
 
 /* SIGNAL */
 void	ft_signal(void);
