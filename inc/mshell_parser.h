@@ -28,11 +28,12 @@ typedef struct s_token
 	int		quotes_status;
 	char	**token;
 	int		*tkn_literal;
-	int		literal;
+	int		literal_current;
+	int		*lexer;
 }	t_token;
 
 int		ft_parser(char *line, t_shell *shell);
-void	ft_lexer(t_token *tkn, t_shell *shell);
+int		ft_lexer(char *line, t_token *tkn, t_shell *shell);
 void	ft_cmd_asm(t_token *tkn, t_shell *shell);
 
 /* SYNTAX CHECKS */

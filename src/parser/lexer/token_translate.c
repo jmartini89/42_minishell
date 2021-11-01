@@ -71,7 +71,7 @@ static void
 			tmp->token[tmp->i++] = *tmp->addr;
 	}
 	else
-		tkn->literal = 1;
+		tkn->literal_current = 1;
 }
 
 char

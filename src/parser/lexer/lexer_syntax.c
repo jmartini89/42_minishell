@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 static int
-	ft_token_validity(t_token *tkn)
+	ft_lexer_validity(t_token *tkn)
 {
 	int	i;
 	int	type;
@@ -28,7 +28,7 @@ static int
 int
 	ft_lexer_syntax(t_token *tkn, t_shell *shell)
 {
-	if (!ft_token_validity(tkn))
+	if (!ft_lexer_validity(tkn))
 	{
 		ft_gc_2p_str(tkn->token);
 		free (tkn->tkn_literal);
