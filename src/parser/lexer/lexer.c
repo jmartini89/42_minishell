@@ -44,8 +44,8 @@ static int
 	return (len);
 }
 
-static void
-	ft_token_assembler(t_token *tkn, t_shell *shell)
+void
+	ft_lexer(t_token *tkn, t_shell *shell)
 {
 	int		i;
 	char	*new_tkn;
@@ -61,35 +61,4 @@ static void
 	}
 	else
 		free (new_tkn);
-}
-
-int
-	ft_token(char *line, t_shell *shell)
-{
-	t_token	tkn;
-
-	if (!ft_line_syntax(line, shell))
-		return (0);
-	tkn.token = NULL;
-	tkn.tkn_literal = NULL;
-	ft_token_init_all(&tkn);
-	while (*line)
-	{
-		ft_token_find(&tkn, line);
-		if (tkn.end)
-		{
-			line = tkn.end;
-			ft_token_assembler(&tkn, shell);
-			ft_token_init_all(&tkn);
-		}
-		line++;
-	}
-	if (tkn.token)
-	{
-		if (!ft_token_syntax(&tkn, shell))
-			return (0);
-		ft_cmd_asm(&tkn, shell);
-		return (1);
-	}
-	return (0);
 }

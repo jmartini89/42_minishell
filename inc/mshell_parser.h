@@ -1,5 +1,5 @@
-#ifndef MSHELL_TOKEN_H
-# define MSHELL_TOKEN_H
+#ifndef MSHELL_PARSER_H
+# define MSHELL_PARSER_H
 # define WORD 00
 # define PIPE 01
 # define R_OUT 02
@@ -31,13 +31,13 @@ typedef struct s_token
 	int		literal;
 }	t_token;
 
-/* TOKEN */
-int		ft_token(char *line, t_shell *shell);
+int		ft_parser(char *line, t_shell *shell);
+void	ft_lexer(t_token *tkn, t_shell *shell);
 void	ft_cmd_asm(t_token *tkn, t_shell *shell);
 
-/* SYNTAX */
-int		ft_line_syntax(char *line, t_shell *shell);
-int		ft_token_syntax(t_token *tkn, t_shell *shell);
+/* SYNTAX CHECKS */
+int		ft_token_syntax(char *line, t_shell *shell);
+int		ft_lexer_syntax(t_token *tkn, t_shell *shell);
 
 /* TOKEN_INIT */
 void	ft_token_init_all(t_token *tkn);
@@ -48,7 +48,7 @@ void	ft_token_init_quotes(t_token *tkn);
 void	ft_token_find(t_token *tkn, char *c);
 int		ft_token_quotes_status(t_token *tkn, char c);
 
-/* TOKEN_EXP*/
+/* TOKEN_TRANSLATE */
 char	*ft_token_translate(t_token *tkn, t_shell *shell);
 
 /* TOKEN_UTILS */

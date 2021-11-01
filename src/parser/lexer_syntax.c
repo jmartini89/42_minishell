@@ -26,7 +26,7 @@ static int
 }
 
 int
-	ft_token_syntax(t_token *tkn, t_shell *shell)
+	ft_lexer_syntax(t_token *tkn, t_shell *shell)
 {
 	if (!ft_token_validity(tkn))
 	{
