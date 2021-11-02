@@ -22,8 +22,9 @@ int
 	t_token	tkn;
 
 	ft_parser_null_heap(&tkn);
-	if (ft_token(line, &tkn, shell) == 0
-		|| ft_lexer(&tkn, shell) == 0)
+	if (ft_token(line, &tkn, shell) == 0)
+		return (0);
+	if (ft_lexer(&tkn, shell) == 0)
 	{
 		ft_parser_gc(&tkn);
 		return (0);
