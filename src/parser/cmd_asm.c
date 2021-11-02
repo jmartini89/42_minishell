@@ -47,9 +47,5 @@ void
 	ft_cmd_init(shell);
 	cmd_cnt = ft_cmd_cnt(tkn);
 
-	printf("%d\n", cmd_cnt);
-
-	/* NO LEAK DEBUG */
-	ft_gc_2p_str(tkn->token);
-	free (tkn->tkn_literal);
+	printf("CMD CNT\t%d\n", cmd_cnt);
 }
