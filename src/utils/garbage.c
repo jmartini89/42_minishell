@@ -13,15 +13,12 @@ void
 		while (heap[i][j])
 		{
 			free (heap[i][j]);
-			heap[i][j] = NULL;
 			j++;
 		}
 		free (heap[i]);
-		heap[i] = NULL;
 		i++;
 	}
 	free (heap);
-	heap = NULL;
 }
 
 void
@@ -31,12 +28,8 @@ void
 
 	i = -1;
 	while (heap[++i])
-	{
 		free (heap[i]);
-		heap[i] = NULL;
-	}
 	free (heap);
-	heap = NULL;
 }
 
 void
@@ -44,7 +37,6 @@ void
 {
 	ft_gc_3p_str(heap_c);
 	free (heap_i);
-	heap_i = NULL;
 }
 
 void

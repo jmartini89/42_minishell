@@ -27,7 +27,7 @@ int
 {
 	tkn->lexer = NULL;
 	ft_lexer_tag(tkn);
-	if (ft_lexer_syntax(tkn, shell) == 0) // TODO
+	if (ft_lexer_syntax(tkn, shell) == 0)
 		return (0);
 	return (1);
 }

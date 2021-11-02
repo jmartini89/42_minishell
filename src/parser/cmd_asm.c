@@ -9,29 +9,27 @@ static void
 }
 
 int
-	ft_cmd_cnt(t_token *tkn)
+	ft_cmd_cnt(t_token *tkn) // NOT WORKING PROPERLY
 {
 	int	i;
 	int	cnt;
-	int	type;
 
 	i = 0;
 	cnt = 1;
 	while (tkn->token[i])
 	{
-		type = ft_operator_type(tkn->token[i]);
-		if (type == PIPE)
+		if (tkn->lexer[i] == PIPE)
 		{
 			cnt++;
 			if (tkn->token[i + 1]
-				&& ft_operator_type(tkn->token[i + 1]) == WORD)
+				&& tkn->lexer[i + 1] == WORD)
 				cnt++;
 		}
-		if (type > PIPE)
+		if (tkn->lexer[i] > PIPE)
 		{
 			cnt++;
 			while (tkn->token[i + 1] && tkn->token[i + 2]
-				&& ft_operator_type(tkn->token[i + 2]) > PIPE)
+				&& tkn->lexer[i + 2] > PIPE)
 				i += 2;
 		}
 		i++;
