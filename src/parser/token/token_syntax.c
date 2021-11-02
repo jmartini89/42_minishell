@@ -47,7 +47,7 @@ static int
 }
 
 int
-	ft_line_syntax(char *line_read, t_shell *shell)
+	ft_token_syntax(char *line_read, t_shell *shell)
 {
 	int	err;
 

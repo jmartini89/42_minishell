@@ -13,7 +13,7 @@ static void
 		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	ft_memcpy(tkn->tkn_literal, tmp, sizeof(*tmp) * len);
 	free (tmp);
-	if (tkn->literal)
+	if (tkn->literal_current)
 		tkn->tkn_literal[len] = 1;
 }
 
@@ -45,13 +45,13 @@ static int
 }
 
 static void
-	ft_token_assembler(t_token *tkn, t_shell *shell)
+	ft_lexer_asm(t_token *tkn, t_shell *shell)
 {
 	int		i;
 	char	*new_tkn;
 
 	ft_token_init_quotes(tkn);
-	tkn->literal = 0;
+	tkn->literal_current = 0;
 	new_tkn = ft_token_translate(tkn, shell);
 	if (*new_tkn)
 	{
@@ -64,32 +64,25 @@ static void
 }
 
 int
-	ft_token(char *line, t_shell *shell)
+	ft_token(char *line, t_token *tkn, t_shell *shell)
 {
-	t_token	tkn;
-
-	if (!ft_line_syntax(line, shell))
+	if (ft_token_syntax(line, shell) == 0)
 		return (0);
-	tkn.token = NULL;
-	tkn.tkn_literal = NULL;
-	ft_token_init_all(&tkn);
+	tkn->token = NULL;
+	tkn->tkn_literal = NULL;
+	ft_token_init_all(tkn);
 	while (*line)
 	{
-		ft_token_find(&tkn, line);
-		if (tkn.end)
+		ft_token_find(tkn, line);
+		if (tkn->end)
 		{
-			line = tkn.end;
-			ft_token_assembler(&tkn, shell);
-			ft_token_init_all(&tkn);
+			line = tkn->end;
+			ft_lexer_asm(tkn, shell);
+			ft_token_init_all(tkn);
 		}
 		line++;
 	}
-	if (tkn.token)
-	{
-		if (!ft_token_syntax(&tkn, shell))
-			return (0);
-		ft_cmd_asm(&tkn, shell);
-		return (1);
-	}
-	return (0);
+	if (tkn->token == NULL)
+		return (0);
+	return (1);
 }

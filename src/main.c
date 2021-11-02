@@ -29,7 +29,7 @@ int
 		if (line_read && *line_read)
 		{
 			add_history(line_read);
-			if (ft_token(line_read, &shell))
+			if (ft_parser(line_read, &shell))
 			{
 				signal(SIGINT, SIG_IGN);
 				// ft_exec(&shell);

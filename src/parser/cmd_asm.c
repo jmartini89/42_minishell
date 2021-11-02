@@ -13,26 +13,23 @@ int
 {
 	int	i;
 	int	cnt;
-	int	type;
 
 	i = 0;
-	cnt = 1;
+	cnt = 0;
 	while (tkn->token[i])
 	{
-		type = ft_operator_type(tkn->token[i]);
-		if (type == PIPE)
+		if (tkn->token[i] && tkn->lexer[i] == WORD)
 		{
 			cnt++;
-			if (tkn->token[i + 1]
-				&& ft_operator_type(tkn->token[i + 1]) == WORD)
-				cnt++;
+			while (tkn->token[i] && tkn->lexer == WORD)
+				i++;
 		}
-		if (type > PIPE)
+		if (tkn->token[i] && tkn->lexer[i] == PIPE)
+			cnt++;
+		if (tkn->token[i] && tkn->lexer[i] > PIPE) // NOT OK FOR EDGE CASE, NEED DIFFERENT LOGIC
 		{
 			cnt++;
-			while (tkn->token[i + 2]
-				&& ft_operator_type(tkn->token[i + 2]) > PIPE)
-				i += 2;
+			i++;
 		}
 		i++;
 	}
@@ -47,9 +44,5 @@ void
 	ft_cmd_init(shell);
 	cmd_cnt = ft_cmd_cnt(tkn);
 
-	printf("%d\n", cmd_cnt);
-
-	/* NO LEAK DEBUG */
-	ft_gc_2p_str(tkn->token);
-	free (tkn->tkn_literal);
+	printf("---\nCMD CNT\t%d\n", cmd_cnt);
 }
