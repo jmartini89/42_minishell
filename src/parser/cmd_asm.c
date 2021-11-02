@@ -9,28 +9,27 @@ static void
 }
 
 int
-	ft_cmd_cnt(t_token *tkn) // NOT WORKING PROPERLY
+	ft_cmd_cnt(t_token *tkn)
 {
 	int	i;
 	int	cnt;
 
 	i = 0;
-	cnt = 1;
+	cnt = 0;
 	while (tkn->token[i])
 	{
-		if (tkn->lexer[i] == PIPE)
+		if (tkn->token[i] && tkn->lexer[i] == WORD)
 		{
 			cnt++;
-			if (tkn->token[i + 1]
-				&& tkn->lexer[i + 1] == WORD)
-				cnt++;
+			while (tkn->token[i] && tkn->lexer == WORD)
+				i++;
 		}
-		if (tkn->lexer[i] > PIPE)
+		if (tkn->token[i] && tkn->lexer[i] == PIPE)
+			cnt++;
+		if (tkn->token[i] && tkn->lexer[i] > PIPE) // NOT OK FOR EDGE CASE, NEED DIFFERENT LOGIC
 		{
 			cnt++;
-			while (tkn->token[i + 1] && tkn->token[i + 2]
-				&& tkn->lexer[i + 2] > PIPE)
-				i += 2;
+			i++;
 		}
 		i++;
 	}
@@ -45,5 +44,5 @@ void
 	ft_cmd_init(shell);
 	cmd_cnt = ft_cmd_cnt(tkn);
 
-	printf("CMD CNT\t%d\n", cmd_cnt);
+	printf("---\nCMD CNT\t%d\n", cmd_cnt);
 }
