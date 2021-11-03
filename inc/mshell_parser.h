@@ -35,7 +35,12 @@ typedef struct s_token
 int		ft_parser(char *line, t_shell *shell);
 int		ft_token(char *line, t_token *tkn, t_shell *shell);
 int		ft_lexer(t_token *tkn, t_shell *shell);
+
+/* CMD */
 void	ft_cmd(t_token *tkn, t_shell *shell);
+void	ft_cmd_asm(t_token *tkn, t_shell *shell, t_list *word, t_redir *redir);
+int		ft_cmd_cnt(t_token *tkn);
+void	ft_word_cpy(t_shell *shell, t_list *word, int index);
 
 /* SYNTAX CHECKS */
 int		ft_line_syntax(char *line, t_shell *shell);
