@@ -11,17 +11,17 @@ void
 	int		err;
 	int		i;
 
-	builtin = ft_builtin_check(shell, shell->cmd[0]);
+	builtin = ft_builtin_check(shell, shell->cmd[0].argv);
 	if (shell->cmd_cnt == 1 && builtin)
 	{
-		ft_builtin_launch(shell, shell->cmd[0], builtin, 0);
+		ft_builtin_launch(shell, shell->cmd[0].argv, builtin, 0);
 		return ;
 	}
 
 	i = 0;
-	while (shell->cmd[i])
+	while (i < shell->cmd_cnt)
 	{
-		if (!shell->cmd_operator[i])
+		if (shell->cmd[i].argv)
 		{
 			pid = fork();
 			if (pid < 0)
@@ -29,13 +29,13 @@ void
 			if (!pid)
 			{
 				ft_signal_default();
-				builtin = ft_builtin_check(shell, shell->cmd[i]);
+				builtin = ft_builtin_check(shell, shell->cmd[i].argv);
 				if (builtin)
-					ft_builtin_launch(shell, shell->cmd[i], builtin, 1);
-				else if (!ft_is_path(shell->cmd[i][0]))
-					if (!ft_exec_env_path(shell, &shell->cmd[i][0]))
+					ft_builtin_launch(shell, shell->cmd[i].argv, builtin, 1);
+				else if (!ft_is_path(shell->cmd[i].argv[0]))
+					if (!ft_exec_env_path(shell, &shell->cmd[i].argv[0]))
 						ft_error_exit(ERR_EXEC_NOCMD, NULL, 127);
-				if (execve(shell->cmd[i][0], shell->cmd[i], shell->env) == -1)
+				if (execve(shell->cmd[i].argv[0], shell->cmd[i].argv, shell->env) == -1)
 				{
 					err = errno;
 					rl_clear_history();

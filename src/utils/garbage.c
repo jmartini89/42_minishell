@@ -43,16 +43,16 @@ void
 	while (i < shell->cmd_cnt)
 	{
 		j = 0;
-		while (shell->cmd_arr[i].argv[j])
+		while (shell->cmd[i].argv && shell->cmd[i].argv[j])
 		{
-			free (shell->cmd_arr[i].argv[j]);
+			free (shell->cmd[i].argv[j]);
 			j++;
 		}
-		ft_rdr_clear(&shell->cmd_arr[i].redir, free);
-		free (shell->cmd_arr[i].argv);
+		ft_rdr_clear(&shell->cmd[i].redir, free);
+		free (shell->cmd[i].argv);
 		i++;
 	}
-	free (shell->cmd_arr);
+	free (shell->cmd);
 }
 
 void

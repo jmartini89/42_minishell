@@ -25,7 +25,8 @@ int
 	int	status;
 
 	status = 0;
-
+	if (argv == NULL)
+		return (status);
 	if (!ft_memcmp(argv[0], "cd", 2) && ft_strlen(argv[0]) == 2)
 		status = (BLTIN_CD);
 	if (!ft_memcmp(argv[0], "echo", 4) && ft_strlen(argv[0]) == 4)

@@ -9,7 +9,7 @@ static void
 static void
 	ft_listprint_rdr(int type, char *name)
 {
-	ft_printf("RDR\ttype\t%d\tname\t%s\n", type, name);
+	ft_printf("REDIR\ttype\t%d\tname\t%s\n", type, name);
 }
 
 static int
@@ -37,7 +37,7 @@ static void
 	i = 0;
 	while (word)
 	{
-		shell->cmd_arr[index].argv[i] = word->content;
+		shell->cmd[index].argv[i] = word->content;
 		word = word->next;
 		i++;
 	}
@@ -57,8 +57,9 @@ static void
 	word = NULL;
 	redir = NULL;
 	tmp_word = NULL;
+
 	shell->cmd_cnt = ft_cmd_cnt(tkn);
-	shell->cmd_arr = ft_calloc(shell->cmd_cnt, sizeof(*shell->cmd_arr));
+	shell->cmd = ft_calloc(shell->cmd_cnt, sizeof(*shell->cmd));
 
 	cnt = 0;
 	i = 0;
@@ -101,31 +102,37 @@ static void
 				i++;
 			}
 
-			shell->cmd_arr[cnt].redir = redir;
+			shell->cmd[cnt].argv = NULL;
+			shell->cmd[cnt].redir = redir;
 
 			lstsize = ft_lstsize(word);
-			shell->cmd_arr[cnt].argv = ft_calloc(lstsize + 1, sizeof(*shell->cmd_arr[cnt].argv));
-			if (shell->cmd_arr[cnt].argv == NULL)
-				ft_error_exit(errno, "malloc", EXIT_FAILURE);
+			if (lstsize)
+			{
+				shell->cmd[cnt].argv = ft_calloc(lstsize + 1, sizeof(*shell->cmd[cnt].argv));
+				if (shell->cmd[cnt].argv == NULL)
+					ft_error_exit(errno, "malloc", EXIT_FAILURE);
+			}
 			ft_lstcpy(shell, word, cnt);
 
 			redir = NULL;
 			ft_lstclear(&word, NULL);
 
 			/* PRINT TEST */
-			while (shell->cmd_arr[cnt].argv[test])
+			while (shell->cmd[cnt].argv && shell->cmd[cnt].argv[test])
 			{
-				ft_printf("%s\n", shell->cmd_arr[cnt].argv[test]);
+				ft_printf("WORD\t%s\n", shell->cmd[cnt].argv[test]);
 				test++;
 			}
-			ft_rdr_iter(shell->cmd_arr[cnt].redir, ft_listprint_rdr);
+			ft_rdr_iter(shell->cmd[cnt].redir, ft_listprint_rdr);
 			test = 0;
+
+			ft_printf("-----------\n", cnt);
 
 			cnt++;
 		}
 	}
 
-	ft_gc_cmd(shell);
+	// ft_gc_cmd(shell);
 }
 
 void

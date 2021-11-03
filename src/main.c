@@ -32,8 +32,8 @@ int
 			if (ft_parser(line_read, &shell))
 			{
 				signal(SIGINT, SIG_IGN);
-				// ft_exec(&shell);
-				// ft_gc_cmd(shell.cmd, shell.cmd_operator);
+				ft_exec(&shell);
+				ft_gc_cmd(&shell);
 				signal(SIGINT, ft_sig_int);
 			}
 		}

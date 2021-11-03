@@ -24,9 +24,7 @@ typedef struct s_shell
 	char	**env;
 	char	*cwd;
 	char	*ret_str;
-	char	***cmd;			// OBSOLETE
-	int		*cmd_operator;	// OBSOLETE
-	t_cmd	*cmd_arr;
+	t_cmd	*cmd;
 	int		cmd_cnt;
 }	t_shell;
 
