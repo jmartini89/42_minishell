@@ -32,19 +32,46 @@ static void
 }
 
 static void
-	ft_list_test(t_token *tkn, t_shell *shell)
+	ft_cmd_word(t_token *tkn, t_list **word, int i)
+{
+	t_list	*tmp;
+
+	tmp = NULL;
+	tmp = ft_lstnew(tkn->token[i]);
+	if (tmp == NULL)
+		ft_error_exit(errno, "malloc", EXIT_FAILURE);
+	if (word == NULL)
+		*word = tmp;
+	else
+		ft_lstadd_back(word, tmp);
+}
+
+static void
+	ft_cmd_redir(t_token *tkn, t_redir **redir, int i)
+{
+	t_redir	*tmp;
+
+	tmp = NULL;
+	tmp = ft_rdr_new(tkn->lexer[i], tkn->token[i + 1]);
+	if (redir == NULL)
+		*redir = tmp;
+	else
+		ft_rdr_add_back(redir, tmp);
+	free (tkn->token[i]);
+	tkn->token[i] = NULL;
+}
+
+static void
+	ft_cmd_asm(t_token *tkn, t_shell *shell)
 {
 	t_list	*word;
-	t_list	*tmp_word;
 	t_redir	*redir;
-	t_redir	*tmp_redir;
 	int		lstsize;
 	int		i;
 	int		cnt;
 
 	word = NULL;
 	redir = NULL;
-	tmp_word = NULL;
 
 	shell->cmd_cnt = ft_cmd_cnt(tkn);
 	shell->cmd = ft_calloc(shell->cmd_cnt, sizeof(*shell->cmd));
@@ -56,25 +83,13 @@ static void
 	{
 		if (tkn->token[i] && tkn->lexer[i] == WORD)
 		{
-			tmp_word = ft_lstnew(tkn->token[i]);
-			if (tmp_word == NULL)
-				ft_error_exit(errno, "malloc", EXIT_FAILURE);
-			if (word == NULL)
-				word = tmp_word;
-			else
-				ft_lstadd_back(&word, tmp_word);
+			ft_cmd_word(tkn, &word, i);
 			i++;
 		}
 
 		if (tkn->token[i] && tkn->lexer[i] > PIPE)
 		{
-			tmp_redir = ft_rdr_new(tkn->lexer[i], tkn->token[i + 1]);
-			if (redir == NULL)
-				redir = tmp_redir;
-			else
-				ft_rdr_add_back(&redir, tmp_redir);
-			free (tkn->token[i]);
-			tkn->token[i] = NULL;
+			ft_cmd_redir(tkn, &redir, i);
 			i += 2;
 		}
 
@@ -127,5 +142,5 @@ void
 {
 	shell->cmd = NULL;
 	shell->cmd_cnt = 0;
-	ft_list_test(tkn, shell);
+	ft_cmd_asm(tkn, shell);
 }
