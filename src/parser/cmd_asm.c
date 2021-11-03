@@ -9,7 +9,7 @@ static void
 static void
 	ft_listprint_rdr(int type, char *name)
 {
-	ft_printf("type\t%d\nname\t%s\n", type, name);
+	ft_printf("RDR\ttype\t%d\tname\t%s\n", type, name);
 }
 
 static int
@@ -93,6 +93,7 @@ static void
 			|| tkn->token[i] == NULL)
 		{
 
+			ft_printf("---CMD %d---\n", cnt);
 			if (tkn->token[i] && tkn->lexer[i] == PIPE)
 			{
 				free (tkn->token[i]);
