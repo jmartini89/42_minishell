@@ -119,6 +119,7 @@ static void
 			}
 			ft_rdr_iter(shell->cmd_arr[cnt].redir, ft_listprint_rdr);
 
+			test = 0;
 			cnt++;
 		}
 	}
