@@ -14,6 +14,8 @@ void
 	builtin = ft_builtin_check(shell, shell->cmd[0].argv);
 	if (shell->cmd_cnt == 1 && builtin)
 	{
+		if (shell->cmd[0].redir)
+			ft_printf("EXEC REDIRECTION DEBUG\n");
 		ft_builtin_launch(shell, shell->cmd[0].argv, builtin, 0);
 		return ;
 	}
