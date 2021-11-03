@@ -36,7 +36,7 @@ void
 	ft_gc_cmd(t_shell *shell)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	j = 0;

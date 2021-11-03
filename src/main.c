@@ -46,7 +46,7 @@ int
 			line_read = NULL;
 			//ft_exit(&shell, NULL);
 			ft_printf("exit\n"); // DEBUG
-			break ; // DEBUG
+			break; // DEBUG
 		}
 		if (line_read && *line_read)
 		{
