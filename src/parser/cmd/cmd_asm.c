@@ -41,7 +41,7 @@ static int
 }
 
 static void
-	ft_cmd_write_word(t_shell *shell, t_token *tkn, t_list *word, int cnt)
+	ft_cmd_write_word(t_shell *shell, t_list *word, int cnt)
 {
 	int	lstsize;
 
@@ -89,7 +89,7 @@ void
 		{
 			if (ft_cmd_pipe(tkn, i))
 				i++;
-			ft_cmd_write_word(shell, tkn, word, cnt);
+			ft_cmd_write_word(shell, word, cnt);
 			shell->cmd[cnt].redir = redir;
 			redir = NULL;
 			cnt++;

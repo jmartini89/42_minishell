@@ -28,6 +28,8 @@ int
 	t_shell	shell;
 	char	*line_read;
 
+	(void)argc;
+	(void)argv;
 	ft_env_init(&shell, envp);
 	line_read = NULL;
 	ft_signal();

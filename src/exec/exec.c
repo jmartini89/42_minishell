@@ -5,13 +5,13 @@ void
 {
 	int		builtin;
 	int		pid;
-	int		*pid_arr;
+	// int		*pid_arr;
 	int		wstatus;
 	int		wexit;
 	int		err;
 	int		i;
 
-	builtin = ft_builtin_check(shell, shell->cmd[0].argv);
+	builtin = ft_builtin_check(shell->cmd[0].argv);
 	if (shell->cmd_cnt == 1 && builtin)
 	{
 		if (shell->cmd[0].redir)
@@ -31,7 +31,7 @@ void
 			if (!pid)
 			{
 				ft_signal_default();
-				builtin = ft_builtin_check(shell, shell->cmd[i].argv);
+				builtin = ft_builtin_check(shell->cmd[i].argv);
 				if (builtin)
 					ft_builtin_launch(shell, shell->cmd[i].argv, builtin, TRUE);
 				else if (!ft_is_path(shell->cmd[i].argv[0]))

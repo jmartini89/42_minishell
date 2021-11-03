@@ -15,7 +15,7 @@ enum	e_builtin {
 void	ft_exec(t_shell *shell);
 
 /* UTILS */
-int		ft_builtin_check(t_shell *shell, char **argv);
+int		ft_builtin_check(char **argv);
 void	ft_builtin_launch(
 			t_shell *shell, char **argv, int status, int process);
 

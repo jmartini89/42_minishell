@@ -3,6 +3,7 @@
 void
 	ft_sig_int(int sig)
 {
+	(void)sig;
 	ft_printf("^C\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);

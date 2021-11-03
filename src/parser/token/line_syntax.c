@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 static int
-	ft_is_valid_operator(t_token *parser, char *c)
+	ft_is_valid_operator(char *c)
 {
 	int	operator;
 
@@ -38,7 +38,7 @@ static int
 			return (ERR_SYNTAX_CHAR);
 		if (ft_is_operator(line[i])
 			&& parser.quotes_status == QTS_CLOSE
-			&& !ft_is_valid_operator(&parser, &line[i]))
+			&& !ft_is_valid_operator(&line[i]))
 			return (ERR_SYNTAX_TKN);
 	}
 	if (parser.quotes_status == QTS_OPEN)

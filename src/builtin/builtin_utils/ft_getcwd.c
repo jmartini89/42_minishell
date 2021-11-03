@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 char *
-	ft_getcwd(t_shell *shell)
+	ft_getcwd(void)
 {
 	char	*cwd;
 	int		err;
