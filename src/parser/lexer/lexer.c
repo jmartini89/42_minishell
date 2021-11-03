@@ -17,7 +17,6 @@ static void
 			tkn->lexer[i] = WORD;
 		else
 			tkn->lexer[i] = ft_operator_type(tkn->token[i]);
-		ft_printf("LEXER\t%s\t%d\n", tkn->token[i], tkn->lexer[i]);
 		i++;
 	}
 }

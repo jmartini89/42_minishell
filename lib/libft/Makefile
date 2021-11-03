@@ -52,7 +52,7 @@ SRCS_BONUS = ft_lstadd_back.c \
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
-all: $(NAME)
+all: bonus
 
 clean:
 	@${RM} $(OBJS) $(OBJS_BONUS)

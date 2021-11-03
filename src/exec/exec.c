@@ -1,16 +1,5 @@
 #include "minishell.h"
 
-static int
-	ft_test(t_shell *shell)
-{
-	if (!ft_memcmp(shell->cmd[0][0], "pipe", 4) && ft_strlen(shell->cmd[0][0]) == 4)
-	{
-		ft_test_pipe(shell);
-		return (1);
-	}
-	return (0);
-}
-
 void
 	ft_exec(t_shell *shell)
 {
@@ -21,9 +10,6 @@ void
 	int		wexit;
 	int		err;
 	int		i;
-
-	if (ft_test(shell)) // TEST
-		return ;
 
 	builtin = ft_builtin_check(shell, shell->cmd[0]);
 	if (shell->cmd_cnt == 1 && builtin)
@@ -37,10 +23,6 @@ void
 	{
 		if (!shell->cmd_operator[i])
 		{
-			if (i && shell->cmd_operator[i - 1])
-				ft_printf("***\tPIPE L TODO\n");
-			if (shell->cmd[i + 1] && shell->cmd_operator[i + 1])
-				ft_printf("***\tPIPE R TODO\n");
 			pid = fork();
 			if (pid < 0)
 				ft_error_exit(errno, "fork", EXIT_FAILURE);

@@ -11,7 +11,8 @@ static void
 static void
 	ft_parser_gc(t_token *tkn)
 {
-	ft_gc_2p_str(tkn->token);
+	// ft_gc_2p_str(tkn->token);
+	free (tkn->token); // DEBUG LEAK
 	free (tkn->tkn_literal);
 	free (tkn->lexer);
 }
