@@ -50,7 +50,7 @@ static void
 	if (lstsize)
 	{
 		shell->cmd[cnt].argv = ft_calloc(
-			lstsize + 1, sizeof(*shell->cmd[cnt].argv));
+				lstsize + 1, sizeof(*shell->cmd[cnt].argv));
 		if (shell->cmd[cnt].argv == NULL)
 			ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	}
