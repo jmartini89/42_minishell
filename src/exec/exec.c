@@ -16,7 +16,7 @@ void
 	{
 		if (shell->cmd[0].redir)
 			ft_printf("EXEC REDIRECTION DEBUG\n");
-		ft_builtin_launch(shell, shell->cmd[0].argv, builtin, 0);
+		ft_builtin_launch(shell, shell->cmd[0].argv, builtin, FALSE);
 		return ;
 	}
 
@@ -33,7 +33,7 @@ void
 				ft_signal_default();
 				builtin = ft_builtin_check(shell, shell->cmd[i].argv);
 				if (builtin)
-					ft_builtin_launch(shell, shell->cmd[i].argv, builtin, 1);
+					ft_builtin_launch(shell, shell->cmd[i].argv, builtin, TRUE);
 				else if (!ft_is_path(shell->cmd[i].argv[0]))
 					if (!ft_exec_env_path(shell, &shell->cmd[i].argv[0]))
 						ft_error_exit(ERR_EXEC_NOCMD, NULL, 127);

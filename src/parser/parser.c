@@ -9,10 +9,12 @@ static void
 }
 
 static void
-	ft_parser_gc(t_token *tkn)
+	ft_parser_gc(t_token *tkn, int exit)
 {
-	// ft_gc_2p_str(tkn->token);
-	free (tkn->token); // DEBUG LEAK
+	if (exit)
+		ft_gc_2p_str(tkn->token);
+	else
+		free (tkn->token);
 	free (tkn->tkn_literal);
 	free (tkn->lexer);
 }
@@ -27,10 +29,10 @@ int
 		return (0);
 	if (ft_lexer(&tkn, shell) == 0)
 	{
-		ft_parser_gc(&tkn);
+		ft_parser_gc(&tkn, TRUE);
 		return (0);
 	}
 	ft_cmd_asm(&tkn, shell);
-	ft_parser_gc(&tkn);
+	ft_parser_gc(&tkn, FALSE);
 	return (1);
 }

@@ -1,5 +1,7 @@
 #ifndef MSHELL_UTILS_H
 # define MSHELL_UTILS_H
+# define FALSE 0
+# define TRUE 1
 
 enum	e_err {
 	ERR_UNDEF,
