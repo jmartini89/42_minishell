@@ -32,7 +32,7 @@ int
 		ft_parser_gc(&tkn, TRUE);
 		return (0);
 	}
-	ft_cmd_asm(&tkn, shell);
+	ft_cmd(&tkn, shell);
 	ft_parser_gc(&tkn, FALSE);
 	return (1);
 }

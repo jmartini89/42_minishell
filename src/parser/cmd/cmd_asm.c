@@ -1,17 +1,5 @@
 #include "minishell.h"
 
-static void
-	ft_listprint(void *content)
-{
-	ft_printf("%s\n", (char *)content);
-}
-
-static void
-	ft_listprint_rdr(int type, char *name)
-{
-	ft_printf("REDIR\ttype\t%d\tname\t%s\n", type, name);
-}
-
 static int
 	ft_cmd_cnt(t_token *tkn)
 {
@@ -123,7 +111,7 @@ static void
 				ft_printf("WORD\t%s\n", shell->cmd[cnt].argv[test]);
 				test++;
 			}
-			ft_rdr_iter(shell->cmd[cnt].redir, ft_listprint_rdr);
+			ft_rdr_iter(shell->cmd[cnt].redir, ft_rdr_print);
 			test = 0;
 			ft_printf("-----------\n", cnt);
 
@@ -135,9 +123,9 @@ static void
 }
 
 void
-	ft_cmd_asm(t_token *tkn, t_shell *shell)
+	ft_cmd(t_token *tkn, t_shell *shell)
 {
-	shell->cmd_cnt = 0;
 	shell->cmd = NULL;
+	shell->cmd_cnt = 0;
 	ft_list_test(tkn, shell);
 }

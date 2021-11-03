@@ -35,10 +35,10 @@ typedef struct s_token
 int		ft_parser(char *line, t_shell *shell);
 int		ft_token(char *line, t_token *tkn, t_shell *shell);
 int		ft_lexer(t_token *tkn, t_shell *shell);
-void	ft_cmd_asm(t_token *tkn, t_shell *shell);
+void	ft_cmd(t_token *tkn, t_shell *shell);
 
 /* SYNTAX CHECKS */
-int		ft_token_syntax(char *line, t_shell *shell);
+int		ft_line_syntax(char *line, t_shell *shell);
 int		ft_lexer_syntax(t_token *tkn, t_shell *shell);
 
 /* TOKEN_INIT */
