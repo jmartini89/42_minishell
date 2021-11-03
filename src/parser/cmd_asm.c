@@ -125,7 +125,6 @@ static void
 			}
 			ft_rdr_iter(shell->cmd[cnt].redir, ft_listprint_rdr);
 			test = 0;
-
 			ft_printf("-----------\n", cnt);
 
 			cnt++;
@@ -139,5 +138,6 @@ void
 	ft_cmd_asm(t_token *tkn, t_shell *shell)
 {
 	shell->cmd_cnt = 0;
+	shell->cmd = NULL;
 	ft_list_test(tkn, shell);
 }

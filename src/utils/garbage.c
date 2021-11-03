@@ -53,6 +53,7 @@ void
 		i++;
 	}
 	free (shell->cmd);
+	shell->cmd = NULL;
 }
 
 void
