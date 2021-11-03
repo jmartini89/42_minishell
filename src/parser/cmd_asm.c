@@ -119,28 +119,13 @@ static void
 				test++;
 			}
 			ft_rdr_iter(shell->cmd_arr[cnt].redir, ft_listprint_rdr);
-
 			test = 0;
+
 			cnt++;
 		}
 	}
 
-	/* GC TEST */
-	int j;
-	i = 0;
-	while (i < shell->cmd_cnt)
-	{
-		j = 0;
-		while (shell->cmd_arr[i].argv[j])
-		{
-			free (shell->cmd_arr[i].argv[j]);
-			j++;
-		}
-		ft_rdr_clear(&shell->cmd_arr[i].redir, free);
-		free (shell->cmd_arr[i].argv);
-		i++;
-	}
-	free (shell->cmd_arr);
+	ft_gc_cmd(shell);
 }
 
 void
