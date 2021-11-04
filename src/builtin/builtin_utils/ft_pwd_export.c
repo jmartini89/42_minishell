@@ -33,7 +33,7 @@ void
 
 	custom = ft_calloc(3, sizeof(*custom));
 	custom[0] = "export";
-	cwd = ft_getcwd(shell);
+	cwd = ft_getcwd();
 	if (!cwd)
 	{
 		free (custom);

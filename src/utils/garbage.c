@@ -33,10 +33,27 @@ void
 }
 
 void
-	ft_gc_cmd(char ***heap_c, int *heap_i)
+	ft_gc_cmd(t_shell *shell)
 {
-	ft_gc_3p_str(heap_c);
-	free (heap_i);
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < shell->cmd_cnt)
+	{
+		j = 0;
+		while (shell->cmd[i].argv && shell->cmd[i].argv[j])
+		{
+			free (shell->cmd[i].argv[j]);
+			j++;
+		}
+		ft_rdr_clear(&shell->cmd[i].redir, free);
+		free (shell->cmd[i].argv);
+		i++;
+	}
+	free (shell->cmd);
+	shell->cmd = NULL;
 }
 
 void

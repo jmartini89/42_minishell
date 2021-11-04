@@ -15,7 +15,7 @@ void
 			exit (ft_atoi(shell->ret_str));
 		return ;
 	}
-	cwd = ft_getcwd(shell);
+	cwd = ft_getcwd();
 	if (cwd)
 	{
 		ft_printf("%s\n", cwd);

@@ -66,7 +66,7 @@ static void
 int
 	ft_token(char *line, t_token *tkn, t_shell *shell)
 {
-	if (ft_token_syntax(line, shell) == 0)
+	if (ft_line_syntax(line, shell) == 0)
 		return (0);
 	tkn->token = NULL;
 	tkn->tkn_literal = NULL;

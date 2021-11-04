@@ -11,7 +11,7 @@ void	ft_pwd(t_shell *shell, char **argv, int process);
 void	ft_unset(t_shell *shell, char **argv, int process);
 
 /* UTILS */
-char	*ft_getcwd(t_shell *shell);
+char	*ft_getcwd(void);
 void	ft_pwd_export_old(t_shell *shell);
 void	ft_pwd_export_new(t_shell *shell);
 int		ft_lencmp(char *arg, char *env);

@@ -26,5 +26,6 @@
 # include "mshell_parser.h"
 # include "mshell_builtin.h"
 # include "mshell_exec.h"
+# include "mshell_liblist.h"
 
 #endif
