@@ -45,7 +45,7 @@ static int
 }
 
 static void
-	ft_lexer_asm(t_token *tkn, t_shell *shell)
+	ft_token_assembler(t_token *tkn, t_shell *shell)
 {
 	int		i;
 	char	*new_tkn;
@@ -53,7 +53,7 @@ static void
 	ft_token_init_quotes(tkn);
 	tkn->literal_current = 0;
 	new_tkn = ft_token_translate(tkn, shell);
-	if (*new_tkn)
+	if (new_tkn && *new_tkn)
 	{
 		i = ft_token_assembler_swap(tkn);
 		tkn->token[i] = new_tkn;
@@ -77,7 +77,7 @@ int
 		if (tkn->end)
 		{
 			line = tkn->end;
-			ft_lexer_asm(tkn, shell);
+			ft_token_assembler(tkn, shell);
 			ft_token_init_all(tkn);
 		}
 		line++;

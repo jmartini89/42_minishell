@@ -7,8 +7,6 @@ static char *
 	char	*tmp;
 	char	*env;
 
-	if (strlen(addr) == 1)
-		return ("$");
 	addr++;
 	len = 0;
 	while (&addr[len] <= tkn->end
@@ -41,7 +39,8 @@ static int
 				env = ft_token_expansion(tkn, shell, addr);
 				if (env)
 					len += ft_strlen(env);
-				while (*addr && !ft_is_quote(*addr) && *(addr + 1) != '$')
+				while (*addr && !ft_token_quotes_status(tkn, *addr)
+					&& *(addr + 1) != '$')
 					addr++;
 			}
 			else
@@ -65,8 +64,8 @@ static void
 				tmp->token[tmp->i++] = *tmp->env;
 				tmp->env++;
 			}
-			while (*tmp->addr
-				&& !ft_is_quote(*tmp->addr) && *(tmp->addr + 1) != '$')
+			while (*tmp->addr && !ft_token_quotes_status(tkn, *tmp->addr)
+				&& *(tmp->addr + 1) != '$')
 				tmp->addr++;
 		}
 		else
@@ -80,9 +79,10 @@ char
 	*ft_token_translate(t_token *tkn, t_shell *shell)
 {
 	t_tkn_tmp	tmp;
+	int			len;
 
-	tmp.token = ft_calloc(
-			ft_token_len(tkn, shell) + 1, sizeof(*tmp.token));
+	len = ft_token_len(tkn, shell);
+	tmp.token = ft_calloc(len + 1, sizeof(*tmp.token));
 	if (!tmp.token)
 		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	tmp.addr = tkn->start;
