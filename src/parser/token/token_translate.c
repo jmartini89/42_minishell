@@ -7,6 +7,8 @@ static char *
 	char	*tmp;
 	char	*env;
 
+	if (strlen(addr) == 1)
+		return ("$");
 	addr++;
 	len = 0;
 	while (&addr[len] <= tkn->end
