@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mshell_src.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jm & mc <jmartini & mcrisari>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/07 23:47:11 by jm & mc           #+#    #+#             */
+/*   Updated: 2021/11/07 23:54:40 by jm & mc          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MSHELL_SRC_H
 # define MSHELL_SRC_H
 # define M_SHELL_NAME "miniscell"
-# define M_SHELL_PROMPT "\001\e[32m\002"M_SHELL_NAME"\001\e[0m\002$ "
+# define M_SHELL_PROMPT "\001\e[32m\002miniscell\001\e[0m\002$ "
 
 typedef struct s_redir
 {
