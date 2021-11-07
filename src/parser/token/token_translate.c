@@ -7,13 +7,13 @@ static char *
 	char	*tmp;
 	char	*env;
 
+	if (strlen(addr) == 1)
+		return ("$");
 	addr++;
 	len = 0;
 	while (&addr[len] <= tkn->end
 		&& !ft_is_quote(addr[len]) && addr[len] != '$')
 		len++;
-	if (len == 0)
-		return ("$");
 	tmp = ft_calloc(len + 1, sizeof(*tmp));
 	if (!tmp)
 		ft_error_exit(errno, "malloc", EXIT_FAILURE);
