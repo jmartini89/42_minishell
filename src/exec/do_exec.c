@@ -6,7 +6,7 @@
 /*   By: jm & mc <jmartini & mcrisari>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:02:34 by jm & mc           #+#    #+#             */
-/*   Updated: 2021/11/09 16:02:35 by jm & mc          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:10:05 by jm & mc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,13 @@ void
 	while (i < shell->cmd_cnt)
 	{
 		ft_pipe_new(shell, i, pipefd);
-		if (shell->cmd[i].argv)
-		{
-			pid = fork();
-			if (pid < 0)
-				ft_error_exit(errno, "fork", EXIT_FAILURE);
-			if (pid == 0)
-				ft_child(shell, i, pipefd, input);
-			else
-				pid_arr[i] = pid;
-		}
+		pid = fork();
+		if (pid < 0)
+			ft_error_exit(errno, "fork", EXIT_FAILURE);
+		if (pid == 0)
+			ft_child(shell, i, pipefd, input);
+		else
+			pid_arr[i] = pid;
 		ft_pipe_control(shell, i, pipefd, &input);
 		i++;
 	}

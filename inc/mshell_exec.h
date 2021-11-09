@@ -27,6 +27,9 @@ enum	e_builtin {
 
 void	ft_exec(t_shell *shell);
 
+/* REDIRECTIONS */
+void	ft_redir(t_redir *redir);
+
 /* DO_EXEC */
 void	ft_do_exec(t_shell *shell, pid_t *pid_arr);
 

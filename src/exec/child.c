@@ -6,7 +6,7 @@
 /*   By: jm & mc <jmartini & mcrisari>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:02:36 by jm & mc           #+#    #+#             */
-/*   Updated: 2021/11/09 16:02:37 by jm & mc          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:10:22 by jm & mc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ void
 	int	builtin;
 	int	err;
 
-	ft_child_pipe(shell, i, pipefd, input);
 	ft_signal_default();
+	ft_child_pipe(shell, i, pipefd, input);
+	if (shell->cmd[i].argv == NULL)
+		exit (69); // DEBUG
 	builtin = ft_builtin_check(shell->cmd[i].argv);
 	if (builtin)
 		ft_builtin_launch(shell, shell->cmd[i].argv, builtin, TRUE);

@@ -6,7 +6,7 @@
 /*   By: jm & mc <jmartini & mcrisari>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 23:48:20 by jm & mc           #+#    #+#             */
-/*   Updated: 2021/11/09 16:07:03 by jm & mc          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:05:57 by jm & mc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static int
 	builtin = ft_builtin_check(shell->cmd[0].argv);
 	if (shell->cmd_cnt == 1 && builtin)
 	{
-		if (shell->cmd[0].redir)
-			ft_printf("EXEC REDIRECTION DEBUG\n");
+		// ft_redir(shell->cmd[0].redir);
 		ft_builtin_launch(shell, shell->cmd[0].argv, builtin, FALSE);
 		return (1);
 	}
