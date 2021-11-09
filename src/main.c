@@ -6,33 +6,33 @@
 /*   By: jm & mc <jmartini & mcrisari>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 23:49:55 by jm & mc           #+#    #+#             */
-/*   Updated: 2021/11/09 16:06:56 by jm & mc          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:13:29 by jm & mc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void
-// 	ft_parser_debug(t_shell *shell)
-// {
-// 	int	i;
-// 	int	cnt;
+static void
+	ft_parser_debug(t_shell *shell)
+{
+	int	i;
+	int	cnt;
 
-// 	cnt = 0;
-// 	while (cnt < shell->cmd_cnt)
-// 	{
-// 		i = 0;
-// 		ft_printf("---CMD %d---\n", cnt);
-// 		while (shell->cmd[cnt].argv && shell->cmd[cnt].argv[i])
-// 		{
-// 			ft_printf("WORD\t%s\n", shell->cmd[cnt].argv[i]);
-// 			i++;
-// 		}
-// 		ft_rdr_iter(shell->cmd[cnt].redir, ft_rdr_print);
-// 		ft_printf("-----------\n", cnt);
-// 		cnt++;
-// 	}
-// }
+	cnt = 0;
+	while (cnt < shell->cmd_cnt)
+	{
+		i = 0;
+		ft_printf("---CMD %d---\n", cnt);
+		while (shell->cmd[cnt].argv && shell->cmd[cnt].argv[i])
+		{
+			ft_printf("WORD\t%s\n", shell->cmd[cnt].argv[i]);
+			i++;
+		}
+		ft_rdr_iter(shell->cmd[cnt].redir, ft_rdr_print);
+		ft_printf("-----------\n", cnt);
+		cnt++;
+	}
+}
 
 int
 	main(int argc, char **argv, char **envp)

@@ -27,8 +27,8 @@ typedef struct s_cmd
 {
 	char	**argv;
 	t_redir	*redir;
-	int		pipe_r;
-	int		pipe_w;
+	int		r_in;
+	int		r_out;
 }	t_cmd;
 
 typedef struct s_shell

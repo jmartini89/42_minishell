@@ -6,7 +6,7 @@
 /*   By: jm & mc <jmartini & mcrisari>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 23:48:20 by jm & mc           #+#    #+#             */
-/*   Updated: 2021/11/09 17:05:57 by jm & mc          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:15:51 by jm & mc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,37 @@ static int
 	ft_single_shot_builtin(t_shell *shell)
 {
 	int	builtin;
+	int	out;
+	int	in;
 
 	builtin = ft_builtin_check(shell->cmd[0].argv);
 	if (shell->cmd_cnt == 1 && builtin)
 	{
-		// ft_redir(shell->cmd[0].redir);
+		in = dup(STDIN_FILENO);
+		if (in == -1)
+			ft_error_exit(errno, "dup", EXIT_FAILURE);
+		out = dup(STDOUT_FILENO);
+		if (out == -1)
+			ft_error_exit(errno, "dup", EXIT_FAILURE);
+
+		if (!ft_redir(&shell->cmd[0]))
+		{
+			ft_env_return(shell, EXIT_FAILURE);
+			return (1);
+		}
+
 		ft_builtin_launch(shell, shell->cmd[0].argv, builtin, FALSE);
+
+		if (shell->cmd[0].r_in)
+			if (dup2(in, STDIN_FILENO) == -1)
+				ft_error_exit(errno, "dup2", EXIT_FAILURE);
+		if (shell->cmd[0].r_out)
+			if (dup2(out, STDOUT_FILENO) == -1)
+				ft_error_exit(errno, "dup2", EXIT_FAILURE);
+		if (close(in) == -1)
+			ft_error_exit(errno, "close", EXIT_FAILURE);
+		if (close(out) == -1)
+			ft_error_exit(errno, "close", EXIT_FAILURE);
 		return (1);
 	}
 	return (0);
