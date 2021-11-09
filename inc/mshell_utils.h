@@ -27,10 +27,7 @@ enum	e_err {
 	ERR_BLTIN_EXPORT,
 	ERR_BLTIN_PWD_NDIR,
 	ERR_BLTIN_UNSET,
-	ERR_EXEC_NOFILE,
-	ERR_EXEC_PERM,
 	ERR_EXEC_NOCMD,
-	ERR_EXEC_UNKWN,
 };
 static const char *const	g_errstr[] = {
 	"Undefined",
@@ -43,10 +40,7 @@ static const char *const	g_errstr[] = {
 	"export: not a valid identifier",
 	"pwd: the current working directory has been unlinked",
 	"unset: not a valid identifier",
-	"execve: no such file or directory",
-	"execve: permission denied",
 	"execve: command not found",
-	"execve: unknown error",
 };
 
 /* ERROR */

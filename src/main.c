@@ -67,7 +67,7 @@ int
 			add_history(line_read);
 			if (ft_parser(line_read, &shell))
 			{
-				ft_parser_debug(&shell);
+				// ft_parser_debug(&shell);
 				signal(SIGINT, SIG_IGN);
 				ft_exec(&shell);
 				ft_gc_cmd(&shell);
