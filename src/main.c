@@ -6,7 +6,7 @@
 /*   By: jm & mc <jmartini & mcrisari>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 23:49:55 by jm & mc           #+#    #+#             */
-/*   Updated: 2021/11/09 16:03:19 by jm & mc          ###   ########.fr       */
+/*   Updated: 2021/11/09 16:06:56 by jm & mc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,8 @@ int
 			if (ft_parser(line_read, &shell))
 			{
 				// ft_parser_debug(&shell);
-				signal(SIGINT, SIG_IGN);
 				ft_exec(&shell);
 				ft_gc_cmd(&shell);
-				signal(SIGINT, ft_sig_int);
 			}
 		}
 	}

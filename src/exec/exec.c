@@ -6,7 +6,7 @@
 /*   By: jm & mc <jmartini & mcrisari>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 23:48:20 by jm & mc           #+#    #+#             */
-/*   Updated: 2021/11/07 23:48:21 by jm & mc          ###   ########.fr       */
+/*   Updated: 2021/11/09 16:07:03 by jm & mc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void
 {
 	pid_t	*pid_arr;
 
+	signal(SIGINT, SIG_IGN);
 	if (ft_single_shot_builtin(shell))
 		return ;
 	pid_arr = ft_calloc(shell->cmd_cnt, sizeof(*pid_arr));
@@ -68,4 +69,5 @@ void
 	ft_do_exec(shell, pid_arr);
 	ft_wait(shell, pid_arr);
 	free (pid_arr);
+	signal(SIGINT, ft_sig_int);
 }
