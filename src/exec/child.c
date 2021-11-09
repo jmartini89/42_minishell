@@ -44,10 +44,10 @@ void
 
 	ft_signal_default();
 	ft_child_pipe(shell, i, pipefd, input);
-	// if (!ft_redir(shell->cmd[i].redir))
-	// 	ft_exit(shell, NULL);
+	if (!ft_redir(shell, &shell->cmd[i]))
+		ft_exit(shell, NULL, TRUE);
 	if (shell->cmd[i].argv == NULL)
-		exit (69); // DEBUG
+		ft_exit(shell, NULL, TRUE);
 	builtin = ft_builtin_check(shell->cmd[i].argv);
 	if (builtin)
 		ft_builtin_launch(shell, shell->cmd[i].argv, builtin, TRUE);

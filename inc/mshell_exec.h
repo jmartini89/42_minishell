@@ -28,7 +28,7 @@ enum	e_builtin {
 void	ft_exec(t_shell *shell);
 
 /* REDIRECTIONS */
-int		ft_redir(t_cmd *cmd);
+int		ft_redir(t_shell *shell, t_cmd *cmd);
 
 /* DO_EXEC */
 void	ft_do_exec(t_shell *shell, pid_t *pid_arr);
@@ -37,6 +37,7 @@ void	ft_do_exec(t_shell *shell, pid_t *pid_arr);
 void	ft_child(t_shell *shell, int i, int *pipefd, int input);
 
 /* BUILTIN */
+int		ft_builtin_as_parent(t_shell *shell);
 int		ft_builtin_check(char **argv);
 void	ft_builtin_launch(
 			t_shell *shell, char **argv, int status, int process);

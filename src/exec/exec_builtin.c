@@ -12,6 +12,45 @@
 
 #include "minishell.h"
 
+static void
+	ft_fd_reset(t_cmd *cmd, int *io)
+{
+	if (cmd->r_in)
+		if (dup2(io[0], STDIN_FILENO) == -1)
+			ft_error_exit(errno, "dup2", EXIT_FAILURE);
+	if (cmd->r_out)
+		if (dup2(io[1], STDOUT_FILENO) == -1)
+			ft_error_exit(errno, "dup2", EXIT_FAILURE);
+	if (close(io[0]) == -1)
+		ft_error_exit(errno, "close", EXIT_FAILURE);
+	if (close(io[1]) == -1)
+		ft_error_exit(errno, "close", EXIT_FAILURE);
+}
+
+int
+	ft_builtin_as_parent(t_shell *shell)
+{
+	int	builtin;
+	int	io[2];
+
+	builtin = ft_builtin_check(shell->cmd[0].argv);
+	if (shell->cmd_cnt == 1 && builtin)
+	{
+		io[0] = dup(STDIN_FILENO);
+		if (io[0] == -1)
+			ft_error_exit(errno, "dup", EXIT_FAILURE);
+		io[1] = dup(STDOUT_FILENO);
+		if (io[1] == -1)
+			ft_error_exit(errno, "dup", EXIT_FAILURE);
+		if (!ft_redir(shell, &shell->cmd[0]))
+			return (1);
+		ft_builtin_launch(shell, shell->cmd[0].argv, builtin, FALSE);
+		ft_fd_reset(&shell->cmd[0], io);
+		return (1);
+	}
+	return (0);
+}
+
 void
 	ft_builtin_launch(t_shell *shell, char **argv, int status, int process)
 {
@@ -22,7 +61,7 @@ void
 	if (status == (BLTIN_ENV))
 		ft_env(shell, argv, process);
 	if (status == (BLTIN_EXIT))
-		ft_exit(shell, argv);
+		ft_exit(shell, argv, process);
 	if (status == (BLTIN_EXPORT))
 		ft_export(shell, argv, process);
 	if (status == (BLTIN_PWD))

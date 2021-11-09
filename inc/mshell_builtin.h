@@ -18,7 +18,7 @@
 void	ft_cd(t_shell *shell, char **argv, int process);
 void	ft_echo(t_shell *shell, char **argv, int process);
 void	ft_env(t_shell *shell, char **argv, int process);
-void	ft_exit(t_shell *shell, char **argv);
+void	ft_exit(t_shell *shell, char **argv, int process);
 void	ft_export(t_shell *shell, char **argv, int process);
 void	ft_pwd(t_shell *shell, char **argv, int process);
 void	ft_unset(t_shell *shell, char **argv, int process);

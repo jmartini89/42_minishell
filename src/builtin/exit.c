@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 void
-	ft_exit(t_shell *shell, char **argv)
+	ft_exit(t_shell *shell, char **argv, int process)
 {
 	int	argc;
 
@@ -22,8 +22,11 @@ void
 	{
 		ft_error(ERR_BLTIN_ARGS, NULL);
 		ft_env_return(shell, 1);
+		if (process)
+			exit (ft_atoi(shell->ret_str));
 		return ;
 	}
-	ft_printf("exit\n");
+	if (process == FALSE)
+		ft_printf("exit\n");
 	exit (ft_atoi(shell->ret_str));
 }

@@ -13,23 +13,26 @@
 #include "minishell.h"
 
 static int
-	ft_redir_fail(t_cmd *cmd, int fd_read, int fd_write)
+	ft_redir_fail(t_shell *shell, t_cmd *cmd, int fd_read, int fd_write)
 {
 	if (cmd->r_in)
 	{
-		if (close(fd_read) == -1)
-			ft_error_exit(errno, "close", EXIT_FAILURE);
+		if (fd_read != -1)
+			if (close(fd_read) == -1)
+				ft_error_exit(errno, "close", EXIT_FAILURE);
 	}
 	if (cmd->r_out)
 	{
-		if (close(fd_write) == -1)
-			ft_error_exit(errno, "close", EXIT_FAILURE);
+		if (fd_write != -1)
+			if (close(fd_write) == -1)
+				ft_error_exit(errno, "close", EXIT_FAILURE);
 	}
+	ft_env_return(shell, EXIT_FAILURE);
 	return (0);
 }
 
 int
-	ft_redir(t_cmd *cmd)
+	ft_redir(t_shell *shell, t_cmd *cmd)
 {
 	int		fd_read;
 	int		fd_write;
@@ -52,7 +55,7 @@ int
 			if (fd_write == -1)
 			{
 				ft_error(errno, "open");
-				return (ft_redir_fail(cmd, fd_write, fd_read));
+				return (ft_redir_fail(shell, cmd, fd_write, fd_read));
 			}
 			cmd->r_out = TRUE;
 		}
@@ -66,7 +69,7 @@ int
 			if (fd_write == -1)
 			{
 				ft_error(errno, "open");
-				return (ft_redir_fail(cmd, fd_write, fd_read));
+				return (ft_redir_fail(shell, cmd, fd_write, fd_read));
 			}
 			cmd->r_out = TRUE;
 		}
@@ -79,7 +82,7 @@ int
 			if (fd_read == -1)
 			{
 				ft_error(errno, "open");
-				return (ft_redir_fail(cmd, fd_write, fd_read));
+				return (ft_redir_fail(shell, cmd, fd_write, fd_read));
 			}
 			cmd->r_in = TRUE;
 		}
@@ -103,5 +106,6 @@ int
 		if (close(fd_write) == -1)
 			ft_error_exit(errno, "close", EXIT_FAILURE);
 	}
+	ft_env_return(shell, EXIT_SUCCESS);
 	return (1);
 }
