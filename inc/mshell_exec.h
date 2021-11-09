@@ -27,6 +27,12 @@ enum	e_builtin {
 
 void	ft_exec(t_shell *shell);
 
+/* DO_EXEC */
+void	ft_do_exec(t_shell *shell, pid_t *pid_arr);
+
+/* CHILD */
+void	ft_child(t_shell *shell, int i, int *pipefd, int input);
+
 /* BUILTIN */
 int		ft_builtin_check(char **argv);
 void	ft_builtin_launch(
