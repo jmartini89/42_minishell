@@ -49,7 +49,7 @@ void
 	pid_arr = ft_calloc(shell->cmd_cnt, sizeof(*pid_arr));
 	if (pid_arr == NULL)
 		ft_error_exit(errno, "malloc", EXIT_FAILURE);
-	ft_do_exec(shell, pid_arr);
+	ft_fork(shell, pid_arr);
 	ft_wait(shell, pid_arr);
 	free (pid_arr);
 }
