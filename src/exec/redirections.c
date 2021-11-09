@@ -84,50 +84,32 @@ int
 		return (1);
 	while (lst)
 	{
-		if (lst->type == R_IN)
+		if (lst->type == R_IN || lst->type == HERE)
 		{
 			if (io[0] >= 0)
 				if (close(io[0]) == -1)
 					ft_error_exit(errno, "close", EXIT_FAILURE);
-			io[0] = open(lst->name, O_RDONLY);
+			if (lst->type == R_IN)
+				io[0] = open(lst->name, O_RDONLY);
+			if (lst->type == HERE)
+				io[0] = open(TMPFILE, O_RDONLY);
 			if (io[0] == -1)
 			{
 				ft_error(errno, "open");
 				return (ft_redir_fail(shell, cmd, io));
 			}
 		}
-		if (lst->type == HERE)
-		{
-			if (io[0] >= 0)
-				if (close(io[0]) == -1)
-					ft_error_exit(errno, "close", EXIT_FAILURE);
-			io[0] = open(TMPFILE, O_RDONLY);
-			if (io[0] == -1)
-			{
-				ft_error(errno, "open");
-				return (ft_redir_fail(shell, cmd, io));
-			}
-		}
-		if (lst->type == R_OUT)
+		if (lst->type == R_OUT || lst->type == APPEND)
 		{
 			if (io[1] >= 0)
 				if (close(io[1]) == -1)
 					ft_error_exit(errno, "close", EXIT_FAILURE);
-			io[1] = open(lst->name, O_CREAT | O_TRUNC | O_RDWR,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			if (io[1] == -1)
-			{
-				ft_error(errno, "open");
-				return (ft_redir_fail(shell, cmd, io));
-			}
-		}
-		if (lst->type == APPEND)
-		{
-			if (io[1] >= 0)
-				if (close(io[1]) == -1)
-					ft_error_exit(errno, "close", EXIT_FAILURE);
-			io[1] = open(lst->name, O_CREAT | O_APPEND | O_RDWR,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+			if (lst->type == R_OUT)
+				io[1] = open(lst->name, O_CREAT | O_TRUNC | O_RDWR,
+						S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+			if (lst->type == APPEND)
+				io[1] = open(lst->name, O_CREAT | O_APPEND | O_RDWR,
+						S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 			if (io[1] == -1)
 			{
 				ft_error(errno, "open");
