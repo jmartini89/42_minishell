@@ -15,7 +15,6 @@
 void
 	ft_header(void)
 {
-	ft_printf("*\n");
 	ft_printf("\e[1m42 Minishell\e[0m\n\e[3mas beautiful as a shell\e[0m\n");
 	ft_printf("\n");
 	ft_printf("Emulating Bash Version 5.1\n");
@@ -25,5 +24,4 @@ void
 	ft_printf("<http://github.com/jmartini89/42_minishell/wiki>\n");
 	ft_printf("\n");
 	ft_printf("Made by jmartini & mcrisari\n");
-	ft_printf("*\n");
 }

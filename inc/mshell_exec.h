@@ -1,3 +1,4 @@
+/* MSHELL_EXEC */
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -26,7 +27,7 @@ enum	e_builtin {
 
 void	ft_exec(t_shell *shell);
 
-/* UTILS */
+/* BUILTIN */
 int		ft_builtin_check(char **argv);
 void	ft_builtin_launch(
 			t_shell *shell, char **argv, int status, int process);
@@ -34,8 +35,5 @@ void	ft_builtin_launch(
 /* PATH */
 int		ft_is_path(char *arg);
 int		ft_exec_env_path(t_shell *shell, char **arg);
-
-/* TEST GARBAGE */
-void	ft_test_pipe(t_shell *shell); // DEBUG
 
 #endif
