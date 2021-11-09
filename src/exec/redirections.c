@@ -13,23 +13,6 @@
 #include "minishell.h"
 
 static int
-	ft_redir_fail(t_shell *shell, t_cmd *cmd, int fd_read, int fd_write)
-{
-	if (fd_read >= 0)
-	{
-		if (close(fd_read) == -1)
-			ft_error_exit(errno, "close", EXIT_FAILURE);
-	}
-	if (fd_write >= 0)
-	{
-		if (close(fd_write) == -1)
-			ft_error_exit(errno, "close", EXIT_FAILURE);
-	}
-	ft_env_return(shell, EXIT_FAILURE);
-	return (0);
-}
-
-static int
 	ft_heredoc(t_redir *lst) // TODO : COMPLETE REWRITE, DIFFERENT LAUNCH LOGIC - good starting point tho
 {
 	char	*line;
@@ -71,15 +54,31 @@ static int
 	}
 }
 
+static int
+	ft_redir_fail(t_shell *shell, t_cmd *cmd, int *io)
+{
+	if (io[0] >= 0)
+	{
+		if (close(io[0]) == -1)
+			ft_error_exit(errno, "close", EXIT_FAILURE);
+	}
+	if (io[1] >= 0)
+	{
+		if (close(io[1]) == -1)
+			ft_error_exit(errno, "close", EXIT_FAILURE);
+	}
+	ft_env_return(shell, EXIT_FAILURE);
+	return (0);
+}
+
 int
 	ft_redir(t_shell *shell, t_cmd *cmd)
 {
-	int		fd_read;
-	int		fd_write;
+	int		io[2];
 	t_redir	*lst;
 
-	fd_read = -1;
-	fd_write = -1;
+	io[0] = -1;
+	io[1] = -1;
 	lst = cmd->redir;
 	if (lst == NULL)
 		return (1);
@@ -87,68 +86,68 @@ int
 	{
 		if (lst->type == R_IN)
 		{
-			if (fd_read >= 0)
-				if (close(fd_read) == -1)
+			if (io[0] >= 0)
+				if (close(io[0]) == -1)
 					ft_error_exit(errno, "close", EXIT_FAILURE);
-			fd_read = open(lst->name, O_RDONLY);
-			if (fd_read == -1)
+			io[0] = open(lst->name, O_RDONLY);
+			if (io[0] == -1)
 			{
 				ft_error(errno, "open");
-				return (ft_redir_fail(shell, cmd, fd_write, fd_read));
+				return (ft_redir_fail(shell, cmd, io));
 			}
 		}
 		if (lst->type == HERE)
 		{
-			if (fd_read >= 0)
-				if (close(fd_read) == -1)
+			if (io[0] >= 0)
+				if (close(io[0]) == -1)
 					ft_error_exit(errno, "close", EXIT_FAILURE);
-			fd_read = open(TMPFILE, O_RDONLY);
-			if (fd_read == -1)
+			io[0] = open(TMPFILE, O_RDONLY);
+			if (io[0] == -1)
 			{
 				ft_error(errno, "open");
-				return (ft_redir_fail(shell, cmd, fd_write, fd_read));
+				return (ft_redir_fail(shell, cmd, io));
 			}
 		}
 		if (lst->type == R_OUT)
 		{
-			if (fd_write >= 0)
-				if (close(fd_write) == -1)
+			if (io[1] >= 0)
+				if (close(io[1]) == -1)
 					ft_error_exit(errno, "close", EXIT_FAILURE);
-			fd_write = open(lst->name, O_CREAT | O_TRUNC | O_RDWR,
+			io[1] = open(lst->name, O_CREAT | O_TRUNC | O_RDWR,
 					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			if (fd_write == -1)
+			if (io[1] == -1)
 			{
 				ft_error(errno, "open");
-				return (ft_redir_fail(shell, cmd, fd_write, fd_read));
+				return (ft_redir_fail(shell, cmd, io));
 			}
 		}
 		if (lst->type == APPEND)
 		{
-			if (fd_write >= 0)
-				if (close(fd_write) == -1)
+			if (io[1] >= 0)
+				if (close(io[1]) == -1)
 					ft_error_exit(errno, "close", EXIT_FAILURE);
-			fd_write = open(lst->name, O_CREAT | O_APPEND | O_RDWR,
+			io[1] = open(lst->name, O_CREAT | O_APPEND | O_RDWR,
 					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			if (fd_write == -1)
+			if (io[1] == -1)
 			{
 				ft_error(errno, "open");
-				return (ft_redir_fail(shell, cmd, fd_write, fd_read));
+				return (ft_redir_fail(shell, cmd, io));
 			}
 		}
 		lst = lst->next;
 	}
-	if (fd_read)
+	if (io[0] >= 0)
 	{
-		if (dup2(fd_read, STDIN_FILENO) == -1)
+		if (dup2(io[0], STDIN_FILENO) == -1)
 			ft_error_exit(errno, "dup2", EXIT_FAILURE);
-		if (close(fd_read) == -1)
+		if (close(io[0]) == -1)
 			ft_error_exit(errno, "close", EXIT_FAILURE);
 	}
-	if (fd_write)
+	if (io[1] >= 0)
 	{
-		if (dup2(fd_write, STDOUT_FILENO) == -1)
+		if (dup2(io[1], STDOUT_FILENO) == -1)
 			ft_error_exit(errno, "dup2", EXIT_FAILURE);
-		if (close(fd_write) == -1)
+		if (close(io[1]) == -1)
 			ft_error_exit(errno, "close", EXIT_FAILURE);
 	}
 	ft_env_return(shell, EXIT_SUCCESS);
