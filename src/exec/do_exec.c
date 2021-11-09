@@ -46,6 +46,7 @@ void
 	i = 0;
 	while (i < shell->cmd_cnt)
 	{
+		// HEREDOC OPERATIONS
 		ft_pipe_new(shell, i, pipefd);
 		pid = fork();
 		if (pid < 0)

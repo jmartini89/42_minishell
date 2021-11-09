@@ -13,6 +13,7 @@
 
 #ifndef MSHELL_EXEC_H
 # define MSHELL_EXEC_H
+# define TMPFILE "/tmp/minishell_heredoc.tmp"
 
 enum	e_builtin {
 	BLTIN_EXEC,

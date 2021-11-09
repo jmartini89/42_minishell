@@ -15,12 +15,10 @@
 static void
 	ft_fd_reset(t_cmd *cmd, int *io)
 {
-	if (cmd->r_in)
-		if (dup2(io[0], STDIN_FILENO) == -1)
-			ft_error_exit(errno, "dup2", EXIT_FAILURE);
-	if (cmd->r_out)
-		if (dup2(io[1], STDOUT_FILENO) == -1)
-			ft_error_exit(errno, "dup2", EXIT_FAILURE);
+	if (dup2(io[0], STDIN_FILENO) == -1)
+		ft_error_exit(errno, "dup2", EXIT_FAILURE);
+	if (dup2(io[1], STDOUT_FILENO) == -1)
+		ft_error_exit(errno, "dup2", EXIT_FAILURE);
 	if (close(io[0]) == -1)
 		ft_error_exit(errno, "close", EXIT_FAILURE);
 	if (close(io[1]) == -1)
