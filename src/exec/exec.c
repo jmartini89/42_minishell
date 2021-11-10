@@ -51,6 +51,7 @@ void
 	if (pid_arr == NULL)
 		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	cnt = ft_fork(shell, pid_arr);
+	ft_printf("FORK CNT %d\n", cnt);
 	ft_wait(shell, pid_arr, cnt);
 	free (pid_arr);
 }

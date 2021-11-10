@@ -40,7 +40,12 @@ static void
 		line = NULL;
 		line = readline("> ");
 		if (line == NULL)
-			break ;
+		{
+			ft_error(WRN_HEREDOC, NULL);
+			if (close(fd) == -1)
+				ft_error_exit(errno, "close", EXIT_FAILURE);
+			exit (EXIT_FAILURE);
+		}
 		if (line && *line)
 		{
 			if (ft_strlen(line) == len && !ft_memcmp(lst->name, line, len))
@@ -48,17 +53,13 @@ static void
 				free (line);
 				if (close(fd) == -1)
 					ft_error_exit(errno, "close", EXIT_FAILURE);
-				exit (1);
+				exit (EXIT_SUCCESS);
 			}
 			write(fd, line, ft_strlen(line));
 			write(fd, "\n", 1);
 			free (line);
 		}
 	}
-	ft_error(WRN_HEREDOC, NULL);
-	if (close(fd) == -1)
-		ft_error_exit(errno, "close", EXIT_FAILURE);
-	exit (1);
 }
 
 static int
@@ -73,7 +74,8 @@ static int
 		ft_heredoc_child(lst);
 	else
 		ft_wait_heredoc(shell, pid);
-	if (ft_atoi(shell->ret_str))
+	ft_printf("HEREDOC RET %s\n", shell->ret_str);
+	if (ft_atoi(shell->ret_str) > 0)
 		return (0);
 	return (1);
 }
