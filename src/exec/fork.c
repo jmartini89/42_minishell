@@ -46,10 +46,10 @@ void
 	i = 0;
 	while (i < shell->cmd_cnt)
 	{
-		// HEREDOC OPERATIONS
 		ft_pipe_new(shell, i, pipefd);
+		ft_heredoc(shell, shell->cmd[i].redir);
 		pid = fork();
-		if (pid < 0)
+		if (pid == -1)
 			ft_error_exit(errno, "fork", EXIT_FAILURE);
 		if (pid == 0)
 			ft_child(shell, i, pipefd, input);

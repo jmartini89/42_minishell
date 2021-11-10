@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_builtin.c                                     :+:      :+:    :+:   */
+/*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jm & mc <jmartini & mcrisari>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 23:48:16 by jm & mc           #+#    #+#             */
-/*   Updated: 2021/11/07 23:48:17 by jm & mc          ###   ########.fr       */
+/*   Updated: 2021/11/09 23:36:34 by jm & mc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int
 	if (shell->cmd_cnt == 1 && builtin)
 	{
 		ft_fd_cpy(io);
-		// HEREDOC
-		if (!ft_redir(shell, &shell->cmd[0]))
+		ft_heredoc(shell, shell->cmd[0].redir);
+		if (!ft_redir(shell, shell->cmd[0].redir))
 			return (1);
 		ft_builtin_launch(shell, shell->cmd[0].argv, builtin, FALSE);
 		ft_fd_reset(&shell->cmd[0], io);

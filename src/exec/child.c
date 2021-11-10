@@ -42,9 +42,8 @@ void
 	int	builtin;
 	int	err;
 
-	ft_signal_default();
 	ft_child_pipe(shell, i, pipefd, input);
-	if (!ft_redir(shell, &shell->cmd[i]))
+	if (!ft_redir(shell, shell->cmd[i].redir))
 		ft_exit(shell, NULL, TRUE);
 	if (shell->cmd[i].argv == NULL)
 		ft_exit(shell, NULL, TRUE);
@@ -56,6 +55,7 @@ void
 		if (!ft_exec_env_path(shell, &shell->cmd[i].argv[0]))
 			ft_error_exit(ERR_EXEC_NOCMD, NULL, 127);
 	}
+	ft_signal_default();
 	if (execve(shell->cmd[i].argv[0], shell->cmd[i].argv, shell->env) == -1)
 	{
 		err = errno;

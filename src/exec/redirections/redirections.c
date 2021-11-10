@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 static int
-	ft_redir_fail(t_shell *shell, t_cmd *cmd, int *io)
+	ft_redir_fail(t_shell *shell, int *io)
 {
 	if (io[0] >= 0)
 	{
@@ -87,24 +87,22 @@ static void
 }
 
 int
-	ft_redir(t_shell *shell, t_cmd *cmd)
+	ft_redir(t_shell *shell, t_redir *lst)
 {
 	int		io[2];
-	t_redir	*lst;
 
 	io[0] = -1;
 	io[1] = -1;
-	lst = cmd->redir;
 	if (lst == NULL)
 		return (1);
 	while (lst)
 	{
 		if (lst->type == R_IN || lst->type == HERE)
 			if (!ft_redir_input(lst, io))
-				return (ft_redir_fail(shell, cmd, io));
+				return (ft_redir_fail(shell, io));
 		if (lst->type == R_OUT || lst->type == APPEND)
 			if (!ft_redir_output(lst, io))
-				return (ft_redir_fail(shell, cmd, io));
+				return (ft_redir_fail(shell, io));
 		lst = lst->next;
 	}
 	ft_redir_assign(io);

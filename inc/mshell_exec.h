@@ -29,11 +29,12 @@ enum	e_builtin {
 void	ft_exec(t_shell *shell);
 
 /* REDIRECTIONS */
-int		ft_redir(t_shell *shell, t_cmd *cmd);
-int		ft_heredoc(t_redir *lst);
+int		ft_redir(t_shell *shell, t_redir *lst);
+int		ft_heredoc(t_shell *shell, t_redir *lst);
 
 /* DO_EXEC */
 void	ft_fork(t_shell *shell, pid_t *pid_arr);
+void	ft_wait_one(t_shell *shell, pid_t pid);
 
 /* CHILD */
 void	ft_child(t_shell *shell, int i, int *pipefd, int input);

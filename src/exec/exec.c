@@ -12,8 +12,29 @@
 
 #include "minishell.h"
 
+void
+	ft_wait_one(t_shell *shell, pid_t pid)
+{
+	int	wstatus;
+	int	wexit;
+
+	wexit = waitpid(pid, &wstatus, WUNTRACED);
+	if (wexit == -1)
+		ft_error_exit(errno, "waitpid", EXIT_FAILURE);
+	if (WIFSTOPPED(wstatus))
+		ft_env_return(shell, WSTOPSIG(wstatus) + 128);
+	if (WIFSIGNALED(wstatus))
+	{
+		if (WTERMSIG(wstatus) == SIGINT)
+			ft_printf("\n");
+		ft_env_return(shell, WTERMSIG(wstatus) + 128);
+	}
+	if (WIFEXITED(wstatus))
+		ft_env_return(shell, WEXITSTATUS(wstatus));
+}
+
 static void
-	ft_wait(t_shell *shell, pid_t *pid_arr)
+	ft_wait_many(t_shell *shell, pid_t *pid_arr)
 {
 	int	wstatus;
 	int	wexit;
@@ -50,6 +71,6 @@ void
 	if (pid_arr == NULL)
 		ft_error_exit(errno, "malloc", EXIT_FAILURE);
 	ft_fork(shell, pid_arr);
-	ft_wait(shell, pid_arr);
+	ft_wait_many(shell, pid_arr);
 	free (pid_arr);
 }
