@@ -94,7 +94,6 @@ char
 	int			len;
 
 	len = ft_token_len(tkn, shell);
-	ft_printf("%d\n", len);
 	tmp.token = ft_calloc(len + 1, sizeof(*tmp.token));
 	if (!tmp.token)
 		ft_error_exit(errno, "malloc", EXIT_FAILURE);
