@@ -59,5 +59,5 @@ int
 		ft_pipe_control(shell, i, pipefd, &input);
 		i++;
 	}
-	return (i + 1);
+	return (i);
 }
