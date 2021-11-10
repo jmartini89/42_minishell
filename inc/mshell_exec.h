@@ -31,6 +31,7 @@ void	ft_exec(t_shell *shell);
 /* REDIRECTIONS */
 int		ft_redir(t_shell *shell, t_redir *lst);
 int		ft_heredoc(t_shell *shell, t_redir *lst);
+void	ft_heredoc_child(t_redir *lst);
 
 /* FORK */
 int		ft_fork(t_shell *shell, pid_t *pid_arr);
