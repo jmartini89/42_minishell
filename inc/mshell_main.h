@@ -1,8 +1,8 @@
-/* MSHELL_SRC */
+/* MSHELL_MAIN */
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mshell_src.h                                       :+:      :+:    :+:   */
+/*   mshell_main.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jm & mc <jmartini & mcrisari>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,8 +11,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MSHELL_SRC_H
-# define MSHELL_SRC_H
+#ifndef MSHELL_MAIN_H
+# define MSHELL_MAIN_H
 # define M_SHELL_NAME "miniscell"
 # define M_SHELL_PROMPT "\001\e[32m\002miniscell\001\e[0m\002$ "
 
@@ -37,5 +37,7 @@ typedef struct s_shell
 	t_cmd	*cmd;
 	int		cmd_cnt;
 }	t_shell;
+
+int	ft_prompt(t_shell *shell);
 
 #endif

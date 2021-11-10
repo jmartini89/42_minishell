@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 static int
-	ft_wait_heredoc(t_shell *shell, pid_t pid)
+	ft_wait_heredoc(pid_t pid)
 {
 	int	wstatus;
 	int	wexit;
@@ -31,6 +31,7 @@ static int
 	}
 	if (WIFEXITED(wstatus))
 		return (WEXITSTATUS(wstatus));
+	return (EXIT_FAILURE);
 }
 
 static int
@@ -45,7 +46,7 @@ static int
 	if (pid == 0)
 		ft_heredoc_child(lst);
 	else
-		ret = ft_wait_heredoc(shell, pid);
+		ret = ft_wait_heredoc(pid);
 	ft_env_return(shell, ret);
 	if (ret > 0)
 		return (0);
