@@ -35,7 +35,7 @@ static void
 	}
 }
 
-void
+int
 	ft_fork(t_shell *shell, pid_t *pid_arr)
 {
 	int		i;
@@ -47,7 +47,8 @@ void
 	while (i < shell->cmd_cnt)
 	{
 		ft_pipe_new(shell, i, pipefd);
-		ft_heredoc(shell, shell->cmd[i].redir);
+		if (!ft_heredoc(shell, shell->cmd[i].redir))
+			return (i);
 		pid = fork();
 		if (pid == -1)
 			ft_error_exit(errno, "fork", EXIT_FAILURE);
@@ -58,4 +59,5 @@ void
 		ft_pipe_control(shell, i, pipefd, &input);
 		i++;
 	}
+	return (i + 1);
 }
