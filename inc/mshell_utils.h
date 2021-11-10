@@ -28,6 +28,7 @@ enum	e_err {
 	ERR_BLTIN_PWD_NDIR,
 	ERR_BLTIN_UNSET,
 	ERR_EXEC_NOCMD,
+	WRN_HEREDOC,
 };
 static const char *const	g_errstr[] = {
 	"Undefined",
@@ -41,6 +42,7 @@ static const char *const	g_errstr[] = {
 	"pwd: the current working directory has been unlinked",
 	"unset: not a valid identifier",
 	"execve: command not found",
+	"warning: here-document delimited by end-of-file",
 };
 
 /* ERROR */

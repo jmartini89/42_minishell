@@ -6,58 +6,35 @@
 /*   By: jm & mc <jmartini & mcrisari>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 23:48:20 by jm & mc           #+#    #+#             */
-/*   Updated: 2021/11/07 23:48:21 by jm & mc          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:15:51 by jm & mc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int
-	ft_single_shot_builtin(t_shell *shell)
+void
+	ft_wait_one(t_shell *shell, pid_t pid)
 {
-	int	builtin;
+	int	wstatus;
+	int	wexit;
 
-	builtin = ft_builtin_check(shell->cmd[0].argv);
-	if (shell->cmd_cnt == 1 && builtin)
+	wexit = waitpid(pid, &wstatus, WUNTRACED);
+	if (wexit == -1)
+		ft_error_exit(errno, "waitpid", EXIT_FAILURE);
+	if (WIFSTOPPED(wstatus))
+		ft_env_return(shell, WSTOPSIG(wstatus) + 128);
+	if (WIFSIGNALED(wstatus))
 	{
-		if (shell->cmd[0].redir)
-			ft_printf("EXEC REDIRECTION DEBUG\n");
-		ft_builtin_launch(shell, shell->cmd[0].argv, builtin, FALSE);
-		return (1);
+		if (WTERMSIG(wstatus) == SIGINT)
+			ft_printf("\n");
+		ft_env_return(shell, WTERMSIG(wstatus) + 128);
 	}
-	return (0);
+	if (WIFEXITED(wstatus))
+		ft_env_return(shell, WEXITSTATUS(wstatus));
 }
 
 static void
-	ft_child(t_shell *shell, int i)
-{
-	int	builtin;
-	int	err;
-
-	ft_signal_default();
-	builtin = ft_builtin_check(shell->cmd[i].argv);
-	if (builtin)
-		ft_builtin_launch(shell, shell->cmd[i].argv, builtin, TRUE);
-	if (!ft_is_path(shell->cmd[i].argv[0]))
-	{
-		if (!ft_exec_env_path(shell, &shell->cmd[i].argv[0]))
-			ft_error_exit(ERR_EXEC_NOCMD, NULL, 127);
-	}
-	if (execve(shell->cmd[i].argv[0], shell->cmd[i].argv, shell->env) == -1)
-	{
-		err = errno;
-		rl_clear_history();
-		if (err == ENOENT)
-			ft_error_exit(err, "execve", 127);
-		if (err == EACCES)
-			ft_error_exit(err, "execve", 126);
-		else
-			ft_error_exit(err, "execve", EXIT_FAILURE);
-	}
-}
-
-static void
-	ft_terminator(t_shell *shell, pid_t *pid_arr)
+	ft_wait_many(t_shell *shell, pid_t *pid_arr)
 {
 	int	wstatus;
 	int	wexit;
@@ -86,69 +63,14 @@ static void
 void
 	ft_exec(t_shell *shell)
 {
-	int		i;
-	pid_t	pid;
 	pid_t	*pid_arr;
 
-	int		pipefd[2];
-	int		read;
-
-	if (ft_single_shot_builtin(shell))
+	if (ft_builtin_as_parent(shell))
 		return ;
-
 	pid_arr = ft_calloc(shell->cmd_cnt, sizeof(*pid_arr));
 	if (pid_arr == NULL)
 		ft_error_exit(errno, "malloc", EXIT_FAILURE);
-
-	i = 0;
-	while (i < shell->cmd_cnt)
-	{
-		if (shell->cmd_cnt > 1 && i + 1 < shell->cmd_cnt)
-			if (pipe(pipefd) == -1)
-				ft_error_exit(errno, "pipe", EXIT_FAILURE);
-		if (shell->cmd[i].argv)
-		{
-			pid = fork();
-			if (pid < 0)
-				ft_error_exit(errno, "fork", EXIT_FAILURE);
-			if (pid == 0)
-			{
-				if (shell->cmd_cnt > 1)
-				{
-					if (i)
-					{
-						if (dup2(read, STDIN_FILENO) == -1)
-							ft_error_exit(errno, "dup2", EXIT_FAILURE);
-						if (close(read) == -1)
-							ft_error_exit(errno, "close", EXIT_FAILURE);
-					}
-					if (i + 1 < shell->cmd_cnt)
-					{
-						if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-							ft_error_exit(errno, "dup2", EXIT_FAILURE);
-						if (close(pipefd[1]) == -1)
-							ft_error_exit(errno, "close", EXIT_FAILURE);
-						if (close(pipefd[0]) == -1)
-							ft_error_exit(errno, "close", EXIT_FAILURE);
-					}
-				}
-				ft_child(shell, i);
-			}
-			else
-				pid_arr[i] = pid;
-		}
-		if (shell->cmd_cnt > 1)
-		{
-			if (i)
-				if (close(read) == -1)
-					ft_error_exit(errno, "close", EXIT_FAILURE);
-			read = pipefd[0];
-			if (i + 1 < shell->cmd_cnt)
-				if (close(pipefd[1]) == -1)
-					ft_error_exit(errno, "close", EXIT_FAILURE);
-		}
-		i++;
-	}
-	ft_terminator(shell, pid_arr);
+	ft_fork(shell, pid_arr);
+	ft_wait_many(shell, pid_arr);
 	free (pid_arr);
 }

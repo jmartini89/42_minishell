@@ -13,6 +13,7 @@
 
 #ifndef MSHELL_EXEC_H
 # define MSHELL_EXEC_H
+# define TMPFILE "/tmp/minishell_heredoc.tmp"
 
 enum	e_builtin {
 	BLTIN_EXEC,
@@ -27,7 +28,19 @@ enum	e_builtin {
 
 void	ft_exec(t_shell *shell);
 
+/* REDIRECTIONS */
+int		ft_redir(t_shell *shell, t_redir *lst);
+int		ft_heredoc(t_shell *shell, t_redir *lst);
+
+/* DO_EXEC */
+void	ft_fork(t_shell *shell, pid_t *pid_arr);
+void	ft_wait_one(t_shell *shell, pid_t pid);
+
+/* CHILD */
+void	ft_child(t_shell *shell, int i, int *pipefd, int input);
+
 /* BUILTIN */
+int		ft_builtin_as_parent(t_shell *shell);
 int		ft_builtin_check(char **argv);
 void	ft_builtin_launch(
 			t_shell *shell, char **argv, int status, int process);

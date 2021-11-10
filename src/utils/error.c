@@ -18,7 +18,7 @@ void
 	int	errcpy;
 
 	errcpy = err;
-	ft_putstr_fd(M_SHELL_NAME" : ", 2);
+	ft_putstr_fd(M_SHELL_NAME": ", 2);
 	if (libc)
 	{
 		ft_putstr_fd(libc, 2);
