@@ -46,7 +46,8 @@ int
 	if (shell->cmd_cnt == 1 && builtin)
 	{
 		ft_fd_cpy(io);
-		ft_heredoc(shell, shell->cmd[0].redir);
+		if (!ft_heredoc(shell, shell->cmd[0].redir))
+			return (1);
 		if (!ft_redir(shell, shell->cmd[0].redir))
 			return (1);
 		ft_builtin_launch(shell, shell->cmd[0].argv, builtin, FALSE);

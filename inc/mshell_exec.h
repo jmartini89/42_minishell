@@ -31,10 +31,10 @@ void	ft_exec(t_shell *shell);
 /* REDIRECTIONS */
 int		ft_redir(t_shell *shell, t_redir *lst);
 int		ft_heredoc(t_shell *shell, t_redir *lst);
+void	ft_heredoc_child(t_redir *lst);
 
-/* DO_EXEC */
-void	ft_fork(t_shell *shell, pid_t *pid_arr);
-void	ft_wait_one(t_shell *shell, pid_t pid);
+/* FORK */
+int		ft_fork(t_shell *shell, pid_t *pid_arr);
 
 /* CHILD */
 void	ft_child(t_shell *shell, int i, int *pipefd, int input);

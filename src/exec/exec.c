@@ -12,36 +12,15 @@
 
 #include "minishell.h"
 
-void
-	ft_wait_one(t_shell *shell, pid_t pid)
-{
-	int	wstatus;
-	int	wexit;
-
-	wexit = waitpid(pid, &wstatus, WUNTRACED);
-	if (wexit == -1)
-		ft_error_exit(errno, "waitpid", EXIT_FAILURE);
-	if (WIFSTOPPED(wstatus))
-		ft_env_return(shell, WSTOPSIG(wstatus) + 128);
-	if (WIFSIGNALED(wstatus))
-	{
-		if (WTERMSIG(wstatus) == SIGINT)
-			ft_printf("\n");
-		ft_env_return(shell, WTERMSIG(wstatus) + 128);
-	}
-	if (WIFEXITED(wstatus))
-		ft_env_return(shell, WEXITSTATUS(wstatus));
-}
-
 static void
-	ft_wait_many(t_shell *shell, pid_t *pid_arr)
+	ft_wait(t_shell *shell, pid_t *pid_arr, int cnt)
 {
 	int	wstatus;
 	int	wexit;
 	int	i;
 
 	i = 0;
-	while (i < shell->cmd_cnt)
+	while (i < cnt)
 	{
 		wexit = waitpid(pid_arr[i], &wstatus, WUNTRACED);
 		if (wexit == -1)
@@ -64,13 +43,15 @@ void
 	ft_exec(t_shell *shell)
 {
 	pid_t	*pid_arr;
+	int		cnt;
 
 	if (ft_builtin_as_parent(shell))
 		return ;
 	pid_arr = ft_calloc(shell->cmd_cnt, sizeof(*pid_arr));
 	if (pid_arr == NULL)
 		ft_error_exit(errno, "malloc", EXIT_FAILURE);
-	ft_fork(shell, pid_arr);
-	ft_wait_many(shell, pid_arr);
+	cnt = ft_fork(shell, pid_arr);
+	ft_printf("FORK CNT %d\n", cnt);
+	ft_wait(shell, pid_arr, cnt);
 	free (pid_arr);
 }

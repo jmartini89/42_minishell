@@ -64,6 +64,11 @@ void	ft_signal_default(void);
 int		ft_argc(char **argv);
 char	**ft_argv_dup(char **argv);
 
+/* HEADER */
 void	ft_header(void);
+
+/* DEBUG */
+void	ft_debug_parser(t_shell *shell);
+int		ft_debug_leaks_at_exit(t_shell *shell);
 
 #endif
