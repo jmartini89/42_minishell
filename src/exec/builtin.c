@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 static void
-	ft_fd_reset(t_cmd *cmd, int *io)
+	ft_fd_reset(int *io)
 {
 	if (dup2(io[0], STDIN_FILENO) == -1)
 		ft_error_exit(errno, "dup2", EXIT_FAILURE);
@@ -50,7 +50,7 @@ int
 		if (!ft_redir(shell, shell->cmd[0].redir))
 			return (1);
 		ft_builtin_launch(shell, shell->cmd[0].argv, builtin, FALSE);
-		ft_fd_reset(&shell->cmd[0], io);
+		ft_fd_reset(io);
 		return (1);
 	}
 	return (0);

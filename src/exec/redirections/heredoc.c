@@ -5,7 +5,7 @@ static void
 {
 	char	*line;
 	int		fd;
-	int		len;
+	size_t	len;
 
 	signal(SIGINT, ft_sig_int);
 	fd = open(TMPFILE, O_CREAT |  O_TRUNC | O_APPEND | O_RDWR,
