@@ -36,11 +36,29 @@ static void
 	}
 }
 
+static void
+	ft_child_execve(t_shell *shell, int i)
+{
+	int	err;
+
+	ft_signal_default();
+	if (execve(shell->cmd[i].argv[0], shell->cmd[i].argv, shell->env) == -1)
+	{
+		err = errno;
+		rl_clear_history();
+		if (err == ENOENT)
+			ft_error_exit(err, "execve", 127);
+		if (err == EACCES)
+			ft_error_exit(err, "execve", 126);
+		else
+			ft_error_exit(err, "execve", EXIT_FAILURE);
+	}
+}
+
 void
 	ft_child(t_shell *shell, int i, int *pipefd, int input)
 {
 	int	builtin;
-	int	err;
 
 	ft_child_pipe(shell, i, pipefd, input);
 	if (!ft_redir(shell, shell->cmd[i].redir))
@@ -55,16 +73,5 @@ void
 		if (!ft_exec_env_path(shell, &shell->cmd[i].argv[0]))
 			ft_error_exit(ERR_EXEC_NOCMD, NULL, 127);
 	}
-	ft_signal_default();
-	if (execve(shell->cmd[i].argv[0], shell->cmd[i].argv, shell->env) == -1)
-	{
-		err = errno;
-		rl_clear_history();
-		if (err == ENOENT)
-			ft_error_exit(err, "execve", 127);
-		if (err == EACCES)
-			ft_error_exit(err, "execve", 126);
-		else
-			ft_error_exit(err, "execve", EXIT_FAILURE);
-	}
+	ft_child_execve(shell, i);
 }
