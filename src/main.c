@@ -12,27 +12,11 @@
 
 #include "minishell.h"
 
-// static void
-// 	ft_parser_debug(t_shell *shell)
-// {
-// 	int	i;
-// 	int	cnt;
-
-// 	cnt = 0;
-// 	while (cnt < shell->cmd_cnt)
-// 	{
-// 		i = 0;
-// 		ft_printf("---CMD %d---\n", cnt);
-// 		while (shell->cmd[cnt].argv && shell->cmd[cnt].argv[i])
-// 		{
-// 			ft_printf("WORD\t%s\n", shell->cmd[cnt].argv[i]);
-// 			i++;
-// 		}
-// 		ft_rdr_iter(shell->cmd[cnt].redir, ft_rdr_print);
-// 		ft_printf("-----------\n", cnt);
-// 		cnt++;
-// 	}
-// }
+static int
+	ft_prompt()
+{
+	;
+}
 
 int
 	main(int argc, char **argv, char **envp)
@@ -59,8 +43,8 @@ int
 			free (line_read);
 			line_read = NULL;
 			//ft_exit(&shell, NULL);
-			ft_printf("exit\n"); // DEBUG
-			break; // DEBUG
+			/* DEBUG LEAK EXIT */
+			return (ft_debug_leaks_at_exit(&shell));
 		}
 		if (line_read && *line_read)
 		{
@@ -68,13 +52,12 @@ int
 			if (ft_parser(line_read, &shell))
 			{
 				signal(SIGINT, SIG_IGN);
-				// ft_parser_debug(&shell);
+				// ft_debug_parser(&shell);
 				ft_exec(&shell);
 				ft_gc_cmd(&shell);
 				signal(SIGINT, ft_sig_int);
 			}
 		}
 	}
-	ft_gc(&shell);
-	return (EXIT_SUCCESS);
+	exit (EXIT_SUCCESS);
 }
