@@ -17,7 +17,7 @@ int
 {
 	char	*sample;
 
-	sample = "#$%*+,-./:=?@^~";
+	sample = "#$%*+,-./:=@^~";
 	while (*sample)
 	{
 		if (c == *sample)
