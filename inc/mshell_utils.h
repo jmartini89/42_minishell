@@ -49,6 +49,9 @@ static const char *const	g_errstr[] = {
 	"warning: here-document delimited by end-of-file",
 };
 
+/* HISTORY */
+void	ft_history(char *line);
+
 /* ERROR */
 void	ft_error(int err, char *libc);
 void	ft_error_exit(int err, char *libc, int status);
