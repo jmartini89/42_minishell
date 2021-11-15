@@ -13,12 +13,24 @@
 #include "minishell.h"
 
 static void
+	ft_newline_sigint(int wstatus, int *newline)
+{
+	if (WTERMSIG(wstatus) == SIGINT && *newline == 0)
+	{
+		*newline = *newline + 1;
+		ft_printf("\n");
+	}
+}
+
+static void
 	ft_wait(t_shell *shell, pid_t *pid_arr, int cnt)
 {
 	int	wstatus;
 	int	wexit;
+	int	newline;
 	int	i;
 
+	newline = 0;
 	i = 0;
 	while (i < cnt)
 	{
@@ -29,8 +41,7 @@ static void
 			ft_env_return(shell, WSTOPSIG(wstatus) + 128);
 		if (WIFSIGNALED(wstatus))
 		{
-			if (WTERMSIG(wstatus) == SIGINT)
-				ft_printf("\n");
+			ft_newline_sigint(wstatus, &newline);
 			ft_env_return(shell, WTERMSIG(wstatus) + 128);
 		}
 		if (WIFEXITED(wstatus))
