@@ -15,7 +15,7 @@
 static void
 	ft_engine(t_shell *shell, char *line)
 {
-	add_history(line);
+	ft_history(line);
 	if (ft_parser(line, shell))
 	{
 		signal(SIGINT, SIG_IGN);

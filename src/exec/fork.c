@@ -43,6 +43,7 @@ int
 	int		pipefd[2];
 	int		input;
 
+	input = -1;
 	i = 0;
 	while (i < shell->cmd_cnt)
 	{

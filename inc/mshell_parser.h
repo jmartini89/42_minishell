@@ -77,5 +77,6 @@ int		ft_is_quote(char c);
 int		ft_is_operator(char c);
 int		ft_is_space_tab(char c);
 int		ft_operator_type(char *arg);
+int		ft_is_dollar_meta(char c);
 
 #endif

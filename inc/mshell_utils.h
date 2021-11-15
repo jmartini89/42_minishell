@@ -24,6 +24,8 @@ enum	e_err {
 	ERR_BLTIN_ARGS,
 	ERR_BLTIN_CD_ARGS,
 	ERR_BLTIN_CD_HOME,
+	ERR_BLTIN_EXIT_ARGS,
+	ERR_BLTIN_EXIT_NUM,
 	ERR_BLTIN_EXPORT,
 	ERR_BLTIN_PWD_NDIR,
 	ERR_BLTIN_UNSET,
@@ -38,12 +40,17 @@ static const char *const	g_errstr[] = {
 	"built-in: arguments are not supported",
 	"cd: too many arguments",
 	"cd: HOME not set",
+	"exit: too many arguments",
+	"exit: numeric argument required",
 	"export: not a valid identifier",
 	"pwd: the current working directory has been unlinked",
 	"unset: not a valid identifier",
 	"execve: command not found",
 	"warning: here-document delimited by end-of-file",
 };
+
+/* HISTORY */
+void	ft_history(char *line);
 
 /* ERROR */
 void	ft_error(int err, char *libc);
