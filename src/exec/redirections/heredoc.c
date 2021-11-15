@@ -40,6 +40,7 @@ static int
 	pid_t	pid;
 	int		ret;
 
+	ret = 0;
 	pid = fork();
 	if (pid == -1)
 		ft_error_exit(errno, "fork", EXIT_FAILURE);
