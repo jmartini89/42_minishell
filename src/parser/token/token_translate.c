@@ -22,7 +22,8 @@ static char *
 	addr++;
 	len = 0;
 	while (&addr[len] <= tkn->end
-		&& !ft_is_quote(addr[len]) && addr[len] != '$' && addr[len] != ':')
+		&& !ft_is_quote(addr[len])
+		&& ft_is_dollar_meta(addr[len]) == FALSE)
 		len++;
 	tmp = ft_calloc(len + 1, sizeof(*tmp));
 	if (!tmp)
@@ -52,7 +53,7 @@ static int
 				if (env)
 					len += ft_strlen(env);
 				while (*addr && !ft_token_quotes_status(tkn, *addr)
-					&& *(addr + 1) != '$' && *(addr + 1) != ':')
+					&& ft_is_dollar_meta(*(addr + 1)) == FALSE)
 					addr++;
 			}
 			else
@@ -77,7 +78,7 @@ static void
 				tmp->env++;
 			}
 			while (*tmp->addr && !ft_token_quotes_status(tkn, *tmp->addr)
-				&& *(tmp->addr + 1) != '$' && *(tmp->addr + 1) != ':')
+				&& ft_is_dollar_meta(*(tmp->addr + 1)) == FALSE)
 				tmp->addr++;
 		}
 		else
