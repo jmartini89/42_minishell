@@ -16,13 +16,12 @@ int
 	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
-	int		ret;
 
 	(void)argc;
 	(void)argv;
 	ft_env_init(&shell, envp);
 	ft_signal();
 	ft_header();
-	ret = ft_prompt(&shell);
-	return (ret); // CHANGE TO EXIT
+	ft_prompt(&shell);
+	exit (EXIT_SUCCESS);
 }

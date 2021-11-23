@@ -38,6 +38,6 @@ typedef struct s_shell
 	int		cmd_cnt;
 }	t_shell;
 
-int	ft_prompt(t_shell *shell);
+void	ft_prompt(t_shell *shell);
 
 #endif

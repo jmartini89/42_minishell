@@ -19,14 +19,13 @@ static void
 	if (ft_parser(line, shell))
 	{
 		signal(SIGINT, SIG_IGN);
-		// ft_debug_parser(shell);
 		ft_exec(shell);
 		ft_gc_cmd(shell);
 		signal(SIGINT, ft_sig_int);
 	}
 }
 
-int
+void
 	ft_prompt(t_shell *shell)
 {
 	char	*line;
@@ -44,9 +43,7 @@ int
 		{
 			free (line);
 			line = NULL;
-			//ft_exit(&shell, NULL);
-			/* DEBUG LEAK EXIT */
-			return (ft_debug_leaks_at_exit(shell));
+			ft_exit(shell, NULL, FALSE);
 		}
 		if (line && *line)
 			ft_engine(shell, line);
