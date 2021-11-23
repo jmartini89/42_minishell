@@ -1,6 +1,6 @@
 # 42_minishell
 
-## *as beautiful as a shell*
+### *as beautiful as a shell*
 
 ### Emulating Bash Version 5.1
 
