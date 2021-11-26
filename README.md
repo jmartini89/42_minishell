@@ -1,3 +1,5 @@
+![minishell](https://user-images.githubusercontent.com/25162290/143592505-7c88e31d-b8a4-4516-9a88-6c7884a04f9d.png)
+
 # 42_minishell
 
 ### *as beautiful as a shell*
